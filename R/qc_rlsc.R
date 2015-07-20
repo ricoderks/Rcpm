@@ -1,17 +1,12 @@
-###--- Written by E.Nevedomskaya 2007-2013---###
-
-### Perform QC-RLSC for batch correction of chromatographic signal
-### As described in Dunn et al. Nature Protocols 6, 1060–1083 (2011)
-### INPUT
-#	tab		= table N*K (row * column) with N samples and K variables
-#	colv		= vector N of numbers: 1 for QC samples and 2 for other samples
-#	or		= vector of measuring order
-### OUTPUT
-#	tab_corr	= corrected table N*K
-#
-#
-# MAKE SURE TO SORT EVERYTHING IN MEASUREMENT ORDER!!!!!!
-
+#' Perform QC-RLSC for batch correction of chromatographic signal
+#'
+#' @param tab table N*K (row * column) with N samples and K variables
+#' @param colv vector N of numbers: 1 for QC samples and 2 for other samples
+#' @param or vector of measuring order (see details)
+#' @details Make sure that everything is sorted in measurement order!!!
+#' @return corrected table N*K
+#' @author E. Nevedomskaya
+#' @references 1.Dunn et al. Nature Protocols 6, 1060-1083 (2011)
 qc_rlsc <- function(tab, colv, or) {
 	# create table of the same sizeas initial
 	tab_corr <- tab;
