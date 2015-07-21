@@ -7,7 +7,7 @@
 #' @return Data frame with count, mean, standard devation, standard error of the mean and confidence interval.
 #' @description Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 0.95).
 #' @references www.cookbook-r.com
-summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.interval=.95, .drop=TRUE) {
+summary_se <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.interval=.95, .drop=TRUE) {
  # New version of length which can handle NA's: if na.rm==T, don't count them
   length2 <- function (x, na.rm=FALSE) {
     if (na.rm) {
@@ -19,7 +19,7 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.i
 
   # This does the summary. For each group's data frame, return a vector with
   # N, mean, and sd
-  datac <- ddply(data, groupvars, .drop=.drop, .fun = function(xx, col) {
+  datac <- plyr::ddply(data, groupvars, .drop=.drop, .fun = function(xx, col) {
     c(N    = length2(xx[[col]], na.rm=na.rm),
       mean = mean   (xx[[col]], na.rm=na.rm),
       sd   = sd     (xx[[col]], na.rm=na.rm)
