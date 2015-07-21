@@ -23,6 +23,6 @@ Equating is based on the function *normalize.quantiles* from the library preproc
 Rico Derks
 }
 \references{
-Draisma, H. H. M. et al. Equating, or Correction for Between-Block Effects with Application to Body Fluid LC−MS and NMR Metabolomics Data Sets. Anal. Chem. 82, 1039–1046 (2010).
+Draisma, H. H. M. et al. Equating, or Correction for Between-Block Effects with Application to Body Fluid LC−MS and NMR Metabolomics Data Sets. Anal. Chem. 82, 1039-1046 (2010).
 }
 
