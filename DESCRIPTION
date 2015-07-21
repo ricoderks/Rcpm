@@ -10,4 +10,5 @@ Description: This package contains several general functions for the Center of
 License: GPL-3
 LazyData: TRUE
 Imports: plyr
-Suggests: pls
+Suggests: pls,
+  preprocessCore
