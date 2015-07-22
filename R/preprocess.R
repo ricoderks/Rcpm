@@ -1,10 +1,11 @@
 #' Center and scale your data
-#'
+#' @description With this function you can center and scale your data.
 #' @param data matrix to preprocess
 #' @param center center the data (default is TRUE)
-#' @param scale which scaling to use \code{none}, \code{uv} or \code{pareto}
-#' @param reverse reverse the scaling \\ centering
-#' @param simple only return the preprocessed matrix. If false also the original data will be returned as a list.
+#' @param scale which scaling to use \code{c("none", "uv", "pareto")}
+#' @param reverse reverse the scaling \\ centering. Default is false.
+#' @param simple only return the preprocessed matrix. If false also the original
+#'   data will be returned as a list. Default is true.
 #' @return The centered and scaled matrix will be returned.
 preprocess <- function (data, center=TRUE, scale=c("none", "uv", "pareto"), reverse=FALSE, simple=TRUE) {
 	data <- as.matrix(data);

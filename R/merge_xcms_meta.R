@@ -6,7 +6,7 @@
 #' @return a data frame with the meta data and the XCMS data combined.
 #' @details This functions is based on our data analysis protocol. The XCMS peak
 #'   picking is done on the QCpool and actual samples. Sample names should start
-#'   with QCpool_ or Sample_. This is used within the function to find where the
+#'   with \code{QCpool_} or \code{Sample_}. This is used within the function to find where the
 #'   actual data starts. The MetaFile should contain a column with the name
 #'   \code{SampleName}. Merging of both files is based on the sample name.
 #' @author Rico Derks
