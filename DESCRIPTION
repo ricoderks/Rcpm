@@ -11,4 +11,6 @@ License: GPL-3
 LazyData: TRUE
 Imports: plyr
 Suggests: pls,
-  preprocessCore
+  preprocessCore,
+    knitr
+VignetteBuilder: knitr
