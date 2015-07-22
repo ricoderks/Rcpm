@@ -9,17 +9,21 @@ merge_xcms_meta(XcmsFile, MetaFile)
 \arguments{
 \item{XcmsFile}{the XCMS output file. This is a comma seperated file.}
 
-\item{MetaFile}{the meta file. This file should be comma seperated.}
+\item{MetaFile}{the meta data file. This file should be comma seperated.}
 }
 \value{
 a data frame with the meta data and the XCMS data combined.
 }
 \description{
-This functions combines meta data with a XCMS output file. The merge is done based on the sample name.
+This functions combines meta data with a XCMS output file. The
+  merge is done based on the sample name.
 }
 \details{
-This functions is based on our data analysis protocol. The XCMS peak picking is done on the QCpool and actual samples.
-  Sample names should start with QCpool_ or Sample_. This is used within the function to find where the actual data starts.
+This functions is based on our data analysis protocol. The XCMS peak
+  picking is done on the QCpool and actual samples. Sample names should start
+  with QCpool_ or Sample_. This is used within the function to find where the
+  actual data starts. The MetaFile should contain a column with the name
+  \code{SampleName}. Merging of both files is based on the sample name.
 }
 \author{
 Rico Derks
