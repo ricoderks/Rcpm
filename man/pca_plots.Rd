@@ -9,6 +9,9 @@ pca_plots(mydata, xPC = 1, yPC = 2, type = c("scores", "loadings",
   group.name = NULL, ...)
 }
 \arguments{
+\item{mydata}{Dataframe containing all information. See details for more
+information on the structure.}
+
 \item{xPC}{Principal component for the x-axis.}
 
 \item{yPC}{Principal component for the y-axis.}
@@ -21,10 +24,10 @@ pca_plots(mydata, xPC = 1, yPC = 2, type = c("scores", "loadings",
 
 \item{show.groups}{color the score plot according to the groups. Default is false.}
 
-\item{group.name}{the name of the group in the data frame}
-
-\item{data}{Dataframe containing all information. See details for more
-information on the structure.}
+\item{group.name}{the name of the group in the data frame.}
+}
+\value{
+A ggplot2 plot is returned.
 }
 \description{
 Generate different plots for a PCA analysis. Score plot
@@ -33,8 +36,8 @@ Generate different plots for a PCA analysis. Score plot
   summary of fit plot.
 }
 \details{
-Your data frame should contain the variable names \code{pc1} and
-  \code{pc2}. For every extra principal component use \code{pc3}, \code{pc4},
+Your data frame should contain the variable names \code{PC1} and
+  \code{PC2}. For every extra principal component use \code{PC3}, \code{PC4},
   etc. In the score plot the scores can be colored by group.name. Set show.groups to true.
 }
 \author{
