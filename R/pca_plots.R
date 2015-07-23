@@ -10,6 +10,7 @@
 #' @param type Which plot to generate: scores, loadings or summary plot.
 #' @param T2 add a Hotteling T2 ellipse to the scores plot. Default is true.
 #' @param hotelling Set the Hotelling confidence interval. Default = 0.95.
+#' @details Your data frame should contain the variable names \code{pc1} and \code{pc2}.
 #' @author Rico Derks
 pca_plots <- function(data, xPC=1, yPC=2, type=c("scores", "loadings", "summary"), T2=TRUE, hotelling=0.95, show.groups=FALSE, group.names, group.ids, ...) {
   type <- match.arg(type);
