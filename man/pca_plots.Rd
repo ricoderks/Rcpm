@@ -4,14 +4,11 @@
 \alias{pca_plots}
 \title{create PCA plots}
 \usage{
-pca_plots(data, xPC = 1, yPC = 2, type = c("scores", "loadings",
+pca_plots(mydata, xPC = 1, yPC = 2, type = c("scores", "loadings",
   "summary"), T2 = TRUE, hotelling = 0.95, show.groups = FALSE,
-  group.names, group.ids, ...)
+  group.name = NULL, ...)
 }
 \arguments{
-\item{data}{Dataframe containing all information. See details for more
-information on the structure.}
-
 \item{xPC}{Principal component for the x-axis.}
 
 \item{yPC}{Principal component for the y-axis.}
@@ -21,12 +18,24 @@ information on the structure.}
 \item{T2}{add a Hotteling T2 ellipse to the scores plot. Default is true.}
 
 \item{hotelling}{Set the Hotelling confidence interval. Default = 0.95.}
+
+\item{show.groups}{color the score plot according to the groups. Default is false.}
+
+\item{group.name}{the name of the group in the data frame}
+
+\item{data}{Dataframe containing all information. See details for more
+information on the structure.}
 }
 \description{
 Generate different plots for a PCA analysis. Score plot
   (includings Hotelling T2 confidence interval ellipse), loading plot or a
   summary plot. The summary plot contains a score plot, loadings plot and the
   summary of fit plot.
+}
+\details{
+Your data frame should contain the variable names \code{pc1} and
+  \code{pc2}. For every extra principal component use \code{pc3}, \code{pc4},
+  etc. In the score plot the scores can be colored by group.name. Set show.groups to true.
 }
 \author{
 Rico Derks
