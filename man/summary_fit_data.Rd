@@ -10,7 +10,7 @@ summary_fit_data(mydata)
 \item{mydata}{}
 }
 \value{
-reshaped data frame.
+reshaped data frame. A long data frame is created.
 }
 \description{
 This functions reshapes the data frame for making a bar plot

@@ -19,6 +19,7 @@ and Metabolomics
   \item \code{\link{preprocess}} Centering / scaling
   \item \code{\link{qc_rlsc}} LOESS correction
   \item \code{\link{simple_ellipse}} Hotelling T2 ellipse
+  \item \code{\link{summary_fit}} Plot a summary of fit of a PCA model
   \item \code{\link{summary_se}}
   \item \code{\link{vip}}
   \item \code{\link{vip_jh}}
