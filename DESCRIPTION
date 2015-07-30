@@ -10,7 +10,8 @@ Description: This package contains several general functions for the Center of
 License: GPL-3
 LazyData: TRUE
 Imports: plyr,
-    ggplot2
+    ggplot2,
+    grid
 Suggests: pls,
   preprocessCore,
     knitr
