@@ -24,6 +24,10 @@ pca_plots <- function(mydata, xPC=1, yPC=2, type=c("scores", "loadings", "summar
   p <- ggplot2::ggplot();
   switch(type,
          scores = {
+           if (T2 == TRUE) {
+             el <- simple_ellipse(x=mydata[, paste("PC", xPC, sep="")], y=mydata[, paste("PC", yPC, sep="")], alpha=hotelling);
+             p <- p + ggplot2::geom_path(data=el, ggplot2::aes(x=x, y=y), colour="gray")
+           }
            if (show.groups == FALSE) {
              p <- p + ggplot2::geom_point(data=mydata, ggplot2::aes_string(x=paste("PC", xPC, sep=""), y=paste("PC", yPC, sep="")), size=3);
            } else {
@@ -32,10 +36,6 @@ pca_plots <- function(mydata, xPC=1, yPC=2, type=c("scores", "loadings", "summar
               } else {
                 stop("No group name specified!");
               }
-           }
-           if (T2 == TRUE) {
-             el <- simple_ellipse(x=mydata[, paste("PC", xPC, sep="")], y=mydata[, paste("PC", yPC, sep="")], alpha=hotelling);
-             p <- p + ggplot2::geom_path(data=el, ggplot2::aes(x=x, y=y), colour="gray")
            }
            p <- p + ggplot2::ggtitle("Scores plot");
          },
