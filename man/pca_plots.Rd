@@ -5,7 +5,7 @@
 \title{create PCA plots}
 \usage{
 pca_plots(data, x, y, type = c("scores", "loadings", "summary"), T2 = TRUE,
-  hotelling = 0.95, colour = NULL, shape = NULL, fill = NULL)
+  hotelling = 0.95, colour = NULL, shape = NULL, size = 3)
 }
 \arguments{
 \item{data}{Dataframe containing all information. See details for more
@@ -25,7 +25,7 @@ information on the structure.}
 
 \item{shape}{Set the shape of the points for different groups.}
 
-\item{fill}{Points can be open or filled for different groups Default is filled.}
+\item{size}{Set the size of the points. Default is 3.}
 }
 \value{
 A ggplot2 plot is returned.

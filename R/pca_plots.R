@@ -12,7 +12,7 @@
 #' @param hotelling Set the Hotelling confidence interval. Default = 0.95.
 #' @param colour Set the color of the points for different groups.
 #' @param shape Set the shape of the points for different groups.
-#' @param fill Points can be open or filled for different groups Default is filled.
+#' @param size Set the size of the points. Default is 3.
 #' @return A ggplot2 plot is returned.
 #' @details \code{data} should be data frame which contains at least 2 variables
 #'   for plotting the scores or loadings plot. The name of these 2 variables are
@@ -25,7 +25,8 @@
 #' # create a dummy frame
 #' mydata <- data.frame(pc1=rnorm(40), pc2=rnorm(40), groups=as.factor(c(rep(1, 20), rep(2, 20))), shapes=as.factor(c(rep(1, 20),rep(2, 20))));
 #' p <- pca_plots(data=mydata, x="pc1", y="pc2", type="scores", colour="groups", shape="shapes");
-pca_plots <- function(data, x, y, type=c("scores", "loadings", "summary"), T2=TRUE, hotelling=0.95, colour=NULL, shape=NULL, fill=NULL) {
+#'
+pca_plots <- function(data, x, y, type=c("scores", "loadings", "summary"), T2=TRUE, hotelling=0.95, colour=NULL, shape=NULL, size=3) {
 
   type <- match.arg(type);
 
@@ -37,11 +38,11 @@ pca_plots <- function(data, x, y, type=c("scores", "loadings", "summary"), T2=TR
              el <- simple_ellipse(x=data[, x], y=data[, y], alpha=hotelling);
              p <- p + ggplot2::geom_path(data=el, ggplot2::aes(x=x, y=y), colour="gray");
            }
-           p <- p + ggplot2::geom_point(data=data, ggplot2::aes_string(x=x, y=y, colour=colour, shape=shape, fill=fill), size=3);
+           p <- p + ggplot2::geom_point(data=data, ggplot2::aes_string(x=x, y=y, colour=colour, shape=shape), size=size);
            p <- p + ggplot2::ggtitle("Scores plot");
          },
          loadings = {
-           p <- p + ggplot2::geom_point(data=data, ggplot2::aes_string(x=x, y=y), size=3);
+           p <- p + ggplot2::geom_point(data=data, ggplot2::aes_string(x=x, y=y), size=size);
            p <- p + ggplot2::ggtitle("Loadings plot");
          },
          summary = {
