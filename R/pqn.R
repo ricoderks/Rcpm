@@ -1,11 +1,3 @@
-#' Perform Probabilistic Quotient Normalization (Median Fold Change)
-#'
-#' @param X matrix to normalize samples * variables (rows * columns)
-#' @param n normalization reference: "mean" for using the overall average of variables as reference or "median" (default) for using the overall median of variables as reference
-#' @param QC vector of number(s) to specify samples which average to use as reference (e.g. QC samples)
-#' @return Normalized table samples * variables (rows * columns)
-#' @author E. Nevedomskaya
-#' @references 1.Dieterle, F., Ross, A., Schlotterbeck, G. & Senn, H. Probabilistic Quotient Normalization as Robust Method to Account for Dilution of Complex Biological Mixtures. Application in H1 NMR Metabonomics. Anal. Chem. 78, 4281–4290 (2006).
 pqn <- function(X, n="median", QC) {
   X.norm <- matrix(nrow=nrow(X), ncol=ncol(X));
 	colnames(X.norm) <- colnames(X);

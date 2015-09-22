@@ -1,13 +1,3 @@
-#' Gives a summary of a data frame
-#' @param data data frame
-#' @param measurevar the name of a column that contains the variable to be summariezed
-#' @param groupvars a vector containing names of columns that contain grouping variables
-#' @param na.rm a boolean that indicates whether to ignore NA's
-#' @param conf.interval the percent range of the confidence interval (default is 0.95)
-#' @.drop should empty fields be dropped
-#' @return Data frame with count, mean, standard devation, standard error of the mean and confidence interval.
-#' @description Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 0.95).
-#' @references www.cookbook-r.com
 summary_se <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE, conf.interval=.95, .drop=TRUE) {
  # New version of length which can handle NA's: if na.rm==T, don't count them
   length2 <- function (x, na.rm=FALSE) {

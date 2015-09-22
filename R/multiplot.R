@@ -1,14 +1,3 @@
-#' Multiple plot function
-#' @description You want to put multiple graphs on one page.
-#' @param plotlist a list of ggplots
-#' @param cols number of columns in layout
-#' @param layout  a matrix specifying the layout. If present, \code{cols} is ignored. See for more info Details
-#' @details ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
-#' If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
-#' then plot 1 will go in the upper left, 2 will go in the upper right, and
-#' 3 will go all the way across the bottom.
-#' @author Rico Derks
-#' @references http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
 multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL) {
  # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)

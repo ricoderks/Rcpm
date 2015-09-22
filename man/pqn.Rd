@@ -16,6 +16,9 @@ pqn(X, n = "median", QC)
 \value{
 Normalized table samples * variables (rows * columns)
 }
+\details{
+First a total area normalization should be done before PQN is applied.
+}
 \description{
 Perform Probabilistic Quotient Normalization (Median Fold Change)
 }
@@ -23,6 +26,6 @@ Perform Probabilistic Quotient Normalization (Median Fold Change)
 E. Nevedomskaya
 }
 \references{
-1.Dieterle, F., Ross, A., Schlotterbeck, G. & Senn, H. Probabilistic Quotient Normalization as Robust Method to Account for Dilution of Complex Biological Mixtures. Application in H1 NMR Metabonomics. Anal. Chem. 78, 4281–4290 (2006).
+1.Dieterle, F., Ross, A., Schlotterbeck, G. & Senn, H. Probabilistic Quotient Normalization as Robust Method to Account for Dilution of Complex Biological Mixtures. Application in H1 NMR Metabonomics. Anal. Chem. 78, 4281-4290 (2006).
 }
 

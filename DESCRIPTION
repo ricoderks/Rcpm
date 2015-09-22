@@ -11,7 +11,8 @@ License: GPL-3
 LazyData: TRUE
 Imports: plyr,
     ggplot2,
-    grid
+    grid,
+    reshape2
 Suggests: pls,
   preprocessCore,
     knitr

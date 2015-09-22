@@ -1,12 +1,3 @@
-#' Create a simple ellipse for a PCA score plot
-#' @description This function can be used to create a confidence (Hotteling T2) interval for a
-#'   PCA score plot.
-#' @param x x vector
-#' @param y y vector
-#' @param alpha confidence interval
-#' @param len number of points to create the ellipse
-#' @return A data frame is returned with the points to create the ellipse
-#' @author Rico Derks
 simple_ellipse <- function(x, y, alpha=0.95, len=200) {
   N <- length(x);
   mypi <- seq(0, 2 * pi, length=len);
