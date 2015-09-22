@@ -4,6 +4,7 @@
 #' @param groupvars a vector containing names of columns that contain grouping variables
 #' @param na.rm a boolean that indicates whether to ignore NA's
 #' @param conf.interval the percent range of the confidence interval (default is 0.95)
+#' @.drop should empty fields be dropped
 #' @return Data frame with count, mean, standard devation, standard error of the mean and confidence interval.
 #' @description Gives count, mean, standard deviation, standard error of the mean, and confidence interval (default 0.95).
 #' @references www.cookbook-r.com

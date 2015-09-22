@@ -4,12 +4,10 @@
 \alias{multiplot}
 \title{Multiple plot function}
 \usage{
-multiplot(..., plotlist = NULL, file, cols = 1, layout = NULL)
+multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 }
 \arguments{
 \item{plotlist}{a list of ggplots}
-
-\item{file}{}
 
 \item{cols}{number of columns in layout}
 
