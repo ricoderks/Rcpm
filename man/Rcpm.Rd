@@ -12,6 +12,7 @@ and Metabolomics
 \itemize{
   \item \code{\link{equate}} quantile equate
   \item \code{\link{merge_xcms_meta}} merge xcms output file with meta data
+  \item \code{\link{msca}} multilevel simultaneous analysis
   \item \code{\link{pca_plots}} plot several PCA plots
   \item \code{\link{pqn}} Perform Probabilistic Quotient Normalization
   \item \code{\link{preprocess}} Centering / scaling

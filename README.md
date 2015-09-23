@@ -11,3 +11,7 @@ The first repository is our own R repository (http://cpm.lumc.nl/R/). This is no
 ### Current status
 
 Currently this package is updated frequently. So make sure to update the package frequently.
+
+###
+Create repository with :
+`tools::write_PACKAGES(dir="location of package", type="source")`
