@@ -15,7 +15,7 @@ msca_p <- function(X, persID) {
 	rm(i);
 	
 	### Part I: Calculate Offset
-	offset <- colMeans(X);
+	offset <- colMeans(X, na.rm=TRUE);
 	
 	# Subtract offset from Data
 	Xoff <- X - cbind(rep(1, K)) %*% offset;

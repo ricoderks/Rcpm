@@ -24,6 +24,8 @@ A data frame with the following structure :
 \details{
 X needs to have the following data table structure ((I x K) x J). Where I are the individuals, J are the variables, and K are samples of an individual.
 
+Note: msca can NOT handle NA's!
+
 Based on the algorithm Jansen et al. ANALYTICA CHIMICA ACTA (2005) 530(2):173-183
 Based on MatLab code available here http://www.bdagroup.nl/content/Downloads/software/software.php
 }
