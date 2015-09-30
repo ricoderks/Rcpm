@@ -35,6 +35,7 @@ msca <- function(X, persID) {
 	pca_b <- pcaMethods::svdPca(scale(W %*% Xindsc), nPcs=I, center=F)
 	
 	pca_b@scores <- pca_b@scores %*% solve(W)
+	colnames(pca_b@scores) <- paste("PC", 1:ncol(pca_b@scores), sep="");
 	
 	### Part III: Within individual scores
 	# Center data for each individual
