@@ -4,9 +4,19 @@ The Rcpm package contains some general functions for use within CPM.
 
 ### Installation
 
-Install the package with the command : 
-`install.packages("Rcpm", repos=c("http://cpm.lumc.nl/R/", "http://cran-mirror.cs.uu.nl/"), type="source")`
-The first repository is our own R repository (http://cpm.lumc.nl/R/). This is not a mirror of the CRAN repository. The second repository is a CRAN repository. Here you can choose any CRAN repository you want.
+The Rcpm package depends on quite some packages and they need to be installed first:
+
+* `install.packages(c("plyr", "ggplot2", "grid", "reshape2", "pls", "knitr"))`.
+Some packages are hosted by BioConductor, install like:
+
+* `source("http://bioconductor.org/biocLite.R")`
+* `biocLite(c("grid", "preProcessCore", "pcaMethods"))`
+* if it asks to update, update all packages.
+
+Finally the R package is installed with :
+
+* `install.packages("Rcpm", repos="http://cpm.lumc.nl/R/", type="source")`
+
 
 ### Current status
 
