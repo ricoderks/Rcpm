@@ -11,7 +11,7 @@ The Rcpm package depends on quite some packages and they need to be installed fi
 Some packages are hosted by BioConductor, install like:
 
 * `source("http://bioconductor.org/biocLite.R")`
-* `biocLite(c("grid", "preProcessCore", "pcaMethods"))`
+* `biocLite(c("grid", "preprocessCore", "pcaMethods"))`
 * if it asks to update, update all packages.
 
 Finally the R package is installed with :
