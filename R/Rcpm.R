@@ -14,6 +14,7 @@
 #'   \item \code{\link{summary_fit}} Plot a summary of fit of a PCA model
 #'   \item \code{\link{summary_fit_data}} Restructure the data for a summary of fit plot
 #'   \item \code{\link{summary_se}}
+#'   \item \code{\link{unmap}} Dummy matrix for an outcome factor
 #'   \item \code{\link{vip}}
 #'   \item \code{\link{vip_jh}}
 #' }
