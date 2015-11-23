@@ -4,7 +4,7 @@ opls_pred <- function(A, model, direction) {
 #
 # Input:
 #   A: Observations
-#   model: o2pls model
+#   model: opls model
 #   direction: from x to y ('xy') or from y to x ('yx')
 # Output
 #   Bhat : Predictions

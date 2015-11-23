@@ -1,0 +1,27 @@
+\name{ncomp_opls}
+\alias{ncomp_opls}
+\title{Find the optimal number of OPLS components}
+\usage{
+ncomp_opls(Xi, Yi, prep, nrcv)
+}
+\arguments{
+\item{Xi}{X matrix N samples x K variables}
+\item{Yi}{Y matrix N samples x I variables (currently works only with single Y)}
+\item{prep}{preprocessing ("uv" for UV scaling, "mc" for mean centering, "no" for no preprocessing)}
+\item{nrcv}{number of folds in cross-validation}
+}
+\description{
+Find the optimal number of OPLS components based on the highest Q2 value
+}
+\details{
+Find the optimal number of OPLS components based on the highest Q2 value
+}
+\value{
+Output is a list of three elements: 
+\item{A}{number of correlated components}
+\item{ncox}{number of orthogonal components in X}
+\item{ncoy}{number of orthogonal components in Y}
+}
+\author{
+E. Nevedomskaya, Rico Derks
+}

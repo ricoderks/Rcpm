@@ -13,6 +13,11 @@ and Metabolomics
   \item \code{\link{equate}} quantile equate
   \item \code{\link{merge_xcms_meta}} merge xcms output file with meta data
   \item \code{\link{msca}} multilevel simultaneous analysis
+  \item \code{\link{ncomp_opls}} Find the optimal number of OPLS components (only works for single Y)
+  \item \code{\link{o2pls_pred}} Prediction function of the opls package
+  \item \code{\link{o2pls}} Orthogonal Projections to Latent Structures (OPLS) for a multiple Y's
+  \item \code{\link{opls_pred}} Prediction function of the opls package
+  \item \code{\link{opls}} Orthogonal Projections to Latent Structures (OPLS) for a single Y
   \item \code{\link{pca_plots}} plot several PCA plots
   \item \code{\link{pqn}} Perform Probabilistic Quotient Normalization
   \item \code{\link{preprocess}} Centering / scaling

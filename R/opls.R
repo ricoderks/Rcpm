@@ -134,7 +134,7 @@ opls <- function(Xi, Yi, prep, A, ncox, ncoy, nrcv) {
 	if (ncox != 0){
 		for (i in 1:ncox) {
 			# PCA of E'T for extraction of the first residual orthogonal component
-			m <- nipalsPca(t(model$E) %*% model$T, nPcs=1);
+			m <- pcaMethods::nipalsPca(t(model$E) %*% model$T, nPcs=1);
 			
 			# Extraction of Wosc from the PCA model m
 			wosc <- m@scores;
@@ -194,7 +194,7 @@ opls <- function(Xi, Yi, prep, A, ncox, ncoy, nrcv) {
 	if (ncoy != 0){
 		for (i in 1:ncoy) {
 			# PCA of F'U for extraction of the first residual orthogonal component
-			m <- nipalsPca(t(t(model$F) %*% model$U), nPcs=1);
+			m <- pcaMethods::nipalsPca(t(t(model$F) %*% model$U), nPcs=1);
 			
 			# Extraction of Cosc from the PCA model m
 			cosc <- m@loadings;
