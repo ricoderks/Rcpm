@@ -2,6 +2,8 @@ perm_test <- function(pls_model, perm=200, scale=FALSE) {
 	Y <- as.matrix(pls_model$model[1]);
 	X <- as.matrix(pls_model$model[2]);
 	nComps <- pls_model$ncomp;
+	# seed the random generator
+	set.seed(unclass(Sys.time()));
 	# dataframe to hold the results
 	perm_results <- data.frame(corr=vector(mode="numeric", length=perm), R2Ycum=vector(mode="numeric", length=perm), Q2cum=vector(mode="numeric", length=200));
 	for (a in 1:perm) {

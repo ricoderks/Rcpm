@@ -14,6 +14,7 @@ Permutation test for PLS and PLS-DA models. The Y variable is permutated and a m
 }
 \details{
 The scaling for the PLS / PLS-DA model has to be given to the function. At the moment this can not be retrieved from the original model.
+The function \code{sample()} is used to randomize the Y variable. With \code{set.seed()} the random generator is seeded based on the current date time.
 }
 \value{
 Output is a plot showing the results.
