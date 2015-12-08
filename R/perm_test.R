@@ -11,7 +11,7 @@ perm_test <- function(pls_model, perm=200, scale=FALSE) {
 		Yperm <- Y[sample(1:nrow(Y), nrow(Y)), ];
 		Mperm_pls <- pls::plsr(Yperm ~ X, ncomp=nComps, validation=pls_model$validation$method, scale=scale, method=pls_model$method);
 		# calculate correlation between original Y and permutated Y (default is Pearsons correlation)
-		perm_results$corr[a] <- abs(cor(Y, Yperm));
+		perm_results$corr[a] <- as.vector(abs(cor(Y, Yperm)))[1];
 		# calculate R2Ycum
 		rss_y <- colSums(colSums(Mperm_pls$residuals^2));
 		rss0 <- sum(Mperm_pls$validation$PRESS0);
@@ -19,7 +19,11 @@ perm_test <- function(pls_model, perm=200, scale=FALSE) {
 		# calculate Q2cum
 		press <- colSums(Mperm_pls$validation$PRESS);
 		press0 <- Mperm_pls$validation$PRESS0;
-		perm_results$Q2cum[a] <- (1 - (press / press0))[nComps];
+		Q2cum <- (1 - (press / press0));
+#		if (length(which(Q2cum < -0.1)) > 0) {
+#			Q2cum[which(Q2cum < -0.1)] <- -0.1;
+#		}
+		perm_results$Q2cum[a] <- Q2cum[nComps];
 	}
 	#### add the values for the original model
 	# calculate R2Ycum
@@ -28,7 +32,7 @@ perm_test <- function(pls_model, perm=200, scale=FALSE) {
 	R2Ycum <- (1 - (rss_y / rss0))[nComps];
 	# calculate Q2cum
 	press <- colSums(pls_model$validation$PRESS);
-	press0 <- pls_model$validation$PRESS0;
+	press0 <- sum(pls_model$validation$PRESS0);
 	Q2cum <- (1 - (press / press0))[nComps];	
 	perm_results <- rbind(perm_results, c(1, R2Ycum, Q2cum));
 	
