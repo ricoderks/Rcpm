@@ -18,6 +18,7 @@ Some packages are hosted by BioConductor, install like:
 Finally the R package is installed with :
 
 * `install.packages("Rcpm", repos="http://cpm.lumc.nl/R/", type="source")`
+If it doesn't install try with https!
 
 
 ### Current status
