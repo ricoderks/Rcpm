@@ -6,15 +6,18 @@ Date: 2016-02-11
 Author: Rico Derks
 Maintainer: Rico Derks <r.j.e.derks@lumc.nl>
 Description: This package contains several general functions for the Center of
-  Proteomics and Metabolomics (LUMC).
+    Proteomics and Metabolomics (LUMC).
 License: GPL-3
 LazyData: TRUE
-Imports: plyr,
+Imports:
+    plyr,
     ggplot2,
     grid,
     reshape2,
     pcaMethods
-Suggests: pls,
-  preprocessCore,
+Suggests:
+    pls,
+    preprocessCore,
     knitr
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

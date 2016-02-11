@@ -20,7 +20,7 @@ plot_histogram plots a histogram with a fitted kernel density plot and a normal 
 \author{
 Rico Derks
 }
-\example{
+\examples{
 df <- data.frame(a=rnorm(100, mean=10), b=rnorm(100, mean=20))
 plot_histogram(DataSet=df)
 }
