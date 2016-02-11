@@ -20,6 +20,7 @@ and Metabolomics
   \item \code{\link{opls}} Orthogonal Projections to Latent Structures (OPLS) for a single Y
   \item \code{\link{pca_plots}} plot several PCA plots
   \item \code{\link{perm_test}} Permutation test for PLS and PLS-DA models
+  \item \code{\link{plot_histogram}} plot nice histogram
   \item \code{\link{pqn}} Perform Probabilistic Quotient Normalization
   \item \code{\link{preprocess}} Centering / scaling
   \item \code{\link{qc_rlsc}} LOESS correction
