@@ -7,7 +7,7 @@ The Rcpm package contains some general functions for use within CPM.
 The Rcpm package depends on quite some packages and they need to be installed first:
 * check if you can load the package grid with `library(grid)`. It the package doesn't load you need to upgrade your R installation.
 
-* `install.packages(c("plyr", "ggplot2", "grid", "reshape2", "pls", "knitr"))`.
+* `install.packages(c("plyr", "ggplot2", "reshape2", "pls", "knitr"))`.
 
 Some packages are hosted by BioConductor, install like:
 
@@ -18,6 +18,7 @@ Some packages are hosted by BioConductor, install like:
 Finally the R package is installed with :
 
 * `install.packages("Rcpm", repos="http://cpm.lumc.nl/R/", type="source")`
+If it doesn't install try with https!
 
 
 ### Current status
