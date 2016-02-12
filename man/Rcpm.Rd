@@ -11,6 +11,7 @@ and Metabolomics
 
 \itemize{
   \item \code{\link{equate}} quantile equate
+  \item \code{\link{m_pow_x}} Modeling power
   \item \code{\link{merge_xcms_meta}} merge xcms output file with meta data
   \item \code{\link{msca}} multilevel simultaneous analysis
   \item \code{\link{ncomp_opls}} Find the optimal number of OPLS components (only works for single Y)
