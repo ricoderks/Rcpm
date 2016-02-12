@@ -8,7 +8,7 @@ m_pow_x(data, pca_model)
 \item{data}{is a matrix of the original data (centered and scaled)}
 
 \item{pca_model}{is the pca model from the package pcaMethods}
-
+}
 \value{
 vector of the modeling power for each variable
 }
