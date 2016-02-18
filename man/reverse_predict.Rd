@@ -1,0 +1,27 @@
+\name{reverse_predict}
+\alias{reverse_predict}
+\title{Do a reverse prediction on a linear regression}
+\usage{
+reverse_predict(model, new_y, level=0.95)
+}
+\arguments{
+\item{model}{regression model of class \code{lm}}
+
+\item{new_y}{the new y values, should be a vector}
+
+\item{level}{confidence interval, default = 0.95}
+
+}
+\value{
+A list with :
+\item{x}{the predict x value}
+
+\item{confidence_interval}{the confidence interval of the predict value}
+}
+\description{
+Predict x values from y values. As with calibration curves, determine the concentration (x) from the peak area (y).
+}
+\author{
+Rico Derks
+}
+
