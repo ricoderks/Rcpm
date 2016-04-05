@@ -8,14 +8,11 @@ check_alignment(files)
 \item{files}{A character vector containing all the mzXML file locations.}
 }
 \value{
-The function gives a message with the file name of the problematic mzXML file.
+The function gives a message with the file name of the problematic mzXML file and returns TRUE or FALSE.
 }
 \details{
 msalign2 sometimes creates wrong retention times. The retention time of a scan is sometimes
 smaller then its previous scan. 
-}
-\value{
-Returns true or false.
 }
 \description{
 Check the aligned mzXML files for problematic retention times
