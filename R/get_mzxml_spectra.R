@@ -6,7 +6,7 @@ get_mzxml_spectra <- function(file) {
 	# initialize list to hold all the scans (MS1)
 	spectra <- list()
 	
-	for (a in 1:length(peaks)) {
+	for (a in 1:length(scans)) {
 		# the order of these steps I got from the package readMzXmlData!
 		# first base64decode 
 		scan_decode <- base64enc::base64decode(scans[a])
