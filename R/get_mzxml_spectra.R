@@ -16,7 +16,7 @@ get_mzxml_spectra <- function(file) {
 		scan_raw <- readBin(scan_decom, what="double", n=length(scan_decom)%/%8, size=8, signed=TRUE, endian="big")
 		# scan contains the m/z and intensity as :
 		# m/z intensity m/z intensity etc.
-		spectra[[a]] <- matrix(scan_raw, ncol=2, byrow=TRUE) # first column = m/z, second column = intensity
+		spectra[[a]] <- matrix(scan_raw, ncol=2, byrow=TRUE, dimnames=list(1:(length(scan_raw)/2), c("Mz", "Intensity"))) # first column = m/z, second column = intensity
 	}
 	return(spectra)
 }
