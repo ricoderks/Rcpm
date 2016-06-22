@@ -16,7 +16,8 @@ Imports:
     reshape2,
     pcaMethods,
     xml2,
-    base64enc
+    base64enc,
+    xcms
 Suggests:
     pls,
     preprocessCore,

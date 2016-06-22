@@ -7,12 +7,12 @@ The Rcpm package contains some general functions for use within CPM.
 The Rcpm package depends on quite some packages and they need to be installed first:
 * check if you can load the package grid with `library(grid)`. It the package doesn't load you need to upgrade your R installation.
 
-* `install.packages(c("plyr", "ggplot2", "reshape2", "pls", "knitr", "xml2"))`.
+* `install.packages(c("plyr", "ggplot2", "reshape2", "pls", "knitr", "xml2", "base64enc"))`.
 
 Some packages are hosted by BioConductor, install like:
 
 * `source("http://bioconductor.org/biocLite.R")`
-* `biocLite(c("preprocessCore", "pcaMethods"))`
+* `biocLite(c("preprocessCore", "pcaMethods", "xcms"))`
 * if it asks to update, update all packages.
 
 Finally the R package is installed with :
