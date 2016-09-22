@@ -12,7 +12,3 @@ The Rcpm package can be installed with :
 ### Current status
 
 Currently this package is updated frequently. So make sure to update the package frequently.
-
-### Repository
-
-Create repository with : `tools::write_PACKAGES(dir="location of package", type="source")`
