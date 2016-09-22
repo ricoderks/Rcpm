@@ -11,6 +11,7 @@
 #' 		\item \code{\link{m_pow_x}} Modeling power
 #'		\item \code{\link{merge_xcms_meta}} merge xcms output file with meta data
 #'		\item \code{\link{msca}} multilevel simultaneous analysis
+#'		\item \code{\link{ms_search_lipidmaps}} MS search on the LMSD database from LipidMaps
 #'		\item \code{\link{ncomp_opls}} Find the optimal number of OPLS components (only works for single Y)
 #'		\item \code{\link{o2pls_pred}} Prediction function of the opls package
 #'		\item \code{\link{o2pls}} Orthogonal Projections to Latent Structures (OPLS) for a multiple Y's
