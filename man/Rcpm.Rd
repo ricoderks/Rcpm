@@ -34,7 +34,6 @@ and Metabolomics
 		\item \code{\link{summary_fit_data}} Restructure the data for a summary of fit plot
 		\item \code{\link{summary_se}}
 		\item \code{\link{vip}}
-		\item \code{\link{vip_jh}
+		\item \code{\link{vip_jh}}
 }
 }
-

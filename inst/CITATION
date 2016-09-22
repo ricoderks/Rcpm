@@ -1,0 +1,5 @@
+citHeader("To cite Rcpm in publications use :")
+citEntry(entry="Misc",
+author = "Rico Derks",
+note = "Center of Proteomics and Metabolomics - Leiden University Medical Center",
+textVersion = "There is no publication attached to this package, but a small acknowledgement is alway appreciated!")
