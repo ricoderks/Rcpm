@@ -8,7 +8,7 @@ The Rcpm package depends on quite some packages and it may happen that you need 
 
 The packages from **Bioconductor** you need to install yourself first :
  * `source("http://bioconductor.org/biocLite.R")`
- * `biocLite(c("preprocessCore", "pcaMethods", "xcms"))`
+ * `biocLite(c("preprocessCore", "pcaMethods", "xcms", "multtest"))`
  * if it asks to update, update all packages. Make sure that you have a clean R open (no packages loaded)!
  Keep in mind that updating packages can be risky!
 
