@@ -6,3 +6,6 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [0.9.10] - 2016-11-23
 ### Fixed
 - summary_fit gave an output to the console, because no id variable was specified. This is now fixed (issue #3).
+
+### Added
+- started with writing unit tests.
