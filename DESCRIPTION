@@ -22,5 +22,6 @@ Imports:
 Suggests:
     pls,
     preprocessCore,
-    knitr
+    knitr,
+    testthat
 VignetteBuilder: knitr
