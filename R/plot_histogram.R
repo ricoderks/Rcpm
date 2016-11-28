@@ -79,5 +79,5 @@ plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
     h <- h + ggplot2::scale_colour_manual(values = c("blue", "red"), 
                                           guide = ggplot2::guide_legend(title = NULL))
   }
-  h
+  return(h)
 }
