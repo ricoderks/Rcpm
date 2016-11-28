@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 
 ## [0.9.11] - 2016-11-28
+### Fixed
+- plot_histogram wasn't using the correct binwidth for each histogram (if multiple histograms where plotted).
+
 ### Added
 - Create input checks for summary_fit and summary_fit_data. For both functions additional unit test where created.
 
