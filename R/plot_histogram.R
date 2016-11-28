@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< master
 plot_histogram <- function(DataSet, Metabolite=NULL, Legend=TRUE) {
 	if (is.null(Metabolite)) {
@@ -48,6 +49,11 @@ plot_histogram <- function(DataSet, Metabolite=NULL, Legend=TRUE) {
 plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
   if (is.null(Metabolite)) {
     # # calculate bin width according to Freedman-Diaconis rule for eache metabolite
+=======
+plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
+  if (is.null(Metabolite)) {
+    # determine the optimal binwidth for the histogram
+>>>>>>> unit_tests
     bw <- lapply(DataSet, function(x) (max(x) - min(x)) / nclass.FD(x))
 
     # create function to fit
@@ -61,8 +67,12 @@ plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
     # melt gives it name L1, change to variable for ggplot
     colnames(fit_melt)[3] <- "variable"
     
+<<<<<<< HEAD
     FAdata_melt <- reshape2::melt(DataSet,
                                   measure.vars = colnames(DataSet))
+=======
+    FAdata_melt <- reshape2::melt(DataSet)
+>>>>>>> unit_tests
 
     # get the names of the metabolites
     met_names <- names(bw)
@@ -127,5 +137,8 @@ plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
                                           guide = ggplot2::guide_legend(title = NULL))
   }
   h
+<<<<<<< HEAD
 >>>>>>> local
+=======
+>>>>>>> unit_tests
 }
