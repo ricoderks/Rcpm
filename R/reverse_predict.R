@@ -1,4 +1,4 @@
-reverse_predict <- function(model, new_y, level=0.95) {
+reverse_predict <- function(model, new_y, level = 0.95) {
 	# sanity check --------------------------------------------------
 	if (class(model) != "lm") {
 		stop("model needs to be of class lm!");
@@ -24,9 +24,11 @@ reverse_predict <- function(model, new_y, level=0.95) {
 	names(sx0) <- NULL;
 	
 	# obtain 95% confidence interval two tailed t-statistic for n-2 degrees of freedom
-	tv <- qt(p=(1 - (1 - level)/2), lower.tail=TRUE, df=model$df.residual);
+	tv <- qt(p=(1 - (1 - level)/2), 
+	         lower.tail = TRUE, 
+	         df = model$df.residual);
 	
 	# calculate the confidence interval
 	conf_interval <- tv * sx0;
-	return(list(x=x0, confidence_interval=conf_interval));
+	return(list(x = x0, confidence_interval = conf_interval));
 }
