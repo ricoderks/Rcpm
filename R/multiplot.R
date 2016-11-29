@@ -10,10 +10,11 @@ multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL) {
     # ncol: Number of columns of plots
     # nrow: Number of rows needed, calculated from # of cols
     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                     ncol = cols, nrow = ceiling(numPlots/cols))
+                     ncol = cols, 
+                     nrow = ceiling(numPlots/cols))
   }
 
-  if (numPlots==1) {
+  if (numPlots == 1) {
     print(plots[[1]])
 
   } else {

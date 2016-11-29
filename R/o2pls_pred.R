@@ -10,48 +10,48 @@ o2pls_pred <- function(A, model, direction) {
 #   Bhat : Predictions
 #   Scorenew : Corresponding scores
 	
-	modelPred <- c();
+	modelPred <- c()
 	
 	if (direction == "xy") {
-		To <- c();
+		To <- c()
 		
 		if (length(model$TYosc) != 0) {
 			for (i in 1:ncol(model$TYosc)) {
-				to <- A %*% model$Wosc[ , i];
-				To <- cbind(To, to);
-				A <- A - to %*% t(model$PYosc[ , i]);
+				to <- A %*% model$Wosc[ , i]
+				To <- cbind(To, to)
+				A <- A - to %*% t(model$PYosc[ , i])
 			}
 		}
 		
-		T <- A %*% model$W;
-		Yhat <- T %*% model$Bt %*% t(model$C);
+		T <- A %*% model$W
+		Yhat <- T %*% model$Bt %*% t(model$C)
 		
-		modelPred$T <- T;
-		modelPred$Yhat <- Yhat;
+		modelPred$T <- T
+		modelPred$Yhat <- Yhat
 		if (length(model$TYosc) != 0) {
-			modelPred$To <- To;
+			modelPred$To <- To
 		}
 	}
 	
 	if (direction == "yx") {
-		Uo <- c();
+		Uo <- c()
 		
 		if (length(model$UXosc) != 0) {
 			for (i in 1:ncol(model$UXosc)) { 
-				uo <- A %*% model$Cosc[,i];
-				Uo <- cbind(Uo, uo); 
-				A <- A - uo %*% t(model$PXosc[ , i]);
+				uo <- A %*% model$Cosc[,i]
+				Uo <- cbind(Uo, uo) 
+				A <- A - uo %*% t(model$PXosc[ , i])
 			}
 		}
 		
-		U <- A %*% model$C;
-		Xhat <- U %*% model$Bu %*% t(model$W);
-		modelPred$U <- U;
-		modelPred$Xhat <- Xhat;
+		U <- A %*% model$C
+		Xhat <- U %*% model$Bu %*% t(model$W)
+		modelPred$U <- U
+		modelPred$Xhat <- Xhat
 		if (length(model$UXosc) != 0) {
-			modelPred$Uo <- Uo;
+			modelPred$Uo <- Uo
 		}
 	}		
 	
-	return(modelPred);
+	return(modelPred)
 }

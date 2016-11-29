@@ -25,23 +25,24 @@
 unmap <- function (classification, groups = NULL, noise = NULL, ...) {
     n <- length(classification)
     u <- sort(unique(classification))
-    levels =  levels(classification)### Add levels
+    levels = levels(classification)### Add levels
     
     if (is.null(groups)) {
         groups <- u
     } else {
-        if (any(match(u, groups, nomatch = 0) == 0))
-        stop("groups incompatible with classification")
+        if (any(match(u, groups, nomatch = 0) == 0)) {
+          stop("groups incompatible with classification")
+        }
         miss <- match(groups, u, nomatch = 0) == 0
     }
     
     cgroups <- as.character(groups)
     if (!is.null(noise)) {
         noiz <- match(noise, groups, nomatch = 0)
-        if (any(noiz == 0))
-        stop("noise incompatible with classification")
-        groups <- c(groups[groups != noise], groups[groups ==
-        noise])
+        if (any(noiz == 0)) {
+          stop("noise incompatible with classification")
+        }
+        groups <- c(groups[groups != noise], groups[groups == noise])
         noise <- as.numeric(factor(as.character(noise), levels = unique(groups)))
     }
     
@@ -57,7 +58,10 @@ unmap <- function (classification, groups = NULL, noise = NULL, ...) {
     }
     
     z <- matrix(0, n, k, dimnames = c(names(classification), nam))
-    for (j in 1:k) z[classification == groups[j], j] <- 1
+    for (j in 1:k) {
+      z[classification == groups[j], j] <- 1
+    }
+    
     attr(z, "levels") = levels
-    z
+    return(z)
 }

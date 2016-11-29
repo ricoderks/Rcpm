@@ -13,7 +13,10 @@ check_alignment <- function(files) {
 	for (a in 1:length(files)) {
 		tmp <- xml2::read_xml(files[a])
 		all_rt <- xml2::xml_text(xml2::xml_find_all(tmp, "//@retentionTime"))
-		all_rt_num <- as.numeric(regmatches(m=regexpr(pattern="[0-9]{1,3}.[0-9]{1,7}", text=all_rt), x=all_rt))
+		all_rt_num <- as.numeric(regmatches(m = regexpr(pattern = "[0-9]{1,3}.[0-9]{1,7}",
+		                                                text = all_rt),
+		                                    x = all_rt))
+		
 		if (length(which(diff(all_rt_num) >= 0)) < (length(all_rt_num) - 1)) {
 			cat("Something wrong with : ", files[a], "\n"); flush.console()
 			all_fine <- FALSE
