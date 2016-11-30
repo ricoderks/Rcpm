@@ -15,7 +15,7 @@ The packages from **Bioconductor** you need to install yourself first :
 For the installation you need the **devtools** package which you can install from the CRAN repository.
 The Rcpm package can be installed with :
 
-* `devtools::install_git(url = "https://git.lumc.nl/rjederks/Rcpm.git", dependencies = TRUE)`
+* `devtools::install_github("ricoderks/Rcpm")`
 
 ### Current status
 
