@@ -1,5 +1,12 @@
 citHeader("To cite Rcpm in publications use :")
-citEntry(entry="Misc",
-author = "Rico Derks",
-note = "Center of Proteomics and Metabolomics - Leiden University Medical Center",
-textVersion = "There is no publication attached to this package, but a small acknowledgement is alway appreciated!")
+
+citEntry(
+  entry="Manual",
+  title = "Rico Derks (2016). Rcpm: General functions for the Center of Proteomics and Metabolomics.",
+  author = "Rico Derks",
+  year = "2016",
+  url = "https://github.com/ricoderks/Rcpm",
+  textVersion = "Rico Derks (2016). Rcpm: General functions for the Center of Proteomics and Metabolomics."
+)
+
+citFooter("As Rcpm is continually evolving, you may want to cite its version number. Find it with 'help(package = Rcpm)'.")
