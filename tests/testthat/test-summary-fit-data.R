@@ -6,7 +6,7 @@ sumfit <- data.frame(PC = paste0("PC", 1:5),
 my_matrix <- matrix(data = 1, ncol = 3, nrow = 5)
 
 sumfit_wrong <- data.frame(PC = paste0("PC", 1:5),
-                           R2cu = seq(from = 0.1, to = 0.75, length.out = 5),
+                           R2cum = seq(from = 0.1, to = 0.75, length.out = 5),
                            Q2cum = seq(from = 0.05, to = 0.5, length.out = 5))
 
 
