@@ -6,7 +6,7 @@ citEntry(
   author = "Rico Derks",
   year = "2016",
   url = "https://github.com/ricoderks/Rcpm",
-  textVersion = "Rico Derks (2016). Rcpm: General functions for the Center of Proteomics and Metabolomics."
+  textVersion = "Rico Derks (2016). Rcpm: General functions for the Center of Proteomics and Metabolomics. (https://github.com/ricoderks/Rcpm)"
 )
 
 citFooter("As Rcpm is continually evolving, you may want to cite its version number. Find it with 'help(package = Rcpm)'.")
