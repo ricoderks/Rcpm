@@ -29,6 +29,7 @@
 #'		\item \code{\link{summary_se}}
 #'		\item \code{\link{vip}}
 #'		\item \code{\link{vip_jh}}
+#'		\item \code{\link{xcmsraw_to_tbl}} Convert raw data into a tibble of xcmsRaw objects.
 #' }
 #' @docType package
 #' @name Rcpm

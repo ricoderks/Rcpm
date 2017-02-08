@@ -14,7 +14,6 @@
 #' @importFrom dplyr as.tbl mutate select %>% data_frame
 #' @import xcms
 #'
-#' @examples
 xcmsraw_to_tbl <- function(files, ...){
   sample_name <- NULL
   
