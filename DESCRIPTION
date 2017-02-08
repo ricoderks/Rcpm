@@ -18,7 +18,9 @@ Imports:
     xml2,
     base64enc,
     xcms,
-    curl
+    curl,
+    dplyr,
+    purrr
 Suggests:
     pls,
     preprocessCore,
