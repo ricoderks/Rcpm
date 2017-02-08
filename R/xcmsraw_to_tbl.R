@@ -11,16 +11,18 @@
 #' 
 #' @export
 #' @import purrr
-#' @import dplyr
+#' @importFrom dplyr as.tbl mutate select %>% data_frame
 #' @import xcms
 #'
 #' @examples
 xcmsraw_to_tbl <- function(files, ...){
+  sample_name <- NULL
+  
   data <- files %>% 
     data_frame(sample_name = .) %>% 
-    dplyr::as.tbl %>%                  # string to tbl
-    dplyr::mutate(raw = purrr::map(.$sample_name, ~ xcms::xcmsRaw(.x, ...))) %>%           # read raw data
-    dplyr::select(sample_name, raw)                       # just re-arrange for readability
+    as.tbl %>%                  # string to tbl
+    mutate(raw = purrr::map(.$sample_name, ~ xcms::xcmsRaw(.x, ...))) %>%           # read raw data
+    select(sample_name, raw)                       # just re-arrange for readability
   
   return(data)
 }
