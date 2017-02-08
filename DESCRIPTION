@@ -18,11 +18,13 @@ Imports:
     xml2,
     base64enc,
     xcms,
-    curl
+    curl,
+    dplyr,
+    purrr
 Suggests:
     pls,
     preprocessCore,
     knitr,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.0
