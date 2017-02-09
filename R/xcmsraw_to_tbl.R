@@ -11,7 +11,7 @@
 #'   \item \strong{raw:} The xcmsRaw objects.
 #' }
 #' 
-#' @details 
+#' @details This is based on the work of Jan Stanstrup (see references).
 #' This will read multiple files with xcmsRaw and put all xcmsRaw objects in a table.
 #' 
 #' @export
@@ -19,7 +19,9 @@
 #' @importFrom dplyr as.tbl mutate select %>% data_frame
 #' @importFrom xcms xcmsRaw
 #'
+#' @author Jan Stanstrup
 #' @author Rico Derks
+#' @references https://github.com/stanstrup/QC4Metabolomics
 xcmsraw_to_tbl <- function(files, ...){
   . <- sample_name <- NULL
   
