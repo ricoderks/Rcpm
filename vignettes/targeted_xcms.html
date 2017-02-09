@@ -87,12 +87,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Rcpm</li>
 <li>xcms</li>
 <li>dplyr</li>
+<li>purrr</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(xcms)
 <span class="kw">library</span>(Rcpm)
-WorkDir &lt;-<span class="st"> &quot;/home/rjederks/Documents/Projects/TargetedXCMS/&quot;</span>
-DataDir &lt;-<span class="st"> </span><span class="kw">paste0</span>(WorkDir, <span class="st">&quot;Data&quot;</span>)</code></pre></div>
+<span class="kw">library</span>(purrr)</code></pre></div>
 <div id="setup-processing-parameters" class="section level2">
 <h2>Setup processing parameters</h2>
 <p>The first thing we do is setup the processing parameters. Your peak picking parameters can be set here just as you would do with an untargeted analysis using XCMS. Be carefull with the step size (here set to 0.01). Lowering this value will consume a lot of memory!!!</p>
@@ -115,10 +115,10 @@ settings$findPeaks$fitgauss &lt;-<span class="st"> </span><span class="ot">TRUE<
 </div>
 <div id="load-your-data" class="section level2">
 <h2>Load your data</h2>
-<p>Next we load our data, the file with our targets and all your mzXML files.</p>
+<p>Next we will load our data, the file with our targets compounds and all of our mzXML files.</p>
 <div id="targets" class="section level3">
 <h3>Targets</h3>
-<p>Load your file which contains your targets. It at least needs two columsn with the names <strong>mz</strong> and <strong>rt</strong>.</p>
+<p>Load your file which contains your targets. It at least needs two columns with the names <strong>mz</strong> and <strong>rt</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">target_peaks &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="kw">paste0</span>(WorkDir, <span class="st">&quot;141010_QCS.csv&quot;</span>),
                            <span class="dt">header =</span> <span class="ot">TRUE</span>,
                            <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>)
@@ -131,9 +131,55 @@ target_peaks %&gt;%<span class="st"> </span><span class="kw">head</span>(<span c
                          <span class="dt">full.names =</span> <span class="ot">TRUE</span>)
 
 raw_data &lt;-<span class="st"> </span><span class="kw">xcmsraw_to_tbl</span>(<span class="dt">files =</span> list_mzxml,
-                           <span class="dt">profparam =</span> settings$xcmsRaw)</code></pre></div>
+                           <span class="dt">profparam =</span> settings$xcmsRaw$profparam)</code></pre></div>
 </div>
 </div>
+<div id="peak-picking-a-targeted-list-of-compounds" class="section level2">
+<h2>Peak picking a targeted list of compounds</h2>
+<div id="setup-list-of-roi" class="section level3">
+<h3>Setup list of ROI</h3>
+<p>First we need to merge the table of raw data with the list of standards. The table of standards will is now repeated for each data file. Other things to do:</p>
+<ul>
+<li>convert retention time to seconds</li>
+<li>remove the raw data data table to save memory</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>target_peaks %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">rt =</span> rt *<span class="st"> </span><span class="dv">60</span>) %&gt;%
+<span class="st">  </span>list %&gt;%
+<span class="st">  </span><span class="kw">rep</span>(<span class="kw">nrow</span>(raw_data)) %&gt;%
+<span class="st">  </span><span class="kw">data_frame</span>(<span class="dt">stds =</span> .) %&gt;%
+<span class="st">  </span><span class="kw">bind_cols</span>(raw_data, .)
+
+<span class="co"># remove raw data datatable</span>
+<span class="kw">rm</span>(raw_data)</code></pre></div>
+<p>Add the regions of interest to the table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>data %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ROI =</span> <span class="kw">map2</span>(raw, stds, ~<span class="st"> </span><span class="kw">tbl2roi</span>(<span class="dt">tbl =</span> .y, 
+                                         <span class="dt">raw =</span> .x, 
+                                         <span class="dt">ppm =</span> settings$std_match$ppm, 
+                                         <span class="dt">rt_tol =</span> settings$std_match$rt_tol)))</code></pre></div>
+</div>
+<div id="peak-detection" class="section level3">
+<h3>Peak detection</h3>
+<p>Run findPeaks from the XCMS package to find my peaks.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">findPeaks_l &lt;-<span class="st"> </span><span class="kw">lift_dl</span>(findPeaks) <span class="co"># trick to make findPeaks accept a list of arguments.</span>
+
+<span class="co"># run it</span>
+data &lt;-<span class="st"> </span>data %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">peakTable =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> raw, 
+                          <span class="dt">.y =</span> ROI, 
+                          <span class="dt">.f =</span> ~<span class="st"> </span><span class="kw">findPeaks_l</span>(settings$findPeaks,
+                                             <span class="dt">object =</span> .x,
+                                             <span class="dt">ROI.list =</span> .y) %&gt;%<span class="st"> </span>
+<span class="st">                            </span>as.data.frame %&gt;%<span class="st"> </span>
+<span class="st">                            </span>as.tbl))</code></pre></div>
+<p><code>data$peakTable[[1]]</code> contains now the peak table of the first sample.</p>
+</div>
+</div>
+</div>
+<div id="and-now." class="section level1">
+<h1>And now….</h1>
+<p>It is not finished here. It still needs some work. Sometimes more peaks are retrieved and now we need something to get the correct peaks out of this table.</p>
 </div>
 
 
