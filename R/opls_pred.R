@@ -1,3 +1,21 @@
+#' @title Prediction function of the opls package
+#' 
+#' @description Prediction function of the opls package.
+#' 
+#' @param A Observations
+#' @param model opls model
+#' @param direction from x to y ('xy') or from y to x ('yx')
+#'
+#' @return Matrix :
+#' \item{Bhat}{Predictions}
+#' \item{Scorenew}{Corresponding scores}
+#' 
+#' @details Prediction function of the opls package.
+#' 
+#' @export
+#'
+#' @author E. Nevedomskaya
+#' @author Rico Derks
 opls_pred <- function(A, model, direction) {
 	
 # Prediction function of the o2pls package

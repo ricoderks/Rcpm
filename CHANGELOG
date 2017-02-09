@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. Keeping track of the change log started from v0.9.10.
 
 ## [Unreleased]
+- unit testing
+
+## [0.9.12] - 2017-02-09
+### fixed
+- import of packages, this was not done properly everywhere.
+
+### Added
+- several functions for targeted analysis wich xcms.
+- several unit tests, more will follow in the future.
+- vignette (first draft) for targeted analysis with xcms.
+
+### Misc
+- roxygenise everything so it is easier to maintain help documentation.
 
 ## [0.9.11] - 2016-11-28
 ### Fixed

@@ -1,4 +1,19 @@
-equate <- function(data, sequence, test=FALSE) {
+#' @title Quantile equatin
+#'
+#' @description Equating is based on the function *normalize.quantiles* from the library preprocessCore from BioConductor.
+#'
+#' @param data is a matrix containing all the data, rows correspond to protein, columns correspond to samples.
+#' @param sequence is a vector containing the sequence number of each sample.
+#' @param test is a boolean (default false) used to run a test if the equating was succesful. No real equating is done, but the original matrix is exported again.
+#'
+#' @return a matrix with the equated data
+#' 
+#' @export
+#' @importFrom preprocessCore normalize.quantiles
+#' @references Draisma, H. H. M. et al. Equating, or Correction for Between-Block Effects with Application to Body Fluid LC-MS 
+#' and NMR Metabolomics Data Sets. Anal. Chem. 82, 1039-1046 (2010).
+#' @author Rico Derks
+equate <- function(data, sequence, test = FALSE) {
 	if (requireNamespace("preprocessCore", quietly = TRUE) == TRUE) {
 
 		num.sequences <- max(sequence)				# number of sequences

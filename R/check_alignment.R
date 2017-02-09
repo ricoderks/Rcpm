@@ -1,3 +1,19 @@
+#' @title Check the alignment of mzXML files
+#'
+#' @description Check the aligned mzXML files for problematic retention times.
+#'
+#' @param files A character vector containing all the mzXML file locations.
+#'
+#' @return The function gives a message with the file name of the problematic mzXML file and returns TRUE or FALSE.
+#' 
+#' @details 
+#' msalign2 sometimes creates wrong retention times. The retention time of a scan is sometimes smaller then its previous scan. 
+#' 
+#' @export
+#' @importFrom xml2 read_xml xml_text xml_find_all
+#' @importFrom utils flush.console
+#'
+#' @author Rico Derks
 check_alignment <- function(files) {
 	# sanity check
 	if ((is.vector(files) && is.list(files)) && !is.character(files)) {

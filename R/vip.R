@@ -1,3 +1,22 @@
+#' @title Implementation of VIP (Variable Importance in Projection) for the pls package.
+#' 
+#' @description ip is an implementation of the Variance Importance in Projection, as described in 
+#' Chong, Il-Gyo & Jun, Chi-Hyuck, 2005, Performance of some variable selection methods when 
+#' multicollinearity is present, Chemometrics and Intelligent Laboratory Systems 78, 103-112. 
+#' It currently only works with single-response ortghogonal scores plsr models.
+#'
+#' @param object a pls object
+#'
+#' @return vip returns all VIP values for all variables and all number of components.
+#' 
+#' @export
+#' 
+#' @author Bjorn-Helge Mevik
+#' @author Rico Derks
+#' @references http://mevik.net/work/software/pls.html
+#' @references As described in Chong, Il-Gyo & Jun, Chi-Hyuck, 2005, Performance of some variable 
+#' selection methods when multicollinearity is present, Chemometrics and Intelligent 
+#' Laboratory Systems 78, 103-112.
 vip <- function(object) {
   if (object$method != "oscorespls")
     stop("Only implemented for orthogonal scores algorithm.  Refit with 'method = \"oscorespls\"'")

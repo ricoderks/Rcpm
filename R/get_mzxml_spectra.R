@@ -1,3 +1,18 @@
+#' @title Retrieve MS1 spectra from a mzXML file
+#'
+#' @description Retrieve all MS1 spectra from a mzXML file.
+#'
+#' @param file mzXML file
+#'
+#' @return The function returns a list of spectra. A spectrum is a matrix where the first column is \emph{m/z} and the second column is intensity.
+#' @details This is first version for retrieving spectra from mzXML files. For now it only works on MS1 data, there is no error checking. It assumes that the 
+#' presicion is 64bit, endian is network and the compression is zlib. 
+#' 
+#' @export
+#' @importFrom xml2 read_xml xml_text xml_find_all xml_ns
+#' @importFrom base64enc base64decode
+#' 
+#' @author Rico Derks
 get_mzxml_spectra <- function(file) {
 	data_xml <- xml2::read_xml(file)
 	# give the namespace and use it to find the peaks

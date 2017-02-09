@@ -1,3 +1,66 @@
+#' @title Orthogonal Projections to Latent Structures (OPLS) for a multiple Y's
+#'
+#' @description Orthogonal Projections to Latent Structures (OPLS) for a multiple Y's. Written by E.Nevedomskaya 2007-2013. 
+#' Based on malab script by O. Cloarec	Imperial College, London.
+#'
+#' @param Xi X matrix input
+#' @param Yi Y column input
+#' @param prep preprocessing, \code{"no"}, no preprocessing, \code{"mc"} mean centering, \code{"uv"} univariance scaling
+#' @param A number of correlated components, it can be determinated by PCA of Y'X
+#' @param ncox number of orthogonal components in X
+#' @param ncoy number of orthogonal component in Y
+#' @param nrcv umber of fold in the cross-validation (full cross validation)
+#'
+#' @return Output is a list with the following elements:
+#' \item{MeanX}{variable means for the X table}  
+#' \item{MeanY}{variable means for the Y table}      
+#' \item{VarX}{variance of the variables in the X table}    
+#' \item{VarY}{variance of the variables in the Y table}     
+#' \item{svd}{results of the SVD transformation of the X-Y covariance table}
+#' \item{T}{T scores}
+#' \item{Ts}{X scores}
+#' \item{E}{residuals}
+#' \item{wo}{Y-orthogonal loadings (non-normalized)}       		
+#' \item{TYosc}{orthogonal scores}
+#' \item{PYosc}{Y-orthogonal loadings}	
+#' \item{Wosc}{orthogonal weights}   
+#' \item{R2Xyo}{modelled percentage of X orthogonal to Y}
+#' \item{R2Xcorr}{modelled percentage of X correlated to Y}
+#' \item{R2XcorrVar}{modelled percentage of X variance correlated to Y}
+#' \item{R2X}{total percentage of X that had been modelled}     
+#' \item{U}{U scores}         
+#' \item{F}{residuals}
+#' \item{R2Ycorr}{modelled percentage of Y correlated to X}
+#' \item{R2Y}{total percentage of X that had been modelled}        
+#' \item{P}{loadings}
+#' \item{Bu}{regression coefficients}       
+#' \item{Bt}{regression coefficients}
+#' \item{Yhat}{Y predicted by the regression}     
+#' \item{R2Yhat}{predicted by the regression variance of Y}
+#' \item{R2Yhatcum}{cumulative predicted (by the regression) variance of Y}
+#' \item{R2Xhat}{predicted (by the regression) variance of X}
+#' \item{R2Xhatcum}{cumulative predicted variance of X}
+#' \item{Tcv}{cross-validated T-scores}    
+#' \item{TYosccv}{cross-validated Y-orthogonal scores}
+#' \item{Ucv}{cross-validated T-scores}
+#' \item{YPRESSf}{cumulative predicted residual sums of squares (PRESS) of Y}
+#' \item{YPRESSi}{PRESS for each column of Y}
+#' \item{XPRESSf}{cumulative predicted residual sums of squares (PRESS) of X}   
+#' \item{XPRESSi}{PRESS for each column of X} 
+#' \item{Yhatcv}{Y predicted in cross-validation (CV)}
+#' \item{Xhatcv}{X predicted in cross-validation}
+#' \item{Q2Yhatcum}{cumulative predicted in CV variance of Y}
+#' \item{Q2Yhat}{variance of Y predicted in CV}
+#' \item{Q2Xhatcum}{cumulative predicted in CV variance of X}
+#' \item{Q2Xhat}{variance of Y predicted in CV}
+#' 
+#' @details Orthogonal Projections to Latent Structures (OPLS) for a multiple Y's. The number of components can be determined with the function ncomp_opls.
+#' 
+#' @export
+#' @importFrom pcaMethods nipalsPca
+#'
+#' @author E. Nevedomskaya
+#' @author Rico Derks
 o2pls <- function(Xi, Yi, prep, A, ncox, ncoy, nrcv) {
 ###--- Written by E.Nevedomskaya 2007-2013---###
 ###--------------------------------------------------
@@ -61,6 +124,8 @@ o2pls <- function(Xi, Yi, prep, A, ncox, ncoy, nrcv) {
 #	$Q2Xhatcum 		=	cumulative predicted in CV variance of X
 #	$Q2Xhat    		= 	variance of Y predicted in CV
 	
+  var <- NULL
+  
 	model <- c()
 	model$Wosc <- c()
 	model$TYosc <- c()

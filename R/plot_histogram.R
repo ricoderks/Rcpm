@@ -1,12 +1,37 @@
+#' @title plot nice histogram
+#' 
+#' @description plot_histogram plots a histogram with a fitted kernel density plot and a normal 
+#' density plot. If no \code{Metabolite} (i.e. NULL) is defined for each column in the 
+#' dataframe a histogram is plotted.
+#'
+#' @param DataSet is a dataframe containing all the data
+#' @param Metabolite is a character containing the name of the metabolite (see details).
+#' @param Legend is a boolean (default true) used to show the legend.
+#'
+#' @return ggplot showing the nice histogram
+#' 
+#' @export
+#' @import ggplot2
+#' @importFrom grDevices nclass.FD
+#' @importFrom stats dnorm sd density complete.cases
+#' @importFrom reshape2 melt
+#'
+#' @author Rico Derks
+#'
+#' @examples
+#' df <- data.frame(a = rnorm(100, mean = 10), b = rnorm(100, mean = 20))
+#' plot_histogram(DataSet = df)
 plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
+  variable <- value <- ..density.. <- NULL                       # keep check happy
+  
   if (is.null(Metabolite)) {
     # calculate bin width according to Freedman-Diaconis rule for eache metabolite
-    bw <- lapply(DataSet, function(x) (max(x) - min(x)) / nclass.FD(x))
-
+    bw <- lapply(DataSet, function(x) (max(x) - min(x)) / grDevices::nclass.FD(x))
+    
     # create function to fit
     fit_func <- function(x) {
       xfit <- seq(min(x, na.rm = TRUE),	max(x, na.rm = TRUE),	length = 100)
-      yfit <- dnorm(xfit,	mean = mean(x, na.rm = TRUE), sd = sd(x, na.rm = TRUE))
+      yfit <- stats::dnorm(xfit,	mean = mean(x, na.rm = TRUE), sd = stats::sd(x, na.rm = TRUE))
       return(data.frame(xfit = xfit, yfit = yfit))
     }
     fit <- lapply(DataSet, fit_func)
@@ -16,7 +41,7 @@ plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
     
     FAdata_melt <- reshape2::melt(DataSet,
                                   measure.vars = colnames(DataSet))
-
+    
     # get the names of the metabolites
     met_names <- names(bw)
     
@@ -49,19 +74,19 @@ plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
     xfit <- seq(min(x, na.rm = TRUE),	
                 max(x, na.rm = TRUE),	
                 length = 100)
-    yfit <- dnorm(xfit,	
-                  mean = mean(x, na.rm = TRUE), 
-                  sd = sd(x, na.rm = TRUE))
+    yfit <- stats::dnorm(xfit,	
+                         mean = mean(x, na.rm = TRUE), 
+                         sd = stats::sd(x, na.rm = TRUE))
     fit <- data.frame(xfit = xfit, 
                       yfit = yfit)
     # density plot for normal distribution
-    d <- density(x[complete.cases(x)], 
-                 from = min(x[complete.cases(x)]), 
-                 to = max(x[complete.cases(x)]))
+    d <- stats::density(x[stats::complete.cases(x)], 
+                        from = min(x[stats::complete.cases(x)]), 
+                        to = max(x[stats::complete.cases(x)]))
     
     # calculate bin width according to Freedman-Diaconis rule
-    bw <- (max(x) - min(x)) / nclass.FD(x)
-
+    bw <- (max(x) - min(x)) / grDevices::nclass.FD(x)
+    
     h <- ggplot2::ggplot()
     h <- h + ggplot2::geom_histogram(data = DataSet, 
                                      ggplot2::aes_string(x = Metabolite, 

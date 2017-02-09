@@ -1,4 +1,25 @@
-preprocess <- function (data, center = TRUE, scale = c("none", "uv", "pareto"), reverse = FALSE, simple = TRUE) {
+#' @title Center and scale your data
+#' 
+#' @description With this function you can center and scale your data.
+#' 
+#' @param data matrix to preprocess
+#' @param center center the data (default is TRUE)
+#' @param scale which scaling to use \code{c("none", "uv", "pareto")}
+#' @param reverse reverse the scaling \\ centering. Default is false.
+#' @param simple only return the preprocessed matrix. If false also the original 
+#' data will be returned as a list. Default is true.
+#'
+#' @return The centered and scaled matrix will be returned.
+#' 
+#' @export
+#' @importFrom stats sd
+#'
+#' @author Rico Derks
+preprocess <- function (data, 
+                        center = TRUE, 
+                        scale = c("none", "uv", "pareto"), 
+                        reverse = FALSE, 
+                        simple = TRUE) {
 	data <- as.matrix(data)
 	# do arguments exist, if not set a default value
 	if (is.null(center)) {
@@ -40,9 +61,9 @@ preprocess <- function (data, center = TRUE, scale = c("none", "uv", "pareto"), 
 		if (scale == "none") {
 			scale <- rep(1, ncol(data))
 		} else if (scale == "uv") {
-			scale <- apply(data, 2, sd, na.rm = TRUE)
+			scale <- apply(data, 2, stats::sd, na.rm = TRUE)
 		} else if (scale == "pareto") {
-			scale <- sqrt(apply(data, 2, sd, na.rm = TRUE))
+			scale <- sqrt(apply(data, 2, stats::sd, na.rm = TRUE))
 		}
 	}
 	if (length(scale) != ncol(data)) {

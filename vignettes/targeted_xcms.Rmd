@@ -1,0 +1,147 @@
+---
+title: "Targeted analysis with XCMS"
+author: "Rico Derks"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This is a first draft of the **Targeted analysis with XCMS** vignette.
+
+# Introduction
+
+XCMS is designed to do untargeted analysis, but with some smart tricks it is also possiple to do 
+targeted analysis. The strategy described here is based on the work of Jan Stanstrup. He wrote some
+[smart functions](https://github.com/stanstrup/QC4Metabolomics) and an 
+[explanation](https://cdn.rawgit.com/stanstrup/QC4Metabolomics/master/MetabolomiQCsR/inst/doc/standard_stats.html) 
+how to use it. I'am using a few of his functions and modified them a little bit.
+
+At the moment this document will describe his strategy. I might alter this in the future if I would
+like to things differently.
+
+# Targeted analysis with XCMS
+
+The following libraries are used :
+
+* Rcpm
+* xcms
+* dplyr
+* purrr
+
+```{r load_libraries, eval=FALSE}
+library(dplyr)
+library(xcms)
+library(Rcpm)
+library(purrr)
+```
+
+
+## Setup processing parameters
+
+The first thing we do is setup the processing parameters. Your peak picking parameters can be set here just as you would do with an untargeted 
+analysis using XCMS. Be carefull with the step size (here set to 0.01). Lowering this value will consume a lot of memory!!!
+
+```{r process_settings, eval=FALSE}
+settings <- list()
+
+settings$xcmsRaw$profparam <- list(step = 0.01)
+
+settings$std_match$ppm <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+settings$std_match$rt_tol <- 10
+
+settings$findPeaks$method <- "centWave"
+settings$findPeaks$snthr <- 10
+settings$findPeaks$ppm <- 10
+settings$findPeaks$peakwidth  <- c(5, 20)
+settings$findPeaks$scanrange <- NULL      # use everyhting
+settings$findPeaks$prefilter <- c(3, 1000)
+settings$findPeaks$integrate <- 1
+settings$findPeaks$verbose.columns <- TRUE
+settings$findPeaks$fitgauss <- TRUE
+```
+
+## Load your data
+
+Next we will load our data, the file with our targets compounds and all of our mzXML files.
+
+### Targets
+
+Load your file which contains your targets. It at least needs two columns with the names **mz** and **rt**. 
+
+```{r load_targeted_peaks, eval=FALSE}
+target_peaks <- read.table(file = paste0(WorkDir, "141010_QCS.csv"),
+                           header = TRUE,
+                           sep = ",")
+target_peaks %>% head(nrow(target_peaks))
+```
+
+### mzXML files
+
+```{r load_mzxml_data, eval=FALSE}
+list_mzxml <- list.files(path = DataDir,
+                         pattern = "^QCS.*[Mm][Zz][Xx][Mm][Ll]$",
+                         full.names = TRUE)
+
+raw_data <- xcmsraw_to_tbl(files = list_mzxml,
+                           profparam = settings$xcmsRaw$profparam)
+```
+
+## Peak picking a targeted list of compounds
+
+### Setup list of ROI
+
+First we need to merge the table of raw data with the list of standards. The table of standards will is now repeated for each data file. Other things to do:
+
+* convert retention time to seconds
+* remove the raw data data table to save memory
+
+```{r merge_raw_standards, eval=FALSE}
+data <- target_peaks %>% 
+  mutate(rt = rt * 60) %>%
+  list %>%
+  rep(nrow(raw_data)) %>%
+  data_frame(stds = .) %>%
+  bind_cols(raw_data, .)
+
+# remove raw data datatable
+rm(raw_data)
+```
+
+Add the regions of interest to the table.
+
+```{r add_roi, eval=FALSE}
+data <- data %>%
+  mutate(ROI = map2(raw, stds, ~ tbl2roi(tbl = .y, 
+                                         raw = .x, 
+                                         ppm = settings$std_match$ppm, 
+                                         rt_tol = settings$std_match$rt_tol)))
+```
+
+
+### Peak detection
+
+Run findPeaks from the XCMS package to find my peaks.
+
+```{r detect_peaks, eval=FALSE}
+findPeaks_l <- lift_dl(findPeaks) # trick to make findPeaks accept a list of arguments.
+
+# run it
+data <- data %>%
+  mutate(peakTable = map2(.x = raw, 
+                          .y = ROI, 
+                          .f = ~ findPeaks_l(settings$findPeaks,
+                                             object = .x,
+                                             ROI.list = .y) %>% 
+                            as.data.frame %>% 
+                            as.tbl))
+```
+
+`data$peakTable[[1]]` contains now the peak table of the first sample. 
+
+# And now....
+
+It is not finished here. It still needs some work. Sometimes more peaks are retrieved and now we need 
+something to get the correct peaks out of this table.

@@ -1,8 +1,41 @@
+#' @title Do a MS search on the LMSD database from LipidMaps
+#'
+#' @description Search the LMSD database from LipidMaps (http://www.lipidmaps.org/).
+#'
+#' @param ExactMass The exact mass to search.
+#' @param ExactMassOffSet The search window in dalton.
+#' @param Name Optional parameter to filter the search results. Name is search in any part of common name.
+#' @param Formula Optional parameter to filter the search results. Formula is search in any part of formula.
+#' @param CoreClass Optional parameter to filter the search results. At the moment there are 8 core classes defined (1-8). 
+#' See detail section for more information.
+#'
+#' @return he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
+#' warning message showing the status code of the connection.
+#' 
+#' @details This function uses the Programmatic Access functionality of LipidMaps to search the LMSD database. 
+#' There are 8 core classes defined :
+#'  \describe{
+#'    \item{1:}{Fatty Acids [FA]}
+#'    \item{2:}{Glycerolipids [GL]}
+#'    \item{3:}{Glycerophospholipids [GP]}
+#'    \item{4:}{Sphingolipids [SP]}
+#'    \item{5:}{Sterol Lipids [ST]}
+#'    \item{6:}{Prenol Lipids [PR]}
+#'    \item{7:}{Saccharolipids [SL]}
+#'    \item{8:}{Polyketides [PK]}
+#'  }
+#' 
+#' @export
+#' @importFrom curl new_handle handle_setform curl_fetch_memory
+#' @importFrom utils read.table
+#'
+#' @author Rico Derks
+#' @examples results <- ms_search_lipidmaps(ExactMass = 537.37944, ExactMassOffSet = 0.01)
 ms_search_lipidmaps <- function(ExactMass = NULL, 
-                             ExactMassOffSet = 0.01,
-                             Name = NULL,
-                             Formula = NULL,
-                             CoreClass = NULL) {
+                                ExactMassOffSet = 0.01,
+                                Name = NULL,
+                                Formula = NULL,
+                                CoreClass = NULL) {
   # make sure not to connect more than once per 20 seconds
   # using package curl for the communication with lipidmaps
   
