@@ -1,4 +1,6 @@
-#' Convert raw data into a tibble of xcmsRaw objects.
+#' @title Convert raw data into a tibble of xcmsRaw objects.
+#'
+#' @description Convert raw data into a tibble of xcmsRaw objects.
 #'
 #' @param files character vector of file names/paths.
 #' @param ... further arguments to \code{\link{xcmsRaw}}.
@@ -9,13 +11,17 @@
 #'   \item \strong{raw:} The xcmsRaw objects.
 #' }
 #' 
+#' @details 
+#' This will read multiple files with xcmsRaw and put all xcmsRaw objects in a table.
+#' 
 #' @export
-#' @import purrr
+#' @importFrom purrr map
 #' @importFrom dplyr as.tbl mutate select %>% data_frame
-#' @import xcms
+#' @importFrom xcms xcmsRaw
 #'
+#' @author Rico Derks
 xcmsraw_to_tbl <- function(files, ...){
-  sample_name <- NULL
+  . <- sample_name <- NULL
   
   data <- files %>% 
     data_frame(sample_name = .) %>% 

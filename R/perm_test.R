@@ -1,4 +1,29 @@
+#' @title Permutation test for PLS and PLS-DA models
+#' 
+#' @description Permutation test for PLS and PLS-DA models. The Y variable is permutated and a 
+#' model is then fitted. From this model the R2Ycum and Q2cum are calculated.
+#'
+#' @param pls_model The PLS or PLS-DA model created by the pls package
+#' @param perm number of permutations (default = 200)
+#' @param scale should scaling be used. Use the same settings as used in the original model 
+#' (see details).
+#'
+#' @return Output is a plot showing the results.
+#' 
+#' @details The scaling for the PLS / PLS-DA model has to be given to the function. At the moment 
+#' this can not be retrieved from the original model. The function \code{sample()} is used to 
+#' randomize the Y variable. With \code{set.seed()} the random generator is seeded based on the 
+#' current date time.
+#' 
+#' @export
+#' @importFrom pls plsr
+#' @importFrom stats cor
+#' @import ggplot2
+#'
+#' @author Rico Derks
 perm_test <- function(pls_model, perm = 200, scale = FALSE) {
+  corr <- NULL            # keep check happy
+  
 	Y <- as.matrix(pls_model$model[1])
 	X <- as.matrix(pls_model$model[2])
 	nComps <- pls_model$ncomp

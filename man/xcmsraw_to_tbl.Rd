@@ -21,3 +21,9 @@ A \code{\link{tibble}} containing the columns:
 \description{
 Convert raw data into a tibble of xcmsRaw objects.
 }
+\details{
+This will read multiple files with xcmsRaw and put all xcmsRaw objects in a table.
+}
+\author{
+Rico Derks
+}

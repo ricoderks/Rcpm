@@ -1,3 +1,23 @@
+#' @title Find the optimal number of OPLS components
+#'
+#' @description Find the optimal number of OPLS components based on the highest Q2 value.
+#' 
+#' @param Xi X matrix N samples x K variables
+#' @param Yi Y matrix N samples x I variables (currently works only with single Y)
+#' @param prep preprocessing ("uv" for UV scaling, "mc" for mean centering, "no" for no preprocessing)
+#' @param nrcv number of folds in cross-validation
+#'
+#' @return Output is a list of three elements: 
+#' \item{A}{number of correlated components} 
+#' \item{ncox}{number of orthogonal components in X}
+#' \item{ncoy}{number of orthogonal components in Y}
+#' 
+#' @details Find the optimal number of OPLS components based on the highest Q2 value.
+#' 
+#' @export
+#'
+#' @author E. Nevedmoskaya
+#' @author Rico Derks
 ncomp_opls <- function(Xi, Yi, prep, nrcv){
 ### Find the optimal number of OPLS components based on the highest Q2 value
 ### INPUT
