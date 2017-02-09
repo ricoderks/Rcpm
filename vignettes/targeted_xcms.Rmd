@@ -22,51 +22,126 @@ how to use it. I'am using a few of his functions and modified them a little bit.
 At the moment this document will describe his strategy. I might alter this in the future if I would
 like to things differently.
 
+# Targeted analysis with XCMS
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+The following libraries are used :
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+* Rcpm
+* xcms
+* dplyr
+* purrr
 
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r load_libraries, eval=FALSE}
+library(dplyr)
+library(xcms)
+library(Rcpm)
+library(purrr)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+## Setup processing parameters
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+The first thing we do is setup the processing parameters. Your peak picking parameters can be set here just as you would do with an untargeted 
+analysis using XCMS. Be carefull with the step size (here set to 0.01). Lowering this value will consume a lot of memory!!!
 
-## More Examples
+```{r process_settings, eval=FALSE}
+settings <- list()
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+settings$xcmsRaw$profparam <- list(step = 0.01)
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+settings$std_match$ppm <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+settings$std_match$rt_tol <- 10
+
+settings$findPeaks$method <- "centWave"
+settings$findPeaks$snthr <- 10
+settings$findPeaks$ppm <- 10
+settings$findPeaks$peakwidth  <- c(5, 20)
+settings$findPeaks$scanrange <- NULL      # use everyhting
+settings$findPeaks$prefilter <- c(3, 1000)
+settings$findPeaks$integrate <- 1
+settings$findPeaks$verbose.columns <- TRUE
+settings$findPeaks$fitgauss <- TRUE
 ```
 
-Also a quote using `>`:
+## Load your data
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Next we will load our data, the file with our targets compounds and all of our mzXML files.
+
+### Targets
+
+Load your file which contains your targets. It at least needs two columns with the names **mz** and **rt**. 
+
+```{r load_targeted_peaks, eval=FALSE}
+target_peaks <- read.table(file = paste0(WorkDir, "141010_QCS.csv"),
+                           header = TRUE,
+                           sep = ",")
+target_peaks %>% head(nrow(target_peaks))
+```
+
+### mzXML files
+
+```{r load_mzxml_data, eval=FALSE}
+list_mzxml <- list.files(path = DataDir,
+                         pattern = "^QCS.*[Mm][Zz][Xx][Mm][Ll]$",
+                         full.names = TRUE)
+
+raw_data <- xcmsraw_to_tbl(files = list_mzxml,
+                           profparam = settings$xcmsRaw$profparam)
+```
+
+## Peak picking a targeted list of compounds
+
+### Setup list of ROI
+
+First we need to merge the table of raw data with the list of standards. The table of standards will is now repeated for each data file. Other things to do:
+
+* convert retention time to seconds
+* remove the raw data data table to save memory
+
+```{r merge_raw_standards, eval=FALSE}
+data <- target_peaks %>% 
+  mutate(rt = rt * 60) %>%
+  list %>%
+  rep(nrow(raw_data)) %>%
+  data_frame(stds = .) %>%
+  bind_cols(raw_data, .)
+
+# remove raw data datatable
+rm(raw_data)
+```
+
+Add the regions of interest to the table.
+
+```{r add_roi, eval=FALSE}
+data <- data %>%
+  mutate(ROI = map2(raw, stds, ~ tbl2roi(tbl = .y, 
+                                         raw = .x, 
+                                         ppm = settings$std_match$ppm, 
+                                         rt_tol = settings$std_match$rt_tol)))
+```
+
+
+### Peak detection
+
+Run findPeaks from the XCMS package to find my peaks.
+
+```{r detect_peaks, eval=FALSE}
+findPeaks_l <- lift_dl(findPeaks) # trick to make findPeaks accept a list of arguments.
+
+# run it
+data <- data %>%
+  mutate(peakTable = map2(.x = raw, 
+                          .y = ROI, 
+                          .f = ~ findPeaks_l(settings$findPeaks,
+                                             object = .x,
+                                             ROI.list = .y) %>% 
+                            as.data.frame %>% 
+                            as.tbl))
+```
+
+`data$peakTable[[1]]` contains now the peak table of the first sample. 
+
+# And now....
+
+It is not finished here. It still needs some work. Sometimes more peaks are retrieved and now we need 
+something to get the correct peaks out of this table.
