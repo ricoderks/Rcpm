@@ -9,7 +9,8 @@
 #  
 #  settings$xcmsRaw$profparam <- list(step = 0.01)
 #  
-#  settings$std_match$ppm <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+#  settings$std_match$mz_tol <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+#  settings$std_match$mz_tol_unit <- "ppm"
 #  settings$std_match$rt_tol <- 10
 #  
 #  settings$findPeaks$method <- "centWave"
@@ -51,7 +52,8 @@
 #  data <- data %>%
 #    mutate(ROI = map2(raw, stds, ~ tbl2roi(tbl = .y,
 #                                           raw = .x,
-#                                           ppm = settings$std_match$ppm,
+#                                           mz_tol = settings$std_match$mz_tol,
+#                                           mz_tol_unit = settings$std_match$mz_tol_unit,
 #                                           rt_tol = settings$std_match$rt_tol)))
 
 ## ----detect_peaks, eval=FALSE--------------------------------------------
@@ -66,4 +68,27 @@
 #                                               ROI.list = .y) %>%
 #                              as.data.frame %>%
 #                              as.tbl))
+
+## ----best_matching, eval=FALSE-------------------------------------------
+#  # we add a row index we can match by later
+#  data <- data %>% mutate(peakTable = map(peakTable, ~ mutate(.x,
+#                                                      row = 1:nrow(.x))))
+#  
+#  data <- data %>% mutate(matched_peaks = map2(.x = stds,
+#                                              .y = peakTable,
+#                                              ~ closest_match(stds = .x,
+#                                                              peakTable = .y,
+#                                                              rt_tol = settings$std_match$rt_tol,
+#                                                              mz_tol = settings$std_match$mz_tol,
+#                                                              mz_tol_unit = settings$std_match$mz_tol_unit) %>%
+#                                                data_frame(row = .) %>%                 # a vector is returned so convert to data frame
+#                                                bind_cols(.x) %>%                       # bind the returned vector (now data frame) to data frame stds
+#                                                left_join(.y,
+#                                                          by = "row",
+#                                                          suffix = c(".stds", ".peaks")) %>%    # return all rows from x, and all columns from x and y.
+#                                                mutate(found = ifelse(is.na(row), FALSE, TRUE)) %>%   # if row is NA the peak was not found, create column with true / false if peak was found
+#                                                select(-row)))                # remove column row
+#  
+#  # show the matched peaks from the first sample with all it's info
+#  data$matched_peaks[[1]] %>% kable
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rico Derks" />
 
-<meta name="date" content="2017-02-09" />
+<meta name="date" content="2017-02-13" />
 
 <title>Targeted analysis with XCMS</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Targeted analysis with XCMS</h1>
 <h4 class="author"><em>Rico Derks</em></h4>
-<h4 class="date"><em>2017-02-09</em></h4>
+<h4 class="date"><em>2017-02-13</em></h4>
 
 
 
@@ -100,7 +100,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 settings$xcmsRaw$profparam &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step =</span> <span class="fl">0.01</span>)
 
-settings$std_match$ppm &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately</span>
+settings$std_match$mz_tol &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately</span>
+settings$std_match$mz_tol_unit &lt;-<span class="st"> &quot;ppm&quot;</span>
 settings$std_match$rt_tol &lt;-<span class="st"> </span><span class="dv">10</span>
 
 settings$findPeaks$method &lt;-<span class="st"> &quot;centWave&quot;</span>
@@ -156,7 +157,8 @@ raw_data &lt;-<span class="st"> </span><span class="kw">xcmsraw_to_tbl</span>(<s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>data %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ROI =</span> <span class="kw">map2</span>(raw, stds, ~<span class="st"> </span><span class="kw">tbl2roi</span>(<span class="dt">tbl =</span> .y, 
                                          <span class="dt">raw =</span> .x, 
-                                         <span class="dt">ppm =</span> settings$std_match$ppm, 
+                                         <span class="dt">mz_tol =</span> settings$std_match$mz_tol,
+                                         <span class="dt">mz_tol_unit =</span> settings$std_match$mz_tol_unit,
                                          <span class="dt">rt_tol =</span> settings$std_match$rt_tol)))</code></pre></div>
 </div>
 <div id="peak-detection" class="section level3">
@@ -175,11 +177,37 @@ data &lt;-<span class="st"> </span>data %&gt;%
 <span class="st">                            </span>as.tbl))</code></pre></div>
 <p><code>data$peakTable[[1]]</code> contains now the peak table of the first sample.</p>
 </div>
+<div id="find-the-best-matching-peaks" class="section level3">
+<h3>Find the best matching peaks</h3>
+<p>Sometimes more peaks are retrieved and now we need something to get the correct peaks out of this table. Jan Stanstrup wrote a function for this <code>closet_match</code>. It finds highest intensity peak within a certain retention time window. Is this maybe interesting to use. In DA I often try to find the peak which has the smallest deviation in retention time from the standard.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># we add a row index we can match by later</span>
+data &lt;-<span class="st"> </span>data %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">peakTable =</span> <span class="kw">map</span>(peakTable, ~<span class="st"> </span><span class="kw">mutate</span>(.x, 
+                                                    <span class="dt">row =</span> <span class="dv">1</span>:<span class="kw">nrow</span>(.x))))
+
+data &lt;-<span class="st"> </span>data %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">matched_peaks =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> stds, 
+                                            <span class="dt">.y =</span> peakTable,
+                                            ~<span class="st"> </span><span class="kw">closest_match</span>(<span class="dt">stds =</span> .x, 
+                                                            <span class="dt">peakTable =</span> .y,
+                                                            <span class="dt">rt_tol =</span> settings$std_match$rt_tol,
+                                                            <span class="dt">mz_tol =</span> settings$std_match$mz_tol,
+                                                            <span class="dt">mz_tol_unit =</span> settings$std_match$mz_tol_unit) %&gt;%
+<span class="st">                                              </span><span class="kw">data_frame</span>(<span class="dt">row =</span> .) %&gt;%<span class="st">                 </span><span class="co"># a vector is returned so convert to data frame</span>
+<span class="st">                                              </span><span class="kw">bind_cols</span>(.x) %&gt;%<span class="st">                       </span><span class="co"># bind the returned vector (now data frame) to data frame stds</span>
+<span class="st">                                              </span><span class="kw">left_join</span>(.y, 
+                                                        <span class="dt">by =</span> <span class="st">&quot;row&quot;</span>,
+                                                        <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">&quot;.stds&quot;</span>, <span class="st">&quot;.peaks&quot;</span>)) %&gt;%<span class="st">    </span><span class="co"># return all rows from x, and all columns from x and y.</span>
+<span class="st">                                              </span><span class="kw">mutate</span>(<span class="dt">found =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(row), <span class="ot">FALSE</span>, <span class="ot">TRUE</span>)) %&gt;%<span class="st">   </span><span class="co"># if row is NA the peak was not found, create column with true / false if peak was found</span>
+<span class="st">                                              </span><span class="kw">select</span>(-row)))                <span class="co"># remove column row</span>
+
+<span class="co"># show the matched peaks from the first sample with all it's info</span>
+data$matched_peaks[[<span class="dv">1</span>]] %&gt;%<span class="st"> </span>kable</code></pre></div>
+</div>
 </div>
 </div>
 <div id="and-now." class="section level1">
 <h1>And now….</h1>
-<p>It is not finished here. It still needs some work. Sometimes more peaks are retrieved and now we need something to get the correct peaks out of this table.</p>
+<p>It is not finished here. It still needs some work.</p>
+<p>Maybe retrieve the EIC’s for some nice plotting or statistics on the peaks.</p>
 </div>
 
 

@@ -5,7 +5,8 @@
 \title{Convert a list of peaks (rt / m/z pairs) to a Region of Interest (ROI) list for use
 with \code{\link{findPeaks}}}
 \usage{
-tbl2roi(tbl, raw, ppm, rt_tol)
+tbl2roi(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"),
+  rt_tol = 10)
 }
 \arguments{
 \item{tbl}{\code{\link{tibble}} containing the columns "rt" and "mz". rt needs to be in seconds.}
@@ -13,12 +14,14 @@ tbl2roi(tbl, raw, ppm, rt_tol)
 \item{raw}{\code{\link{xcmsRaw}} object to create ROI for. It needs to be a specific 
 \code{\link{xcmsRaw}} to match retention times to scan nubmers.}
 
-\item{ppm}{ppm tolerance for the generated ROI.}
+\item{mz_tol}{m/z tolorance}
 
-\item{rt_tol}{Retention time tolerance (in sec!) for the generated ROI.}
+\item{mz_tol_unit}{set the unit of the m/z tolerance, 'ppm' or 'Da'.}
+
+\item{rt_tol}{Retention time tolerance (in seconds!) for the generated ROI.}
 }
 \value{
-List containing the ROIs. Each list contains mz, mzmin, mzmax, scmin, scmax, 
+List containing the ROIs. Each list contains m/z, mzmin, mzmax, scmin, scmax, 
 length (set to -1, not used by centWave) and intensity (set to -1, not used by centWave) columns.
 }
 \description{
