@@ -8,7 +8,7 @@
 #' @param raw \code{\link{xcmsRaw}} object to create ROI for. It needs to be a specific 
 #' \code{\link{xcmsRaw}} to match retention times to scan nubmers.
 #' @param mz_tol m/z tolorance
-#' @param mz_tol_unit ppm tolerance for the generated ROI.
+#' @param mz_tol_unit set the unit of the m/z tolerance, 'ppm' or 'Da'.
 #' @param rt_tol Retention time tolerance (in seconds!) for the generated ROI.
 #'
 #' @return List containing the ROIs. Each list contains m/z, mzmin, mzmax, scmin, scmax, 
@@ -29,14 +29,13 @@ tbl2roi <- function(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"), rt_t
 
   if (is.null(mz_tol_unit)) {
     mz_tol_unit <- "Da"
-    warning("mz_tol_unit set to Da!")
+    warning("mz_tol_unit set to Da!\n")
   }
   
   if (is.character(mz_tol_unit[1])) {
     mz_tol_unit <- match.arg(mz_tol_unit)
   } else {
-    mz_tol_unit <- "Da"
-    warning("mz_tol_unit set to Da!")
+    stop("mz_tol_unit should be character: 'ppm' or 'Da'\n")
   }
 
   out <- tbl %>% 

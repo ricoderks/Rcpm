@@ -16,7 +16,7 @@ tbl2roi(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"),
 
 \item{mz_tol}{m/z tolorance}
 
-\item{mz_tol_unit}{ppm tolerance for the generated ROI.}
+\item{mz_tol_unit}{set the unit of the m/z tolerance, 'ppm' or 'Da'.}
 
 \item{rt_tol}{Retention time tolerance (in seconds!) for the generated ROI.}
 }
