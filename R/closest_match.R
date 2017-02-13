@@ -4,16 +4,20 @@
 #' This function will match a table of standard compounds and a peak table by m/z and retention time.
 #'
 #' @param stds \code{\link{tibble}} of standards to match to a peak table
-#' @param peakTable \code{\link{tibble}} containing peak table supplied by \code{\link{findPeaks}} (but converted to \code{\link{tibble}}/\code{\link{data.frame}}).
+#' @param peakTable \code{\link{tibble}} containing peak table supplied by \code{\link{findPeaks}} 
+#' (but converted to \code{\link{tibble}}/\code{\link{data.frame}}).
 #' @param rt_tol Retention time tolerance for matching peaks. Pay attention to the unit of your tables.
 #' rt_tol should match and stds and peakTable should use same units (i.e. minutes of seconds).
 #' @param mz_tol m/z tolerance.
 #' @param mz_tol_unit set the unit of the m/z tolerance, 'ppm' or 'Da'.
-#' @param rt_col Character string giving the column containing the retention times. Must be same in standards and peak table.
-#' @param mz_col Character string giving the column containing the m/z values. Must be same in standards and peak table. 
+#' @param rt_col Character string giving the column containing the retention times. Must be same in 
+#' standards and peak table.
+#' @param mz_col Character string giving the column containing the m/z values. Must be same in 
+#' standards and peak table. 
 #' @param int_col Character string giving the column containing the intensities in the peak table. 
 #'
-#' @return A vector having the length equivalent to the number of rows in stds giving the indices of the hits in peakTable.
+#' @return A vector having the length equivalent to the number of rows in stds giving the indices 
+#' of the hits in peakTable. If no hit is found \code{NA} is returned.
 #' 
 #' @details 
 #' This function will match a table of standard compounds and a peak table by m/z and retention time.
@@ -30,10 +34,10 @@ closest_match <- function(stds,
                           peakTable, 
                           rt_tol = 0.25, 
                           mz_tol = 30, 
-                          mz_tol_unit = c("Da", "ppm")
+                          mz_tol_unit = c("Da", "ppm"),
                           rt_col = "rt", 
                           mz_col = "mz", 
-                          int_col = "into"){
+                          int_col = "into") {
 
   if (is.null(mz_tol_unit)) {
     mz_tol_unit <- "Da"
@@ -79,7 +83,7 @@ closest_match <- function(stds,
     if (sum(idx) > 1) {
       idx2 <- peakTable %>% 
         slice(which(idx)) %>% 
-        extract2(int_col) %>% 
+        `[[`(int_col) %>% 
         which.max
       indices[i] <- which(idx)[idx2]
       next
