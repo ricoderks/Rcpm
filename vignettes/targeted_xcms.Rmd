@@ -49,7 +49,8 @@ settings <- list()
 
 settings$xcmsRaw$profparam <- list(step = 0.01)
 
-settings$std_match$ppm <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+settings$std_match$mz_tol <- 10 # this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately
+settings$std_match$mz_tol_unit <- "ppm"
 settings$std_match$rt_tol <- 10
 
 settings$findPeaks$method <- "centWave"
@@ -116,7 +117,8 @@ Add the regions of interest to the table.
 data <- data %>%
   mutate(ROI = map2(raw, stds, ~ tbl2roi(tbl = .y, 
                                          raw = .x, 
-                                         ppm = settings$std_match$ppm, 
+                                         mz_tol = settings$std_match$mz_tol,
+                                         mz_tol_unit = settings$std_match$mz_tol_unit,
                                          rt_tol = settings$std_match$rt_tol)))
 ```
 

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rico Derks" />
 
-<meta name="date" content="2017-02-09" />
+<meta name="date" content="2017-02-13" />
 
 <title>Targeted analysis with XCMS</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Targeted analysis with XCMS</h1>
 <h4 class="author"><em>Rico Derks</em></h4>
-<h4 class="date"><em>2017-02-09</em></h4>
+<h4 class="date"><em>2017-02-13</em></h4>
 
 
 
@@ -100,7 +100,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 settings$xcmsRaw$profparam &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">step =</span> <span class="fl">0.01</span>)
 
-settings$std_match$ppm &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately</span>
+settings$std_match$mz_tol &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># this needs to be quite large for this strategy to work. Only scans inside this is used AFAIK. The centwave ppm setting will limit appropiately</span>
+settings$std_match$mz_tol_unit &lt;-<span class="st"> &quot;ppm&quot;</span>
 settings$std_match$rt_tol &lt;-<span class="st"> </span><span class="dv">10</span>
 
 settings$findPeaks$method &lt;-<span class="st"> &quot;centWave&quot;</span>
@@ -156,7 +157,8 @@ raw_data &lt;-<span class="st"> </span><span class="kw">xcmsraw_to_tbl</span>(<s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>data %&gt;%
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ROI =</span> <span class="kw">map2</span>(raw, stds, ~<span class="st"> </span><span class="kw">tbl2roi</span>(<span class="dt">tbl =</span> .y, 
                                          <span class="dt">raw =</span> .x, 
-                                         <span class="dt">ppm =</span> settings$std_match$ppm, 
+                                         <span class="dt">mz_tol =</span> settings$std_match$mz_tol,
+                                         <span class="dt">mz_tol_unit =</span> settings$std_match$mz_tol_unit,
                                          <span class="dt">rt_tol =</span> settings$std_match$rt_tol)))</code></pre></div>
 </div>
 <div id="peak-detection" class="section level3">

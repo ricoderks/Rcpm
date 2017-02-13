@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.13-dev]
+### Added
+- tbl2roi: option to chose between Da or ppm as m/z tolerance
+
 ## [0.9.12] - 2017-02-09
 ### fixed
 - import of packages, this was not done properly everywhere.
