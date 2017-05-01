@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.14] - 2017-05-01
+### Added
+- no need to install bioconductor packages yourself
+
 ## [0.9.13] - 2017-02-13
 ### Added
 - tbl2roi: option to chose between Da or ppm as m/z tolerance
