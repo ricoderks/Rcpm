@@ -1,8 +1,8 @@
 Package: Rcpm
 Type: Package
 Title: General functions for the Center of Proteomics and Metabolomics (LUMC)
-Version: 0.9.13
-Date: 2017-02-09
+Version: 0.9.14
+Date: 2017-05-01
 Author: Rico Derks
 Maintainer: Rico Derks <r.j.e.derks@lumc.nl>
 Description: This package contains several general functions for the Center of
@@ -27,5 +27,10 @@ Suggests:
     knitr,
     testthat,
     rmarkdown
+Remotes:
+    bioc::preprocessCore,
+    bioc::multtest,
+    bioc::xcms,
+    bioc::pcaMethods
 VignetteBuilder: knitr
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
