@@ -17,8 +17,8 @@
 #' @details This is based on the work of Jan Stanstrup (see references).
 #' 
 #' @export
-#' @importFrom dplyr %>% rowwise transmute ungroup mutate
-#' @importFrom purrr by_row map
+#' @importFrom dplyr %>% rowwise transmute ungroup mutate everything
+#' @importFrom purrr pmap map
 #'
 #' @author Jan Stanstrup
 #' @author Rico Derks
@@ -39,7 +39,7 @@ tbl2roi <- function(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"), rt_t
   }
 
   out <- tbl %>% 
-    rowwise %>% 
+    rowwise() %>% 
     transmute(mz = mz, # not used!
               mzmin = ifelse(mz_tol_unit == "Da", mz - mz_tol, mz - mz_tol * mz * 1E-6),
               mzmax = ifelse(mz_tol_unit == "Da", mz + mz_tol, mz + mz_tol * mz * 1E-6),
@@ -48,10 +48,10 @@ tbl2roi <- function(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"), rt_t
               length = -1, # not used!
               intensity = -1  # not used!
     ) %>%
-    ungroup %>% 
-    by_row(as.list) %>%
-    mutate(.out = map(.out, ~ attr_rem(.x, "indices"))) %>%        # we get some indices attribute. Dunno why. But lets remove it.
-    `[[`(".out")
+    ungroup() %>% 
+    mutate(.out = select(., everything()) %>%
+             pmap(list)) %>%
+    `[[`(".out") # select only .out column and make a list of lists
   
   return(out)
 }
