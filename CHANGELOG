@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.15] - 2017-05-15
+### Fixed
+- package could not be loaded anymore. purrr::by_row() was decprecated, this is fixed now
+
 ## [0.9.14] - 2017-05-01
 ### Added
 - no need to install bioconductor packages yourself
