@@ -24,7 +24,7 @@
 #' for a simple example.
 #' 
 #' @export
-#' @import ggplot2
+#' @importFrom ggplot2 ggplot aes aes_string
 #'
 #' @author Rico Derks
 #' @examples
@@ -52,27 +52,26 @@ pca_plots <- function(data,
   type <- match.arg(type)
 
   # start the plot
-  p <- ggplot2::ggplot()
+  p <- ggplot()
   switch(type,
          scores = {
            if (T2 == TRUE) {
-             el <- simple_ellipse(x = data[, x], y = data[, y], alpha = hotelling)
-             p <- p + ggplot2::geom_path(data = el, ggplot2::aes(x = x, y = y), colour = "gray")
+             p <- p + geom_polygon(data = simple_ellipse(x = data[, x], y = data[, y], alpha = hotelling), aes(x = x, y = y), colour = "gray", fill = "white", alpha = 0.5)
            }
-           p <- p + ggplot2::geom_point(data = data, ggplot2::aes_string(x = x, y = y, colour = colour, shape = shape), size = size)
-           p <- p + ggplot2::ggtitle("Scores plot")
+           p <- p + geom_point(data = data, aes_string(x = x, y = y, colour = colour, shape = shape), size = size)
+           p <- p + ggtitle("Scores plot")
          },
          loadings = {
-           p <- p + ggplot2::geom_point(data = data, ggplot2::aes_string(x = x, y = y), size = size)
-           p <- p + ggplot2::ggtitle("Loadings plot")
+           p <- p + geom_point(data = data, aes_string(x = x, y = y), size = size)
+           p <- p + ggtitle("Loadings plot")
          },
          summary = {
 
          }
   )
-  p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = 0), colour = "gray")
-  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept = 0), colour = "gray")
-  p <- p + ggplot2::xlab(x)
-  p <- p + ggplot2::ylab(y)
+  p <- p + geom_hline(aes(yintercept = 0), colour = "gray")
+  p <- p + geom_vline(aes(xintercept = 0), colour = "gray")
+  p <- p + xlab(x)
+  p <- p + ylab(y)
   return(p)
 }
