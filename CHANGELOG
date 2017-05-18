@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.16] - 2017-05-16
+### Changes
+- in pca_plots changed from geom_path to geom_polygon
+
 ## [0.9.15] - 2017-05-15
 ### Fixed
 - package could not be loaded anymore. purrr::by_row() was decprecated, this is fixed now
