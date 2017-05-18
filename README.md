@@ -6,7 +6,7 @@ The Rcpm package contains some general functions for use within CPM.
 
 The Rcpm package depends on quite some packages and it may happen that you need to install some of them first. 
 
-**Bioconductor** packages should be installed automatically now. If not, below are the packages which you need to install :
+**Bioconductor** packages should be installed automatically now. For this to work SVN needs to be installed on your system. If you want to install them manually, below are the packages which you need to install :
 
  * `source("http://bioconductor.org/biocLite.R")`
  * `biocLite(c("preprocessCore", "pcaMethods", "xcms", "multtest"))`
