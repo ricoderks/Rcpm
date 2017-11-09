@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.17] - 2017-11-09
+### Added
+- added new function msms_search_lipidmaps
+
 ## [0.9.16] - 2017-05-16
 ### Changes
 - in pca_plots changed from geom_path to geom_polygon
