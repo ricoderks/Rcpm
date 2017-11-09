@@ -9,7 +9,7 @@
 #' @param ion set the ion type (see details for more info)
 #' @param min_matches how many matches should the search at least have
 #' @param LIMIT limit the chains to 'even' or 'odd' and 'even' (All)
-#' @peaklist peakslist in PKL format
+#' @param peakslist in PKL format
 #' See detail section for more information.
 #'
 #' @return he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
