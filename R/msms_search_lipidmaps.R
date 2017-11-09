@@ -2,14 +2,14 @@
 #'
 #' @description Search the Glycerophospholipid MS/MS Prediction database from LipidMaps (http://www.lipidmaps.org/).
 #'
-#' @param threshold set the intensity threshold
+#' @param intensity_threshold set the intensity threshold
 #' @param prec_tol precursor ion mass tolerance (+/- m/z)
 #' @param prod_tol product ion mass tolerance (+/- m/z)
 #' @param headgroup search all headgroups or one off "PC", "PA", "PS", "PE", "PG", "PI
 #' @param ion set the ion type (see details for more info)
 #' @param min_matches how many matches should the search at least have
 #' @param LIMIT limit the chains to 'even' or 'odd' and 'even' (All)
-#' @param peakslist in PKL format
+#' @param peaklist in PKL format
 #' See detail section for more information.
 #'
 #' @return he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 

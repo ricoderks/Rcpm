@@ -10,6 +10,8 @@ msms_search_lipidmaps(intensity_threshold = 10, prec_tol = 0.01,
   LIMIT = c("All", "even"), peaklist = NULL)
 }
 \arguments{
+\item{intensity_threshold}{set the intensity threshold}
+
 \item{prec_tol}{precursor ion mass tolerance (+/- m/z)}
 
 \item{prod_tol}{product ion mass tolerance (+/- m/z)}
@@ -22,7 +24,8 @@ msms_search_lipidmaps(intensity_threshold = 10, prec_tol = 0.01,
 
 \item{LIMIT}{limit the chains to 'even' or 'odd' and 'even' (All)}
 
-\item{threshold}{set the intensity threshold}
+\item{peaklist}{in PKL format
+See detail section for more information.}
 }
 \value{
 he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
