@@ -4,19 +4,21 @@
 \alias{msms_search_lipidmaps}
 \title{Do a MSMS search on the Glycerophospholipid MS/MS Prediction database from LipidMaps}
 \usage{
-msms_search_lipidmaps(intensity_threshold = 10, prec_tol = 0.01,
-  prod_tol = 0.01, headgroup = c("All", "PC", "PA", "PS", "PE", "PG", "PI"),
-  ion = c("chloride", "acetate", "formate"), min_matches = 5,
-  LIMIT = c("All", "even"), peaklist = NULL)
+msms_search_lipidmaps(lipidclass = c("glycerolipids", "phospholipids"),
+  intensity_threshold = 10, prec_tol = 0.01, prod_tol = 0.01,
+  headgroup = "", ion = "", min_matches = 5, LIMIT = c("All", "even"),
+  peaklist = NULL)
 }
 \arguments{
+\item{lipidclass}{define the lipidclass you want to search, currently available phospholipics and glycerolipids}
+
 \item{intensity_threshold}{set the intensity threshold}
 
 \item{prec_tol}{precursor ion mass tolerance (+/- m/z)}
 
 \item{prod_tol}{product ion mass tolerance (+/- m/z)}
 
-\item{headgroup}{search all headgroups or one off "PC", "PA", "PS", "PE", "PG", "PI}
+\item{headgroup}{search all headgroups of a lipidclass, see details for more inforamtion}
 
 \item{ion}{set the ion type (see details for more info)}
 
@@ -37,14 +39,26 @@ Search the Glycerophospholipid MS/MS Prediction database from LipidMaps (http://
 \details{
 This function uses the Programmatic Access functionality of LipidMaps to search the LMSD database.
 
+Phospholipids:
+
+Headgroups are defined as:  "All" or one off "PC", "PA", "PS", "PE", "PG", "PI"
+
 The ion types are defined as: 
 * chloride : [M-H]- / [M+Cl]-
 * acetate : [M-H]- / [M+Acetate-H]-
 * formate : [M-H]- / [M+Formate-H]-
+
+Glycerolipids:
+
+Headgroups are defined as:  "All" or one off "MD", "DG", "TG"
+
+The ion types are defined as: 
+* ammonia : [M+NH4]+
 }
 \examples{
 mypeaks <- c("818.59 10000 1\\n758.57 20\\n687.50 20\\n506.33 50\\n494.33 15\\n488.31 2")
-results <- msms_search_lipidmaps(intensity_threshold = 10,
+results <- msms_search_lipidmaps(lipidclass = "phospholipids",
+                     intensity_threshold = 10,
                      prec_tol = 0.01,
                      prod_tol = 0.01,
                      headgroup = "All",
