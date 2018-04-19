@@ -25,7 +25,8 @@ Imports:
     pls,
     rvest,
     rlang,
-    stringi
+    stringi,
+    stats
 Suggests:
     knitr,
     testthat,
