@@ -38,7 +38,7 @@ Create Shewhary Chart like QC plots for our metabolomics workflow.
 require(dplyr)
 set.seed(11)
 # create a dummy frame 
-my_data <- data.frame(x = rep(1:5, 8),
+my_data <- data.frame(x = rep(1:8, 5),
                       y = rnorm(40, mean = 10),
                       group = as.factor(rep(1:5, 8)))
 # calculate average / sd / rsd                       

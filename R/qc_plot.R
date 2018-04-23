@@ -28,7 +28,7 @@
 #' require(dplyr)
 #' set.seed(11)
 #' # create a dummy frame 
-#' my_data <- data.frame(x = rep(1:5, 8),
+#' my_data <- data.frame(x = rep(1:8, 5),
 #'                       y = rnorm(40, mean = 10),
 #'                       group = as.factor(rep(1:5, 8)))
 #' # calculate average / sd / rsd                       
@@ -79,12 +79,12 @@ qc_plot <- function(data, x, y, color_by, avg, stdev, rsd, xlabel = "", ylabel =
   rsd <- enquo(rsd)
   
   new_labels <- data %>%
-    mutate(new_labels = paste(!!color_by, ":", format(!!rsd, nsmall = 1, digits = 1), "%")) %>%
+    mutate(new_labels = paste(as.character(!!color_by), ":", format(!!rsd, nsmall = 1, digits = 1), "%")) %>%
     select(!!color_by, new_labels) %>%
     unique()
   
   ## and make a named vector of it
-  new_labels <- setNames(new_labels$new_labels, new_labels[, 1])
+  new_labels <- setNames(new_labels$new_labels, as.character(new_labels[[1]]))
   
   ## create the plot (at the moment this uses the development version of ggplot2 2.2.1.9000)
   p <- data %>%
