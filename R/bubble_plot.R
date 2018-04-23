@@ -35,12 +35,12 @@
 #'                                  rep("46", 6), 
 #'                                  rep("42", 4), 
 #'                                  rep("45", 6)),
-#'                       carbon_db = c(paste0(rep("43", 5), ":", 1:5),
-#'                       paste0(rep("41", 3), ":", 1:3),
-#'                       paste0(rep("44", 7), ":", 1:7),
-#'                       paste0(rep("46", 6), ":", 1:6),
-#'                       paste0(rep("42", 4), ":", 1:4),
-#'                       paste0(rep("45", 6), ":", 1:6)),
+#'                       carbon_db = c(paste0(rep("43", 5), ":", 5:1),
+#'                       paste0(rep("41", 3), ":", 3:1),
+#'                       paste0(rep("44", 7), ":", 7:1),
+#'                       paste0(rep("46", 6), ":", 6:1),
+#'                       paste0(rep("42", 4), ":", 4:1),
+#'                       paste0(rep("45", 6), ":", 6:1)),
 #'                       DotProduct = rnorm(n = 93, mean = 700, sd = 200),
 #'                       LipidClass = c(rep("a", 31), rep("b", 31), rep("c", 31)))
 #' # create the bubble plot
