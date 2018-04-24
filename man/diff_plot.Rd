@@ -30,7 +30,7 @@ Create difference plots to show up- or down-regulation of certain lipids.
 }
 \examples{
 # create the diff plot
-diff_plot(data = my_data,
+p <- diff_plot(data = my_data,
             x = LongLipidName,
             y = difference,
             fill_by = diff_grp,
