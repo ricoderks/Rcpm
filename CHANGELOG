@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file. Keeping tra
 ### Added
 - qc_plot is added to create Shewhart Chart like plots for our metabolomics workflow.
 - bubble_plot is added to create an overview plot of the quality of lipid identification by MS-DIAL.
+- diff_plot is added to create simple plots to show if a lipid is up or down regulated.
 
 ## [0.9.18] - 2017-11-21
 ### Added
