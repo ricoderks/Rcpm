@@ -41,7 +41,9 @@ There are 8 core classes defined :
  }
 }
 \examples{
+\dontrun{
 results <- ms_search_lipidmaps(ExactMass = 537.37944, ExactMassOffSet = 0.01)
+}
 }
 \author{
 Rico Derks

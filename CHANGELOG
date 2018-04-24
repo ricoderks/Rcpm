@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. Keeping tra
 ## [Unreleased]
 - unit testing
 
+## [0.9.19] - 2018-04-23
+### Added
+- qc_plot is added to create Shewhart Chart like plots for our metabolomics workflow.
+- bubble_plot is added to create an overview plot of the quality of lipid identification by MS-DIAL.
+
 ## [0.9.18] - 2017-11-21
 ### Added
 - msms_search_lipidmaps is now main functions which calls one of msms_search_lipidmaps.glycerolipids or msms_search_lipidmaps.phospholipids dependig on the lipidclass you specify.
