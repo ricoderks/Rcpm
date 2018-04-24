@@ -30,7 +30,10 @@
 #' @importFrom utils read.table
 #'
 #' @author Rico Derks
-#' @examples results <- ms_search_lipidmaps(ExactMass = 537.37944, ExactMassOffSet = 0.01)
+#' @examples 
+#' \dontrun{
+#' results <- ms_search_lipidmaps(ExactMass = 537.37944, ExactMassOffSet = 0.01)
+#' }
 ms_search_lipidmaps <- function(ExactMass = NULL, 
                                 ExactMassOffSet = 0.01,
                                 Name = NULL,
