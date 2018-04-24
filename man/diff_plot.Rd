@@ -28,15 +28,6 @@ Create difference plots to show up- or down-regulation of certain lipids.
 \details{
 \code{data} should be data frame which contains at least all the parameters as columns.
 }
-\examples{
-# create the diff plot
-p <- diff_plot(data = my_data,
-            x = LongLipidName,
-            y = difference,
-            fill_by = diff_grp,
-            facet_y = LipidClass,
-            facet_x = versus)
-}
 \author{
 Rico Derks
 }
