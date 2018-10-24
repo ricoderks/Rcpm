@@ -6,6 +6,8 @@ The Rcpm package contains some general functions for use within CPM.
 
 The Rcpm package depends on quite some packages and it may happen that you need to install some of them first. 
 
+If your running Windows you need [Rtools](https://cran.r-project.org/bin/windows/Rtools/) installed.
+
 **Bioconductor** packages should be installed automatically now. For this to work SVN needs to be installed on your system. If you want to install them manually, below are the packages which you need to install :
 
  * `source("http://bioconductor.org/biocLite.R")`
