@@ -9,6 +9,7 @@ Description: This package contains several general functions for the Center of
     Proteomics and Metabolomics (LUMC).
 License: GPL-3
 LazyData: TRUE
+Encoding: UTF-8
 Imports:
     plyr,
     ggplot2,
@@ -35,4 +36,4 @@ Remotes:
     bioc::xcms,
     bioc::pcaMethods
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0
