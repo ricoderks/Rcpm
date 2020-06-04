@@ -5,11 +5,10 @@
 #' @param data matrix to preprocess
 #' @param center center the data (default is TRUE)
 #' @param scale which scaling to use \code{c("none", "uv", "pareto")}
-#' @param reverse reverse the scaling \\ centering. Default is false.
 #' @param simple only return the preprocessed matrix. If false also the original 
 #' data will be returned as a list. Default is true.
 #'
-#' @return The centered and scaled matrix will be returned.
+#' @return The centered and scaled matrix will be returned if simple is true. If simple is false also the center and scale vectors are returned.
 #' 
 #' @export
 #' @importFrom stats sd
@@ -18,22 +17,17 @@
 preprocess <- function (data, 
                         center = TRUE, 
                         scale = c("none", "uv", "pareto"), 
-                        reverse = FALSE, 
                         simple = TRUE) {
+  # convert the data to a matrix
 	data <- as.matrix(data)
+	# check if correct scaling type is selected
+	scale <- match.arg(scale)
+	
 	# do arguments exist, if not set a default value
 	if (is.null(center)) {
 		center <- FALSE
 	}
-	
-	if (is.null(scale)) {
-		scale <- "none"
-	}
-	
-	if (is.null(reverse)) {
-		reverse <- FALSE
-	}
-	
+
 	if (is.null(simple)) {
 		simple <- TRUE
 	}
@@ -50,34 +44,22 @@ preprocess <- function (data,
 	if (length(center) != ncol(data)) {
 		stop("center does not match matrix dimensions!")
 	}
-	
-	if (!reverse) {
-		data <- sweep(data, 2, center, "-")
-	}
+	# do the actual centering
+	data <- sweep(data, 2, center, "-")
 
 	### scaling ###
-	if (is.character(scale[1])) {
-		scale <- match.arg(scale)
-		if (scale == "none") {
-			scale <- rep(1, ncol(data))
-		} else if (scale == "uv") {
-			scale <- apply(data, 2, stats::sd, na.rm = TRUE)
-		} else if (scale == "pareto") {
-			scale <- sqrt(apply(data, 2, stats::sd, na.rm = TRUE))
-		}
-	}
+		switch(scale,
+		       none = { scale <- rep(1, ncol(data)) },
+		       uv = { scale <- apply(data, 2, stats::sd, na.rm = TRUE) },
+		       pareto = { scale <- sqrt(apply(data, 2, stats::sd, na.rm = TRUE)) }
+		)
+
+	# check if the length of scale is the same as the number of columns
 	if (length(scale) != ncol(data)) {
 		stop("scale does not match matrix dimensions!")
 	}
-	if (!reverse) {
-		data <- sweep(data, 2, scale, "/")
-	}
-
-	### reverse ###
-	if (reverse) {
-		data <- sweep(data, 2, scale, "*")
-		data <- sweep(data, 2, center, "+")
-	}
+	# do the actual scaling
+	data <- sweep(data, 2, scale, "/")
 
 	### return result ###
 	if (simple) {
