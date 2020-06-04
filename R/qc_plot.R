@@ -21,7 +21,7 @@
 #' @importFrom rlang enquo !!
 #' @importFrom dplyr mutate select filter %>%
 #' @importFrom stats setNames
-#' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap labeller ggtitle guides labs xlab ylab vars
+#' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap labeller guides labs vars
 #' @importFrom methods is
 #'
 #' @author Rico Derks
@@ -57,15 +57,15 @@ qc_plot <- function(data, x, y, color_by, avg, stdev, rsd, xlabel = "", ylabel =
   if (!is(data, "data.frame")) {
     stop("'data' does not appear to be a data frame!")
   }
-  ## is x a column in the dataframe
+  ## is x a column in the data frame
   if (!deparse(substitute(x)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(x)), "' is not the name of a variable in '",deparse(substitute(data)),"'"))
   }
-  ## is y a column in the dataframe
+  ## is y a column in the data frame
   if (!deparse(substitute(y)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(y)), "' is not the name of a variable in '", deparse(substitute(data)), "'"))
   }
-  ## is color_by a column in the dataframe
+  ## is color_by a column in the data frame
   if (!deparse(substitute(color_by)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(color_by)), "' is not the name of a variable in '", deparse(substitute(data)), "'"))
   }
@@ -79,15 +79,16 @@ qc_plot <- function(data, x, y, color_by, avg, stdev, rsd, xlabel = "", ylabel =
   stdev <- enquo(stdev)
   rsd <- enquo(rsd)
   
+  ## Create custom labels for the strips of the facets.
   new_labels <- data %>%
     mutate(new_labels = paste(as.character(!!color_by), ":", format(!!rsd, nsmall = 1, digits = 1), "%")) %>%
     select(!!color_by, new_labels) %>%
     unique()
   
-  ## and make a named vector of it
+  ## And make a named vector of it.
   new_labels <- setNames(new_labels$new_labels, as.character(new_labels[[1]]))
   
-  ## create the plot (at the moment this uses the development version of ggplot2 2.2.1.9000)
+  ## create the plot
   p <- data %>%
     # filter out some NA's
     filter(!is.na(!!x),
@@ -138,10 +139,10 @@ qc_plot <- function(data, x, y, color_by, avg, stdev, rsd, xlabel = "", ylabel =
                scales = "free_y",
                labeller = labeller(.cols = new_labels)) +
     guides(color = FALSE) +
-    ggtitle("QC chart peak area") +
-    labs(caption = "NOTE: The percentage is the relative standard deviation or CV.") +
-    xlab(xlabel) +
-    ylab(ylabel)
+    labs(title = "QC chart peak area",
+         caption = "NOTE: The percentage is the relative standard deviation or CV.",
+         x = xlabel,
+         y = ylabel)
   
   ## return the ggplot2 object
   return(p)
