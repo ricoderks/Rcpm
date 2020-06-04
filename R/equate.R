@@ -1,4 +1,4 @@
-#' @title Quantile equatin
+#' @title Quantile equating
 #'
 #' @description Equating is based on the function *normalize.quantiles* from the library preprocessCore from BioConductor.
 #'
