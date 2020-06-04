@@ -4,8 +4,17 @@
 \alias{pca_plots}
 \title{Create nice PCA plots.}
 \usage{
-pca_plots(data, x, y, type = c("scores", "loadings", "summary"), T2 = TRUE,
-  hotelling = 0.95, colour = NULL, shape = NULL, size = 3)
+pca_plots(
+  data,
+  x,
+  y,
+  type = c("scores", "loadings", "summary"),
+  T2 = TRUE,
+  hotelling = 0.95,
+  colour = NULL,
+  shape = NULL,
+  size = 3
+)
 }
 \arguments{
 \item{data}{Dataframe containing all information. See details for more information on the structure.}

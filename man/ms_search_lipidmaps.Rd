@@ -4,8 +4,13 @@
 \alias{ms_search_lipidmaps}
 \title{Do a MS search on the LMSD database from LipidMaps}
 \usage{
-ms_search_lipidmaps(ExactMass = NULL, ExactMassOffSet = 0.01, Name = NULL,
-  Formula = NULL, CoreClass = NULL)
+ms_search_lipidmaps(
+  ExactMass = NULL,
+  ExactMassOffSet = 0.01,
+  Name = NULL,
+  Formula = NULL,
+  CoreClass = NULL
+)
 }
 \arguments{
 \item{ExactMass}{The exact mass to search.}

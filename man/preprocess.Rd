@@ -4,8 +4,13 @@
 \alias{preprocess}
 \title{Center and scale your data}
 \usage{
-preprocess(data, center = TRUE, scale = c("none", "uv", "pareto"),
-  reverse = FALSE, simple = TRUE)
+preprocess(
+  data,
+  center = TRUE,
+  scale = c("none", "uv", "pareto"),
+  reverse = FALSE,
+  simple = TRUE
+)
 }
 \arguments{
 \item{data}{matrix to preprocess}

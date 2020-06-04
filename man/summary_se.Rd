@@ -4,8 +4,14 @@
 \alias{summary_se}
 \title{Give a summary of a data frame}
 \usage{
-summary_se(data = NULL, measurevar, groupvars = NULL, na.rm = FALSE,
-  conf.interval = 0.95, .drop = TRUE)
+summary_se(
+  data = NULL,
+  measurevar,
+  groupvars = NULL,
+  na.rm = FALSE,
+  conf.interval = 0.95,
+  .drop = TRUE
+)
 }
 \arguments{
 \item{data}{data frame}

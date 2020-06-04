@@ -4,10 +4,17 @@
 \alias{msms_search_lipidmaps}
 \title{Do a MSMS search on the Glycerophospholipid MS/MS Prediction database from LipidMaps}
 \usage{
-msms_search_lipidmaps(lipidclass = c("glycerolipids", "phospholipids"),
-  intensity_threshold = 10, prec_tol = 0.01, prod_tol = 0.01,
-  headgroup = "", ion = "", min_matches = 5, LIMIT = c("All", "even"),
-  peaklist = NULL)
+msms_search_lipidmaps(
+  lipidclass = c("glycerolipids", "phospholipids"),
+  intensity_threshold = 10,
+  prec_tol = 0.01,
+  prod_tol = 0.01,
+  headgroup = "",
+  ion = "",
+  min_matches = 5,
+  LIMIT = c("All", "even"),
+  peaklist = NULL
+)
 }
 \arguments{
 \item{lipidclass}{define the lipidclass you want to search, currently available phospholipics and glycerolipids}
@@ -56,7 +63,7 @@ The ion types are defined as:
 * ammonia : [M+NH4]+
 }
 \examples{
-mypeaks <- c("818.59 10000 1\\n758.57 20\\n687.50 20\\n506.33 50\\n494.33 15\\n488.31 2")
+mypeaks <- c("818.59 10000 1\n758.57 20\n687.50 20\n506.33 50\n494.33 15\n488.31 2")
 results <- msms_search_lipidmaps(lipidclass = "phospholipids",
                      intensity_threshold = 10,
                      prec_tol = 0.01,

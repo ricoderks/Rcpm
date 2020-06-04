@@ -5,8 +5,7 @@
 \title{Convert a list of peaks (rt / m/z pairs) to a Region of Interest (ROI) list for use
 with \code{\link{findPeaks}}}
 \usage{
-tbl2roi(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"),
-  rt_tol = 10)
+tbl2roi(tbl, raw, mz_tol = 0.005, mz_tol_unit = c("Da", "ppm"), rt_tol = 10)
 }
 \arguments{
 \item{tbl}{\code{\link{tibble}} containing the columns "rt" and "mz". rt needs to be in seconds.}
