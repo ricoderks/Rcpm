@@ -37,7 +37,7 @@ msms_search_lipidmaps(
 See detail section for more information.}
 }
 \value{
-he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
+The function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
 warning message showing the status code of the connection.
 }
 \description{
