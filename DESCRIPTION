@@ -26,7 +26,8 @@ Imports:
     pls,
     rvest,
     rlang,
-    methods
+    methods,
+    tidyr
 Suggests:
     knitr,
     testthat,

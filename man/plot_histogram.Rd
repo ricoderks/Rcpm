@@ -2,28 +2,47 @@
 % Please edit documentation in R/plot_histogram.R
 \name{plot_histogram}
 \alias{plot_histogram}
-\title{plot nice histogram}
+\title{Plot nice histogram}
 \usage{
-plot_histogram(DataSet, Metabolite = NULL, Legend = TRUE)
+plot_histogram(data, variable = NULL, legend = TRUE)
 }
 \arguments{
-\item{DataSet}{is a dataframe containing all the data}
+\item{data}{is a data frame containing all the data}
 
-\item{Metabolite}{is a character containing the name of the metabolite (see details).}
+\item{variable}{which variables (i.e. columns) to plot (see examples).}
 
-\item{Legend}{is a boolean (default true) used to show the legend.}
+\item{legend}{is a boolean (default true) used to show the legend.}
 }
 \value{
-ggplot showing the nice histogram
+ggplot showing a nice histogram
 }
 \description{
 plot_histogram plots a histogram with a fitted kernel density plot and a normal 
-density plot. If no \code{Metabolite} (i.e. NULL) is defined for each column in the 
-dataframe a histogram is plotted.
+density plot. If no \code{variable} (i.e. NULL) is defined, then for each column in the 
+data frame a histogram is plotted.
 }
 \examples{
-df <- data.frame(a = rnorm(100, mean = 10), b = rnorm(100, mean = 20))
-plot_histogram(DataSet = df)
+set.seed(123)
+my_df <- data.frame(a = rnorm(100, mean = 10), 
+                    b = rnorm(100, mean = 40),
+                    c = rnorm(1000, mean = 123))
+                    
+# all variables
+plot_histogram(data = my_df)
+
+# only one
+plot_histogram(data = my_df,
+               variable = a)
+               
+# only two
+plot_histogram(data = my_df,
+               variable = c(a, b))
+
+# or using tidyverse approach
+library(dplyr)
+my_df \%>\%
+  plot_histogram()
+  
 }
 \author{
 Rico Derks

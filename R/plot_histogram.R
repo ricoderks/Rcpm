@@ -1,108 +1,102 @@
-#' @title plot nice histogram
+#' @title Plot nice histogram
 #' 
 #' @description plot_histogram plots a histogram with a fitted kernel density plot and a normal 
-#' density plot. If no \code{Metabolite} (i.e. NULL) is defined for each column in the 
-#' dataframe a histogram is plotted.
+#' density plot. If no \code{variable} (i.e. NULL) is defined, then for each column in the 
+#' data frame a histogram is plotted.
 #'
-#' @param DataSet is a dataframe containing all the data
-#' @param Metabolite is a character containing the name of the metabolite (see details).
-#' @param Legend is a boolean (default true) used to show the legend.
+#' @param data is a data frame containing all the data
+#' @param variable which variables (i.e. columns) to plot (see examples).
+#' @param legend is a boolean (default true) used to show the legend.
 #'
-#' @return ggplot showing the nice histogram
+#' @return ggplot showing a nice histogram
 #' 
 #' @export
-#' @import ggplot2
+#' @importFrom tidyr pivot_longer
+#' @importFrom ggplot2 ggplot geom_histogram geom_density geom_line aes theme facet_wrap scale_colour_manual
 #' @importFrom grDevices nclass.FD
 #' @importFrom stats dnorm sd density complete.cases
-#' @importFrom reshape2 melt
+#' @importFrom dplyr %>% select mutate group_by everything n
+#' @importFrom rlang quo_is_null
 #'
 #' @author Rico Derks
 #'
 #' @examples
-#' df <- data.frame(a = rnorm(100, mean = 10), b = rnorm(100, mean = 20))
-#' plot_histogram(DataSet = df)
-plot_histogram <- function(DataSet, Metabolite = NULL, Legend = TRUE) {
-  variable <- value <- ..density.. <- NULL                       # keep check happy
-  
-  if (is.null(Metabolite)) {
-    # calculate bin width according to Freedman-Diaconis rule for eache metabolite
-    bw <- lapply(DataSet, function(x) (max(x) - min(x)) / grDevices::nclass.FD(x))
-    
-    # create function to fit
-    fit_func <- function(x) {
-      xfit <- seq(min(x, na.rm = TRUE),	max(x, na.rm = TRUE),	length = 100)
-      yfit <- stats::dnorm(xfit,	mean = mean(x, na.rm = TRUE), sd = stats::sd(x, na.rm = TRUE))
-      return(data.frame(xfit = xfit, yfit = yfit))
-    }
-    fit <- lapply(DataSet, fit_func)
-    fit_melt <- reshape2::melt(fit, id.vars = c("xfit", "yfit"))
-    # melt gives it name L1, change to variable for ggplot
-    colnames(fit_melt)[3] <- "variable"
-    
-    FAdata_melt <- reshape2::melt(DataSet,
-                                  measure.vars = colnames(DataSet))
-    
-    # get the names of the metabolites
-    met_names <- names(bw)
-    
-    h <- ggplot2::ggplot()
-    # to create histograms with different binwidth they need to be in different layers
-    for (a in 1:length(met_names)) {
-      h <- h + ggplot2::geom_histogram(data = subset(FAdata_melt, variable == met_names[a]), 
-                                       ggplot2::aes(x = value, 
-                                                    y = ..density..), 
-                                       binwidth = bw[[a]])
-    }
-    h <- h + ggplot2::geom_density(data = FAdata_melt, 
-                                   ggplot2::aes(x = value, 
-                                                colour = "density fit"), 
-                                   show.legend = FALSE)
-    h <- h + ggplot2::geom_line(data = fit_melt, 
-                                ggplot2::aes(x = xfit, 
-                                             y = yfit, 
-                                             colour = "normal fit"), 
-                                show.legend = Legend)
-    h <- h + ggplot2::scale_colour_manual(values = c("blue", "red"), 
-                                          guide = ggplot2::guide_legend(title = NULL))
-    h <- h + ggplot2::theme(axis.title.x = ggplot2::element_blank())
-    h <- h + ggplot2::facet_wrap(~ variable, 
-                                 scales = "free", 
-                                 ncol = 2)
-  } else {
-    x <- as.matrix(subset(DataSet, select = Metabolite))
-    # fit a density plot
-    xfit <- seq(min(x, na.rm = TRUE),	
-                max(x, na.rm = TRUE),	
-                length = 100)
-    yfit <- stats::dnorm(xfit,	
-                         mean = mean(x, na.rm = TRUE), 
-                         sd = stats::sd(x, na.rm = TRUE))
-    fit <- data.frame(xfit = xfit, 
-                      yfit = yfit)
-    # density plot for normal distribution
-    d <- stats::density(x[stats::complete.cases(x)], 
-                        from = min(x[stats::complete.cases(x)]), 
-                        to = max(x[stats::complete.cases(x)]))
-    
-    # calculate bin width according to Freedman-Diaconis rule
-    bw <- (max(x) - min(x)) / grDevices::nclass.FD(x)
-    
-    h <- ggplot2::ggplot()
-    h <- h + ggplot2::geom_histogram(data = DataSet, 
-                                     ggplot2::aes_string(x = Metabolite, 
-                                                         y = "..density.."), 
-                                     binwidth = bw)
-    h <- h + ggplot2::geom_density(data = DataSet, 
-                                   ggplot2::aes_string(x = Metabolite, 
-                                                       colour = shQuote("density fit")), 
-                                   show.legend = FALSE)
-    h <- h + ggplot2::geom_line(data = fit, 
-                                ggplot2::aes(x = xfit, 
-                                             y = yfit, 
-                                             colour = "normal fit"), 
-                                show.legend = Legend)
-    h <- h + ggplot2::scale_colour_manual(values = c("blue", "red"), 
-                                          guide = ggplot2::guide_legend(title = NULL))
+#' set.seed(123)
+#' my_df <- data.frame(a = rnorm(100, mean = 10), 
+#'                     b = rnorm(100, mean = 40),
+#'                     c = rnorm(1000, mean = 123))
+#'                     
+#' # all variables
+#' plot_histogram(data = my_df)
+#' 
+#' # only one
+#' plot_histogram(data = my_df,
+#'                variable = a)
+#'                
+#' # only two
+#' plot_histogram(data = my_df,
+#'                variable = c(a, b))
+#' 
+#' # or using tidyverse approach
+#' library(dplyr)
+#' my_df %>%
+#'   plot_histogram()
+#'   
+plot_histogram <- function(data, variable = NULL, legend = TRUE) {
+  # dirty fix to keep check happy
+  my_var <- value <- ..density.. <- xfit <- yfit <- NULL
+
+  ## sanibty checks
+  # check if data is a data frame
+  if (!is(data, "data.frame")) {
+    stop("'data' does not appear to be a data frame!")
   }
-  return(h)
+  # # is variable a column in the data frame
+  # leave out for now, doesn't work if multiple columns are selected
+  # if (!quo_is_null(enquo(variable)) & !as.character(deparse(substitute(variable))) %in% names(data)) {
+  #   stop(paste0("'", deparse(substitute(variable)), "' is not the name of a variable in '", deparse(substitute(data)),"'"))
+  # }
+
+  variable <- enquo(variable)
+  
+  # if columns are set, select them here
+  if (!quo_is_null(variable)) {
+    data <- data %>% 
+      select(!!variable)
+  }
+  
+  long_data <- data %>% 
+    pivot_longer(cols = everything(),
+                 names_to = "my_var",
+                 values_to = "value") %>% 
+    group_by(my_var) %>% 
+    mutate(xfit = seq(min(value, na.rm = TRUE),
+                      max(value, na.rm = TRUE),
+                      length = n()),
+           yfit = dnorm(x = xfit,
+                        mean = mean(value, na.rm = TRUE),
+                        sd = sd(value, na.rm = TRUE)))
+  
+  long_data %>% 
+    ggplot() +
+    # create histograms
+    geom_histogram(aes(x = value,
+                       y = ..density..,
+                       group = my_var),
+                   binwidth = function(x) (max(x) - min(x)) / nclass.FD(x)) +
+    # add the density fit
+    geom_density(aes(x = value,
+                     colour = "density fit"),
+                 show.legend = FALSE) +
+    # add the normal distribution density plot
+    geom_line(aes(x = xfit,
+                  y = yfit,
+                  colour = "normal fit"),
+              show.legend = legend) +
+    scale_colour_manual(values = c("blue", "red"), 
+                        guide = guide_legend(title = NULL)) + 
+    theme(axis.title.x = element_blank(),
+          legend.position = "bottom") + 
+    facet_wrap(~ my_var,
+               scales = "free")
 }
