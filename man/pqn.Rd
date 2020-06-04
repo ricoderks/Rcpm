@@ -4,7 +4,7 @@
 \alias{pqn}
 \title{Perform Probabilistic Quotient Normalization}
 \usage{
-pqn(X, n = "median", QC)
+pqn(X, n = "median", QC = NULL)
 }
 \arguments{
 \item{X}{matrix to normalize samples * variables (rows * columns)}
