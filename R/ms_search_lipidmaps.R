@@ -98,8 +98,8 @@ ms_search_lipidmaps <- function(ExactMass = NULL,
   
   ### do the search
   # create a new handle to set the form variables
-  h <- curl::new_handle()
-  curl::handle_setform(h, 
+  h <- new_handle()
+  handle_setform(handle = h, 
                  Mode = "ProcessTextSearch",
                  OutputMode = "File",
                  OutputType = "TSV",
@@ -110,11 +110,14 @@ ms_search_lipidmaps <- function(ExactMass = NULL,
                  CoreClass = CoreClass)
   
   # do the request and get the results
-  req <- curl::curl_fetch_memory(http_lipidmaps, h)
+  req <- curl_fetch_memory(url = http_lipidmaps, 
+                           handle = h)
   
   if (req$status_code == 200) {
     # if correct response continue to parse the document
-    results <- read.table(text = rawToChar(req$content), sep = "\t", header = TRUE);
+    results <- read.table(text = rawToChar(req$content),
+                          sep = "\t", 
+                          header = TRUE);
   } else {
     # if status code is not 200 return nothing and add warning with code
     warning("Status code is ", req$status_code)

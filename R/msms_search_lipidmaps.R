@@ -13,7 +13,7 @@
 #' @param peaklist in PKL format
 #' See detail section for more information.
 #'
-#' @return he function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
+#' @return The function returns a dataframe with the search results. If there is a connection problem NULL is returned and a 
 #' warning message showing the status code of the connection.
 #' 
 #' @details This function uses the Programmatic Access functionality of LipidMaps to search the LMSD database.
@@ -83,6 +83,8 @@ msms_search_lipidmaps <- function(lipidclass = c("glycerolipids", "phospholipids
                                                                peaklist = peaklist))
 }
 
+
+## glycerolipids
 msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10, 
                                                 prec_tol = 0.01,
                                                 prod_tol = 0.01,
@@ -164,26 +166,27 @@ msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10,
   
   ### do the search
   # create a new handle to set the form variables
-  h <- curl::new_handle()
-  curl::handle_setform(h,
-                       intensity_threshold = intensity_threshold, 
-                       prec_tol = prec_tol,
-                       prod_tol = prod_tol,
-                       headgroup = headgroup,
-                       ion = ion,
-                       min_matches = min_matches,
-                       LIMIT = LIMIT,
-                       peaklist = peaklist)
+  h <- new_handle()
+  handle_setform(handle = h,
+                 intensity_threshold = intensity_threshold, 
+                 prec_tol = prec_tol,
+                 prod_tol = prod_tol,
+                 headgroup = headgroup,
+                 ion = ion,
+                 min_matches = min_matches,
+                 LIMIT = LIMIT,
+                 peaklist = peaklist)
   
   # do the request and get the results
-  req <- curl::curl_fetch_memory(http_lipidmaps, h)
+  req <- curl_fetch_memory(url = http_lipidmaps,
+                           handle = h)
   
   if (req$status_code == 200) {
     # if correct response continue to parse the document
     results <- rawToChar(req$content) %>%
-      xml2::read_html() %>%
-      rvest::html_node("table") %>%
-      rvest::html_table()
+      read_html() %>%
+      html_node("table") %>%
+      html_table()
   } else {
     # if status code is not 200 return nothing and add warning with code
     warning("Status code is ", req$status_code)
@@ -195,7 +198,7 @@ msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10,
 }
 
 
-
+## phospholipids
 msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10, 
                                                 prec_tol = 0.01,
                                                 prod_tol = 0.01,
@@ -277,26 +280,27 @@ msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10,
   
   ### do the search
   # create a new handle to set the form variables
-  h <- curl::new_handle()
-  curl::handle_setform(h,
-                       intensity_threshold = intensity_threshold, 
-                       prec_tol = prec_tol,
-                       prod_tol = prod_tol,
-                       headgroup = headgroup,
-                       ion = ion,
-                       min_matches = min_matches,
-                       LIMIT = LIMIT,
-                       peaklist = peaklist)
+  h <-new_handle()
+  handle_setform(handle = h,
+                 intensity_threshold = intensity_threshold, 
+                 prec_tol = prec_tol,
+                 prod_tol = prod_tol,
+                 headgroup = headgroup,
+                 ion = ion,
+                 min_matches = min_matches,
+                 LIMIT = LIMIT,
+                 peaklist = peaklist)
   
   # do the request and get the results
-  req <- curl::curl_fetch_memory(http_lipidmaps, h)
+  req <- curl_fetch_memory(url = http_lipidmaps, 
+                           handle = h)
   
   if (req$status_code == 200) {
     # if correct response continue to parse the document
     results <- rawToChar(req$content) %>%
-      xml2::read_html() %>%
-      rvest::html_node("table") %>%
-      rvest::html_table()
+      read_html() %>%
+      html_node("table") %>%
+      html_table()
   } else {
     # if status code is not 200 return nothing and add warning with code
     warning("Status code is ", req$status_code)
