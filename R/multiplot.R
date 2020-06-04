@@ -18,7 +18,12 @@
 #'
 #' @author Rico Derks
 #' @references http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
-multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL) {
+multiplot <- function(..., plotlist = NULL, cols = 1, layout = NULL) {
+  .Deprecated(
+    new = "",
+    package = "Rcpm",
+    msg = "The function multiplot is deprecated. There are much nicer solutions! Have a look at the package: patchwork."
+  )
  # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)
 
