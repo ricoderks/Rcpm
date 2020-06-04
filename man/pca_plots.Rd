@@ -17,7 +17,7 @@ pca_plots(
 )
 }
 \arguments{
-\item{data}{Dataframe containing all information. See details for more information on the structure.}
+\item{data}{dataframe containing all information. See details for more information on the structure.}
 
 \item{x}{Principal component for the x-axis.}
 
@@ -53,16 +53,24 @@ for a simple example.
 }
 \examples{
 # create a dummy frame 
-mydata <- data.frame(pc1 = rnorm(40),
-                     pc2 = rnorm(40),
+mydata <- data.frame(PC1 = rnorm(40),
+                     PC2 = rnorm(40),
                      groups = as.factor(c(rep(1, 20), rep(2, 20))),
                      shapes = as.factor(c(rep(1, 20), rep(2, 20))))
 p <- pca_plots(data = mydata, 
-               x = "pc1",
-               y = "pc2",
+               x = PC1,
+               y = PC2,
                type = "scores",
-               colour = "groups",
-               shape = "shapes")
+               colour = groups,
+               shape = shapes)
+# or
+library(dplyr)
+mydata \%>\%
+  pca_plots(x = PC1,
+            y = PC2,
+            type = "scores",
+            colour = groups,
+            shape = shapes)
 }
 \author{
 Rico Derks
