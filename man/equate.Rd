@@ -2,7 +2,7 @@
 % Please edit documentation in R/equate.R
 \name{equate}
 \alias{equate}
-\title{Quantile equatin}
+\title{Quantile equating}
 \usage{
 equate(data, sequence, test = FALSE)
 }

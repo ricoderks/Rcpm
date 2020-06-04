@@ -22,6 +22,7 @@
 #' @importFrom dplyr mutate select filter %>%
 #' @importFrom stats setNames
 #' @importFrom ggplot2 ggplot aes geom_line geom_point facet_wrap labeller ggtitle guides labs xlab ylab vars
+#' @importFrom methods is
 #'
 #' @author Rico Derks
 #' @examples

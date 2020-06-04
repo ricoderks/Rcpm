@@ -20,6 +20,7 @@
 #' @importFrom dplyr %>%
 #' @importFrom rlang enquo !!
 #' @importFrom ggplot2 ggplot aes geom_bar facet_grid coord_flip guides xlab ylab vars
+#' @importFrom methods is
 #'
 #' @author Rico Derks
 diff_plot <- function(data, x, y, fill_by, facet_y, facet_x) {

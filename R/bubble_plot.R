@@ -19,6 +19,7 @@
 #' @importFrom dplyr %>%
 #' @importFrom rlang enquo !!
 #' @importFrom ggplot2 ggplot aes geom_line geom_point facet_grid geom_text guides xlab ylab
+#' @importFrom methods is
 #'
 #' @author Rico Derks
 #' @examples 

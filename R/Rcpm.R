@@ -8,5 +8,4 @@
 #' It contains all kind of functions. Most of them still need some examples, but most of it is 
 #' self explanatory (but there are still plans to add more examples).
 #' 
-#' A vignette is written for targeted analysis with xcms.
 "_PACKAGE"

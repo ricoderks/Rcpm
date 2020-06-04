@@ -25,7 +25,8 @@ Imports:
     preprocessCore,
     pls,
     rvest,
-    rlang
+    rlang,
+    methods
 Suggests:
     knitr,
     testthat,
@@ -33,7 +34,6 @@ Suggests:
 Remotes:
     bioc::preprocessCore,
     bioc::multtest,
-    bioc::xcms,
     bioc::pcaMethods
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
