@@ -10,12 +10,11 @@ If your running Windows you need [Rtools](https://cran.r-project.org/bin/windows
 
 **Bioconductor** packages should be installed automatically now. For this to work SVN needs to be installed on your system. If you want to install them manually, below are the packages which you need to install :
 
- * `source("http://bioconductor.org/biocLite.R")`
- * `biocLite(c("preprocessCore", "pcaMethods", "xcms", "multtest"))`
- * if it asks to update, update all packages. Make sure that you have a clean R open (no packages loaded)!
- Keep in mind that updating packages can be risky!
+ * `install.packages("BiocManager")`
+ * `BiocManager::install(c("preprocessCore", "pcaMethods", "xcms", "multtest"))`
+ * If it asks to update, do not update packages. Make sure that you have a clean R open (no packages loaded)! 
 
-For the installation of **Rcpm** you need the **devtools** package which you can install from the CRAN repository.
+For the installation of `Rcpm` you need the `devtools` package which you can install from the CRAN repository.
 The Rcpm package can be installed with :
 
 * `devtools::install_github("ricoderks/Rcpm")`
