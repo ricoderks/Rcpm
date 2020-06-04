@@ -18,7 +18,7 @@
 #' @export
 #' @importFrom pls plsr
 #' @importFrom stats cor
-#' @import ggplot2
+#' @import ggplot2 
 #'
 #' @author Rico Derks
 perm_test <- function(pls_model, perm = 200, scale = FALSE) {
@@ -29,10 +29,13 @@ perm_test <- function(pls_model, perm = 200, scale = FALSE) {
 	nComps <- pls_model$ncomp
 	# seed the random generator
 	set.seed(unclass(Sys.time()))
-	# dataframe to hold the results
-	perm_results <- data.frame(corr = vector(mode = "numeric", length = perm),
-	                           R2Ycum = vector(mode = "numeric", length = perm),
-	                           Q2cum = vector(mode = "numeric", length = perm))
+	# data frame to hold the results
+	perm_results <- data.frame(corr = vector(mode = "numeric", 
+	                                         length = perm),
+	                           R2Ycum = vector(mode = "numeric", 
+	                                           length = perm),
+	                           Q2cum = vector(mode = "numeric", 
+	                                          length = perm))
 	for (a in 1:perm) {
 		# do the permutation
 		Yperm <- Y[sample(1:nrow(Y), nrow(Y)), ]
@@ -71,15 +74,30 @@ perm_test <- function(pls_model, perm = 200, scale = FALSE) {
 	Q2cum <- (1 - (press / press0))[nComps]	
 	perm_results <- rbind(perm_results, c(1, R2Ycum, Q2cum))
 	
+	# define some colors
+	cols <- c("R2Ycum" = "green", 
+	          "Q2cum" = "blue")
 	# create the plot
-	cols <- c("R2Ycum" = "green", "Q2cum" = "blue")
-	p <- ggplot2::ggplot(data = perm_results, ggplot2::aes(x = corr))
-	p <- p + ggplot2::geom_point(ggplot2::aes(y = R2Ycum, colour = "R2Ycum"), size=3)
-	p <- p + ggplot2::geom_point(ggplot2::aes(y = Q2cum, colour = "Q2cum"), size=3)
-	p <- p + ggplot2::geom_hline(ggplot2::aes(yintercept = 0), colour = "gray")
-	p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept = 0), colour = "gray")
-	p <- p + ggplot2::scale_x_continuous(name = paste(perm, "permutations", nComps ,"components", sep = " "))
-	p <- p + ggplot2::scale_y_continuous(name = "Value")
-	p <- p + ggplot2::scale_colour_manual(values = cols, name = "Value")
+	p <- ggplot(data = perm_results, 
+	            aes(x = corr)) + 
+	  geom_point(aes(y = R2Ycum, 
+	                 colour = "R2Ycum"), 
+	             size=3) + 
+	  geom_point(aes(y = Q2cum, 
+	                 colour = "Q2cum"), 
+	             size=3) + 
+	  geom_hline(aes(yintercept = 0), 
+	             colour = "gray") +
+	  geom_vline(aes(xintercept = 0), 
+	             colour = "gray") + 
+	  labs(x = paste(perm, 
+	                 "permutations", 
+	                 nComps,
+	                 "components", 
+	                 sep = " "),
+	       y = "Value") +
+	  scale_colour_manual(values = cols, 
+	                      name = "Value")
+	
 	return(p)
 }
