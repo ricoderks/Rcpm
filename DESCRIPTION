@@ -1,8 +1,8 @@
 Package: Rcpm
 Type: Package
 Title: General functions for the Center of Proteomics and Metabolomics (LUMC)
-Version: 0.9.19
-Date: 2018-04-24
+Version: 1.0.0000
+Date: 2020-06-04
 Author: Rico Derks
 Maintainer: Rico Derks <r.j.e.derks@lumc.nl>
 Description: This package contains several general functions for the Center of
