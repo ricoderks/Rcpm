@@ -57,7 +57,7 @@ unmap <- function (classification, groups = NULL, noise = NULL, ...) {
   # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
   n <- length(classification)
   u <- sort(unique(classification))
-  levels = levels(classification)### Add levels
+  levels <- levels(classification)### Add levels
   
   if (is.null(groups)) {
     groups <- u
@@ -89,11 +89,15 @@ unmap <- function (classification, groups = NULL, noise = NULL, ...) {
     nam[k] <- "noise"
   }
   
-  z <- matrix(0, n, k, dimnames = c(names(classification), nam))
+  z <- matrix(data = 0, 
+              nrow = n, 
+              ncol = k, 
+              dimnames = c(names(classification), nam))
+  
   for (j in 1:k) {
     z[classification == groups[j], j] <- 1
   }
   
-  attr(z, "levels") = levels
+  attr(z, "levels") <- levels
   return(z)
 }
