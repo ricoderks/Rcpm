@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiplot.R
 \name{multiplot}
 \alias{multiplot}
-\title{Multiple plot function}
+\title{Multiple plot function (Deprecated)}
 \usage{
 multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 }

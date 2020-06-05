@@ -1,4 +1,4 @@
-#' @title Multiple plot function
+#' @title Multiple plot function (Deprecated)
 #'
 #' @description Put multiple graphs on one page.
 #'

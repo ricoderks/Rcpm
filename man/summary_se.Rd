@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary_se.R
 \name{summary_se}
 \alias{summary_se}
-\title{Give a summary of a data frame}
+\title{Give a summary of a data frame (Deprecated)}
 \usage{
 summary_se(
   data = NULL,

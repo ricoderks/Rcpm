@@ -1,4 +1,4 @@
-#' @title Give a summary of a data frame
+#' @title Give a summary of a data frame (Deprecated)
 #' 
 #' @description Gives count, mean, standard deviation, standard error of the mean, and confidence 
 #' interval (default 0.95).
@@ -25,7 +25,11 @@ summary_se <- function(data = NULL,
                        na.rm = FALSE, 
                        conf.interval = 0.95, 
                        .drop = TRUE) {
-  
+  .Deprecated(
+    new = "",
+    package = "Rcpm",
+    msg = "The function summary_se is deprecated. There are much nicer solutions available. Have a look at the skimr package!"
+  )
  # New version of length which can handle NA's: if na.rm =  = T, don't count them
   length2 <- function (x, na.rm = FALSE) {
     if (na.rm) {
