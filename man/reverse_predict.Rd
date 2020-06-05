@@ -7,9 +7,9 @@
 reverse_predict(model, new_y, level = 0.95)
 }
 \arguments{
-\item{model}{egression model of class \code{lm}}
+\item{model}{regression model of class \code{lm}}
 
-\item{new_y}{the new y values, should be a vector}
+\item{new_y}{the new y value or multiplicate of y as a vector}
 
 \item{level}{confidence interval, default = 0.95}
 }
@@ -21,6 +21,32 @@ A list with :
 \description{
 Predict x values from y values. As with calibration curves, determine the 
 concentration (x) from the peak area (y).
+}
+\examples{
+set.seed(123)
+# dummy data
+my_data <- data.frame(x = 1:10,
+                      y = 1:10 + rnorm(10))
+
+# Create linear model
+model <- lm(y ~ x, 
+            data = my_data)
+            
+# Single y
+reverse_predict(model = model,
+                new_y = 5)
+# $x
+# [1] 4.874066
+# $confidence_interval
+# [1] 2.578921   
+
+# Triplicate y's
+reverse_predict(model = model,
+                new_y = c(5.0, 4.9, 5.3))
+# $x
+# [1] 4.946685
+# $confidence_interval
+# [1] 1.622068             
 }
 \author{
 Rico Derks
