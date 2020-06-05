@@ -4,10 +4,10 @@
 \alias{summary_fit}
 \title{show summary of fit of a PCA model}
 \usage{
-summary_fit(mydata)
+summary_fit(data)
 }
 \arguments{
-\item{mydata}{data frame holding all data. See details for more information.}
+\item{data}{data frame with all data. See details for more information.}
 }
 \value{
 A ggplot2 plot is returned.
@@ -16,15 +16,29 @@ A ggplot2 plot is returned.
 Create a plot which shows a summary of the fit your PCA model.
 }
 \details{
-The data frame mydata should contain 3 variables. \code{PC}, 
+The data frame \code{data} should contain 3 variables. \code{PC}, 
 \code{R2cum} and \code{Q2cum}.
 }
 \examples{
-\dontrun{
-Here a PCA model (M1) was build with package pcaMethods
-sumfit <- data.frame(PC = paste("PC", 1:5, sep = ""), R2cum = M1@R2cum, Q2cum = M1@cvstat)
-p <- summary_fit(sumfit)
-}
+library(pcaMethods)
+
+# create some dummy data
+my_data <- data.frame(samples = c(rep("a", 10), rep("b", 10)),
+                      matrix(data = rnorm(400),
+                             nrow = 20))
+
+# as cross validation q2 needs to be selected
+M1 <- pca(object = my_data,
+          nPcs = 5,
+          cv = "q2")
+          
+# create data frame with R2 and Q2            
+sumfit_data <- data.frame(PC = paste("PC", 1:5, sep = ""), 
+                          R2cum = M1@R2cum, 
+                          Q2cum = M1@cvstat)
+
+# create the summary plot
+p <- summary_fit(sumfit_data)
 }
 \author{
 Rico Derks

@@ -18,8 +18,8 @@ context("summary-fit: input check")
 # * if input data frame doesn't have the correct column names an error
 
 test_that("Is input correct data frame", {
-  expect_error(summary_fit(my_matrix), "mydata needs to be a data frame!")
-  expect_error(summary_fit(sumfit_wrong), "mydata should contain only the column names PC, R2cum and Q2cum!")
+  expect_error(summary_fit(my_matrix), "data needs to be a data frame!")
+  expect_error(summary_fit(sumfit_wrong), "data should contain only the column names PC, R2cum and Q2cum!")
 })
 
 

@@ -2,44 +2,70 @@
 #' 
 #' @description Create a plot which shows a summary of the fit your PCA model.
 #'
-#' @param mydata data frame holding all data. See details for more information.
+#' @param data data frame with all data. See details for more information.
 #'
 #' @return A ggplot2 plot is returned.
 #' 
-#' @details The data frame mydata should contain 3 variables. \code{PC}, 
+#' @details The data frame \code{data} should contain 3 variables. \code{PC}, 
 #' \code{R2cum} and \code{Q2cum}.
 #' 
 #' @export
 #' @import ggplot2
+#' @importFrom dplyr %>%
+#' @importFrom tidyr pivot_longer
 #'
 #' @author Rico Derks
 #' 
 #' @examples
-#' \dontrun{
-#' Here a PCA model (M1) was build with package pcaMethods
-#' sumfit <- data.frame(PC = paste("PC", 1:5, sep = ""), R2cum = M1@R2cum, Q2cum = M1@cvstat)
-#' p <- summary_fit(sumfit)
-#' }
-summary_fit <- function(mydata){
-  PC <- value <- variable <- NULL                      # keep check happy
+#' library(pcaMethods)
+#' 
+#' # create some dummy data
+#' my_data <- data.frame(samples = c(rep("a", 10), rep("b", 10)),
+#'                       matrix(data = rnorm(400),
+#'                              nrow = 20))
+#'
+#' # as cross validation q2 needs to be selected
+#' M1 <- pca(object = my_data,
+#'           nPcs = 5,
+#'           cv = "q2")
+#'           
+#' # create data frame with R2 and Q2            
+#' sumfit_data <- data.frame(PC = paste("PC", 1:5, sep = ""), 
+#'                           R2cum = M1@R2cum, 
+#'                           Q2cum = M1@cvstat)
+#'
+#' # create the summary plot
+#' p <- summary_fit(sumfit_data)
+summary_fit <- function(data){
+  # dirty solution to keep check happy
+  PC <- value <- variable <- R2cum <- Q2cum <- NULL
   
-  # input checking (is this really nescessary?! This is also done in summary_fit_data)
-  # mydata needs to be a data frame
-  if (!is.data.frame(mydata)) {
-    stop("mydata needs to be a data frame!")
+  ## sanity checks
+  # input checking (is this really necessary?! This is also done in summary_fit_data)
+  # data needs to be a data frame
+  if (!is.data.frame(data)) {
+    stop("data needs to be a data frame!")
   }
   
-  # colnames need to be PC, R2cum and Q2cum
+  # check column names, they need to be PC, R2cum and Q2cum
   col_names <- c("PC", "R2cum", "Q2cum")
-  if (length(which(col_names %in% colnames(mydata))) != 3) {
-    stop("mydata should contain only the column names PC, R2cum and Q2cum!")
+  if (length(which(col_names %in% colnames(data))) != 3) {
+    stop("data should contain only the column names PC, R2cum and Q2cum!")
   }
   
-  # melt the data
-  mydata.long <- summary_fit_data(mydata)
+  # make the data frame long 
+  data_long <- data %>% 
+    pivot_longer(cols = c(R2cum, Q2cum),
+                 names_to = "variable",
+                 values_to = "value")
   
   # create the plot
-  p <- ggplot2::ggplot(data = mydata.long, ggplot2::aes(x = PC, y = value, fill = variable))
-  p <- p + ggplot2::geom_bar(stat = "identity", position = "dodge")
+  p <- ggplot(data = data_long, 
+              aes(x = PC, 
+                  y = value, 
+                  fill = variable)) +
+    geom_bar(stat = "identity", 
+             position = "dodge")
+  
   return(p)
 }
