@@ -2,7 +2,7 @@
 % Please edit documentation in R/simple_ellipse.R
 \name{simple_ellipse}
 \alias{simple_ellipse}
-\title{Create a simple ellipse for a PCA score plot}
+\title{Create a Hotelling T2 ellipse for a PCA score plot}
 \usage{
 simple_ellipse(x, y, alpha = 0.95, len = 200)
 }
@@ -19,12 +19,12 @@ simple_ellipse(x, y, alpha = 0.95, len = 200)
 A data frame is returned with the points to create the ellipse.
 }
 \description{
-This function can be used to create a confidence (Hotteling T2) interval for a 
+This function can be used to create a confidence (Hotelling T2) interval for a 
 PCA score plot.
 }
 \details{
-This function can be used to create a confidence (Hotteling T2) interval for a 
-PCA score plot. This is a helper function and therefore not exported.
+This is a helper function which is used to create a confidence (Hotelling T2) interval for a 
+PCA score plot.
 }
 \author{
 Rico Derks

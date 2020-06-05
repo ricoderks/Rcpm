@@ -1,6 +1,6 @@
-#' @title Create a simple ellipse for a PCA score plot
+#' @title Create a Hotelling T2 ellipse for a PCA score plot
 #' 
-#' @description This function can be used to create a confidence (Hotteling T2) interval for a 
+#' @description This function can be used to create a confidence (Hotelling T2) interval for a 
 #' PCA score plot.
 #' 
 #' @param x x vector
@@ -10,8 +10,8 @@
 #'
 #' @return A data frame is returned with the points to create the ellipse.
 #'
-#' @details This function can be used to create a confidence (Hotteling T2) interval for a 
-#' PCA score plot. This is a helper function and therefore not exported.
+#' @details This is a helper function which is used to create a confidence (Hotelling T2) interval for a 
+#' PCA score plot.
 #'
 #' @importFrom stats var qf
 #'
