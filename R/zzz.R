@@ -4,8 +4,21 @@
     utils::globalVariables(
       c(# from magrittr
         ".", 
-        # one of my own things
-        "DotProduct")
+        ## Some of my own things
+        # bubble_lot
+        "DotProduct",
+        # plot_histogram
+        "my_var",
+        "value",
+        "..density..",
+        "xfit",
+        "yfit",
+        # summary_fit
+        "PC",
+        "value",
+        "variable",
+        "R2cum",
+        "Q2cum")
     )
   }
   invisible()

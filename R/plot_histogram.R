@@ -43,9 +43,6 @@
 #'   plot_histogram()
 #'   
 plot_histogram <- function(data, variable = NULL, legend = TRUE) {
-  # dirty fix to keep check happy
-  my_var <- value <- ..density.. <- xfit <- yfit <- NULL
-
   ## sanibty checks
   # check if data is a data frame
   if (!is(data, "data.frame")) {

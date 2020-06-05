@@ -37,9 +37,6 @@
 #' # create the summary plot
 #' p <- summary_fit(sumfit_data)
 summary_fit <- function(data){
-  # dirty solution to keep check happy
-  PC <- value <- variable <- R2cum <- Q2cum <- NULL
-  
   ## sanity checks
   # input checking (is this really necessary?! This is also done in summary_fit_data)
   # data needs to be a data frame
