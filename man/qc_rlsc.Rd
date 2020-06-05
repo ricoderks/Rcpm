@@ -4,14 +4,16 @@
 \alias{qc_rlsc}
 \title{Perform QC-RLSC for batch correction of chromatographic signal}
 \usage{
-qc_rlsc(tab, colv, or)
+qc_rlsc(tab, colv, or, verbose = FALSE)
 }
 \arguments{
-\item{tab}{table N*K (row * column) with N samples and K variables}
+\item{tab}{table N*K (row * column) with N samples and K variables.}
 
-\item{colv}{vector N of numbers: 1 for QC samples and 2 for other samples}
+\item{colv}{vector N of numbers: 1 for QC samples and 2 for other samples.}
 
-\item{or}{ector of measuring order (see details)}
+\item{or}{vector of measuring order (see details).}
+
+\item{verbose}{print which variable has been corrected to monitor the process (default = FALSE).}
 }
 \value{
 corrected table N*K
