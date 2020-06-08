@@ -64,6 +64,7 @@ The ion types are defined as:
 }
 \examples{
 mypeaks <- c("818.59 10000 1\n758.57 20\n687.50 20\n506.33 50\n494.33 15\n488.31 2")
+
 results <- msms_search_lipidmaps(lipidclass = "phospholipids",
                      intensity_threshold = 10,
                      prec_tol = 0.01,
