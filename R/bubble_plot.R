@@ -59,18 +59,19 @@ bubble_plot <- function(data, x, y, color_by, carbon_db) {
   if (!is(data, "data.frame")) {
     stop("'data' does not appear to be a data frame!")
   }
-  ## is x a column in the dataframe
+  ## is x a column in the data frame
   if (!deparse(substitute(x)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(x)), "' is not the name of a variable in '", deparse(substitute(data)),"'"))
   }
-  ## is y a column in the dataframe
+  ## is y a column in the data frame
   if (!deparse(substitute(y)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(y)), "' is not the name of a variable in '", deparse(substitute(data)), "'"))
   }
-  ## is color_by a column in the dataframe
+  ## is color_by a column in the data frame
   if (!deparse(substitute(color_by)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(color_by)), "' is not the name of a variable in '", deparse(substitute(data)), "'"))
-  }## is color_by a column in the dataframe
+  }
+  ## is carbon_db a column in the dat aframe
   if (!deparse(substitute(carbon_db)) %in% names(data)) {
     stop(paste0("'", deparse(substitute(carbon_db)), "' is not the name of a variable in '", deparse(substitute(data)), "'"))
   }
