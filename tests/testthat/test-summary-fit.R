@@ -17,7 +17,7 @@ context("summary-fit: input check")
 # * if input is not a data frame an error message
 # * if input data frame doesn't have the correct column names an error
 
-test_that("Is input correct data frame", {
+test_that("Is input correct data frame:", {
   expect_error(summary_fit(my_matrix), "data needs to be a data frame!")
   expect_error(summary_fit(sumfit_wrong), "data should contain only the column names PC, R2cum and Q2cum!")
 })
@@ -29,6 +29,6 @@ context("summary-fit: output check")
 # Output:
 # * an ggplot object (class is gg and ggplot)
 
-test_that("Is output correct data frame", {
+test_that("Is output correct ggplot2 object:", {
   expect_equal(class(summary_fit(sumfit)), c("gg", "ggplot"))
 })
