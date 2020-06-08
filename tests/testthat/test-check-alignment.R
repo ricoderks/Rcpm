@@ -5,3 +5,7 @@ test_that("Input check:", {
                                "File doesn't exist!"))
 })
 
+test_that("Output check:", {
+  expect_equal(check_alignment(files = "./myfile.mzXML"),
+               TRUE)
+})
