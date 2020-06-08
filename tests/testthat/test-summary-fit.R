@@ -9,6 +9,9 @@ sumfit_wrong <- data.frame(PC = paste0("PC", 1:5),
                            R2cu = seq(from = 0.1, to = 0.75, length.out = 5),
                            Q2cum = seq(from = 0.05, to = 0.5, length.out = 5))
 
+# create the plot for checking
+my_summary_fit_plot <- summary_fit(sumfit)
+
 
 context("summary-fit: input check")
 
@@ -30,5 +33,8 @@ context("summary-fit: output check")
 # * an ggplot object (class is gg and ggplot)
 
 test_that("Is output correct ggplot2 object:", {
-  expect_equal(class(summary_fit(sumfit)), c("gg", "ggplot"))
+  expect_equal(class(summary_fit(sumfit)), 
+               c("gg", "ggplot"))
+  vdiffr::expect_doppelganger("Summary fit plot", 
+                              my_summary_fit_plot)
 })
