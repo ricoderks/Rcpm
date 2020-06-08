@@ -2,9 +2,9 @@
 #' 
 #' @description Create difference plots to show up- or down-regulation of certain lipids.
 #' 
-#' @param data Dataframe containing all information. See details for more information on the structure.
-#' @param x what to plot on the x-axis, in general retention time.
-#' @param y what to plot on the y-axis, in general m/z.
+#' @param data data frame containing all information. See details for more information on the structure.
+#' @param x what to plot on the x-axis, often the variable e.g. lipid
+#' @param y what to plot on the y-axis, the difference 
 #' @param fill_by column with factor for filling the bar plot
 #' @param facet_x facet in x direction with column
 #' @param facet_y facet in y direction with column
@@ -12,9 +12,7 @@
 #' @return A ggplot2 plot is returned.
 #' 
 #' @details \code{data} should be data frame which contains at least all the parameters as columns. 
-#` No calculations are done within the function. In the data frame there should be two column called: 
-#` LipidClass and DotProduct. LipidClass is used for facetting. DotProduct is used for the size of the 
-#` bubbles.
+#` No calculations are done within the function. 
 #' 
 #' @export
 #' @importFrom dplyr %>%
@@ -23,6 +21,37 @@
 #' @importFrom methods is
 #'
 #' @author Rico Derks
+#' @examples 
+#' set.seed(123)
+#' 
+#' my_data <- data.frame(lipidname = c(paste("PA ", seq(30, 40, 2), ":0", sep = ""),
+#'                                     paste("PA ", seq(30, 40, 2), ":1", sep = ""),
+#'                                     paste("PA ", seq(30, 40, 2), ":2", sep = ""),
+#'                                     paste("PC ", seq(30, 40, 2), ":0", sep = ""),
+#'                                     paste("PC ", seq(30, 40, 2), ":1", sep = ""),
+#'                                     paste("PC ", seq(30, 40, 2), ":2", sep = ""),
+#'                                     paste("TG ", seq(50, 60, 1), ":0", sep = ""),
+#'                                     paste("TG ", seq(50, 60, 1), ":1", sep = ""),
+#'                                     paste("TG ", seq(50, 60, 1), ":2", sep = ""),
+#'                                     paste("TG ", seq(50, 60, 1), ":3", sep = ""),
+#'                                     paste("TG ", seq(50, 60, 1), ":4", sep = "")),
+#'                       lipidclass = c(rep("PA", 18),
+#'                                      rep("PC", 18),
+#'                                      rep("TG", 55)),
+#'                       difference = rnorm(n = 91, 
+#'                                          mean = 0,
+#'                                          sd = 3e4),
+#'                       versus = factor(x = "AvsB"))
+#' 
+#' my_data$diff_grp <- as.factor(ifelse(my_data$difference > 0, "high", "low"))
+#' 
+#' diff_plot(data = my_data,
+#'                 x = lipidname,
+#'                 y = difference,
+#'                 fill_by = diff_grp,
+#'                 facet_x = versus,
+#'                 facet_y = lipidclass)
+#' 
 diff_plot <- function(data, x, y, fill_by, facet_y, facet_x) {
   ## some error checking
   if (length(match.call()) <= 6) {

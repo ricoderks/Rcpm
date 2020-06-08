@@ -9,6 +9,9 @@ sumfit_wrong <- data.frame(PC = paste0("PC", 1:5),
                            R2cu = seq(from = 0.1, to = 0.75, length.out = 5),
                            Q2cum = seq(from = 0.05, to = 0.5, length.out = 5))
 
+# create the plot for checking
+my_summary_fit_plot <- summary_fit(sumfit)
+
 
 context("summary-fit: input check")
 
@@ -17,7 +20,7 @@ context("summary-fit: input check")
 # * if input is not a data frame an error message
 # * if input data frame doesn't have the correct column names an error
 
-test_that("Is input correct data frame", {
+test_that("Is input correct data frame:", {
   expect_error(summary_fit(my_matrix), "data needs to be a data frame!")
   expect_error(summary_fit(sumfit_wrong), "data should contain only the column names PC, R2cum and Q2cum!")
 })
@@ -29,6 +32,9 @@ context("summary-fit: output check")
 # Output:
 # * an ggplot object (class is gg and ggplot)
 
-test_that("Is output correct data frame", {
-  expect_equal(class(summary_fit(sumfit)), c("gg", "ggplot"))
+test_that("Is output correct ggplot2 object:", {
+  expect_equal(class(summary_fit(sumfit)), 
+               c("gg", "ggplot"))
+  vdiffr::expect_doppelganger("Summary fit plot", 
+                              my_summary_fit_plot)
 })

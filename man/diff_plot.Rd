@@ -7,11 +7,11 @@
 diff_plot(data, x, y, fill_by, facet_y, facet_x)
 }
 \arguments{
-\item{data}{Dataframe containing all information. See details for more information on the structure.}
+\item{data}{data frame containing all information. See details for more information on the structure.}
 
-\item{x}{what to plot on the x-axis, in general retention time.}
+\item{x}{what to plot on the x-axis, often the variable e.g. lipid}
 
-\item{y}{what to plot on the y-axis, in general m/z.}
+\item{y}{what to plot on the y-axis, the difference}
 
 \item{fill_by}{column with factor for filling the bar plot}
 
@@ -27,6 +27,38 @@ Create difference plots to show up- or down-regulation of certain lipids.
 }
 \details{
 \code{data} should be data frame which contains at least all the parameters as columns.
+}
+\examples{
+set.seed(123)
+
+my_data <- data.frame(lipidname = c(paste("PA ", seq(30, 40, 2), ":0", sep = ""),
+                                    paste("PA ", seq(30, 40, 2), ":1", sep = ""),
+                                    paste("PA ", seq(30, 40, 2), ":2", sep = ""),
+                                    paste("PC ", seq(30, 40, 2), ":0", sep = ""),
+                                    paste("PC ", seq(30, 40, 2), ":1", sep = ""),
+                                    paste("PC ", seq(30, 40, 2), ":2", sep = ""),
+                                    paste("TG ", seq(50, 60, 1), ":0", sep = ""),
+                                    paste("TG ", seq(50, 60, 1), ":1", sep = ""),
+                                    paste("TG ", seq(50, 60, 1), ":2", sep = ""),
+                                    paste("TG ", seq(50, 60, 1), ":3", sep = ""),
+                                    paste("TG ", seq(50, 60, 1), ":4", sep = "")),
+                      lipidclass = c(rep("PA", 18),
+                                     rep("PC", 18),
+                                     rep("TG", 55)),
+                      difference = rnorm(n = 91, 
+                                         mean = 0,
+                                         sd = 3e4),
+                      versus = factor(x = "AvsB"))
+
+my_data$diff_grp <- as.factor(ifelse(my_data$difference > 0, "high", "low"))
+
+diff_plot(data = my_data,
+                x = lipidname,
+                y = difference,
+                fill_by = diff_grp,
+                facet_x = versus,
+                facet_y = lipidclass)
+
 }
 \author{
 Rico Derks
