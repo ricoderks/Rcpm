@@ -27,7 +27,8 @@ Imports:
     rvest,
     rlang,
     methods,
-    tidyr
+    tidyr,
+    vdiffr
 Suggests:
     knitr,
     testthat,
