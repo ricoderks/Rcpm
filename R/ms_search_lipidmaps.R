@@ -73,6 +73,8 @@ ms_search_lipidmaps <- function(ExactMass = NULL,
   # is 'Name' set correctly
   if (is.null(Name)) {
     Name <- ""
+  } else if (!is.character(Name)) {
+    Name <- as.character(Name)
   }
   
   # is 'Formula' set correctly
@@ -89,7 +91,11 @@ ms_search_lipidmaps <- function(ExactMass = NULL,
     # should be between 1 and 8
     if (CoreClass >= 1 & CoreClass <= 8) {
       CoreClass <- as.character(as.integer(CoreClass))
+    } else {
+      stop("'CoreClass' needs to be between 1 and 8!")
     }
+  } else {
+    stop("'CoreClass' needs to be a number!")
   }
   
   ### define some things
