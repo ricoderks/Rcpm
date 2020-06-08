@@ -60,7 +60,7 @@ Glycerolipids:
 Headgroups are defined as:  "All" or one off "MD", "DG", "TG"
 
 The ion types are defined as: 
-* ammonia : [M+NH4]+
+* ammonium : [M+NH4]+
 }
 \examples{
 mypeaks <- c("818.59 10000 1\n758.57 20\n687.50 20\n506.33 50\n494.33 15\n488.31 2")

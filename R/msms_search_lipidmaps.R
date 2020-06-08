@@ -32,7 +32,7 @@
 #' Headgroups are defined as:  "All" or one off "MD", "DG", "TG"
 #'
 #' The ion types are defined as: 
-#' * ammonia : [M+NH4]+
+#' * ammonium : [M+NH4]+
 #'
 #' @importFrom curl new_handle handle_setform curl_fetch_memory
 #' @importFrom utils read.table
@@ -65,38 +65,11 @@ msms_search_lipidmaps <- function(lipidclass = c("glycerolipids", "phospholipids
                                   LIMIT = c("All", "even"),
                                   peaklist = NULL) {
   
-  lipidclass <- match.arg(lipidclass)
-  switch(lipidclass,
-         "glycerolipids" = msms_search_lipidmaps.glycerolipids(intensity_threshold = intensity_threshold, 
-                                                               prec_tol = prec_tol,
-                                                               prod_tol = prod_tol,
-                                                               headgroup = headgroup,
-                                                               ion = ion,
-                                                               min_matches = min_matches,
-                                                               LIMIT = LIMIT,
-                                                               peaklist = peaklist),
-         "phospholipids" = msms_search_lipidmaps.phospholipids(intensity_threshold = intensity_threshold, 
-                                                               prec_tol = prec_tol,
-                                                               prod_tol = prod_tol,
-                                                               headgroup = headgroup,
-                                                               ion = ion,
-                                                               min_matches = min_matches,
-                                                               LIMIT = LIMIT,
-                                                               peaklist = peaklist))
-}
-
-
-## glycerolipids
-msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10, 
-                                                prec_tol = 0.01,
-                                                prod_tol = 0.01,
-                                                headgroup = c("All", "MG", "DG", "TG"),
-                                                ion = c("ammonia"),
-                                                min_matches = 5,
-                                                LIMIT = c("All", "even"),
-                                                peaklist = NULL) {
-  # make sure not to connect more than once per 20 seconds
-  # using package curl for the communication with lipidmaps
+  lipidclass <- match.arg(arg = lipidclass)
+  
+  if (is.null(peaklist)) {
+    stop("No 'peaklist' given!")
+  }
   
   ### do some checking if all is fine
   # make sure ExactMass is set and set as number
@@ -148,19 +121,45 @@ msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10,
     stop("'prod_tol' needs to be a number!")
   }
   
+  switch(lipidclass,
+         "glycerolipids" = msms_search_lipidmaps.glycerolipids(intensity_threshold = intensity_threshold, 
+                                                               prec_tol = prec_tol,
+                                                               prod_tol = prod_tol,
+                                                               headgroup = headgroup,
+                                                               ion = ion,
+                                                               min_matches = min_matches,
+                                                               LIMIT = LIMIT,
+                                                               peaklist = peaklist),
+         "phospholipids" = msms_search_lipidmaps.phospholipids(intensity_threshold = intensity_threshold, 
+                                                               prec_tol = prec_tol,
+                                                               prod_tol = prod_tol,
+                                                               headgroup = headgroup,
+                                                               ion = ion,
+                                                               min_matches = min_matches,
+                                                               LIMIT = LIMIT,
+                                                               peaklist = peaklist))
+}
+
+
+## glycerolipids
+msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10, 
+                                                prec_tol = 0.01,
+                                                prod_tol = 0.01,
+                                                headgroup = c("All", "MG", "DG", "TG"),
+                                                ion = c("ammonium"),
+                                                min_matches = 5,
+                                                LIMIT = c("All", "even"),
+                                                peaklist = NULL) {
+  # make sure not to connect more than once per 20 seconds
+  # using package curl for the communication with lipidmaps
+  
+  # check if the ion is set correctly
+  ion <- match.arg(arg = ion)
+  # check if the headgroup is set correctly
   if (is.null(headgroup)) {
-    headgroup <- ""
-    warning("headgroup set to 'All'!\n")
-  } else {
-    if (is.character(headgroup[1])) {
-      headgroup <- match.arg(headgroup)
-      if (headgroup == "All") {
-        headgroup <- ""
-      }
-    } else {
-      stop("headgroup should be character: 'All', 'MG', 'DG', 'TG'\n")
-    }
+    headgroup <- "All"
   }
+  headgroup <- match.arg(arg = headgroup)
   
   ### define some things
   # define the website
@@ -212,69 +211,13 @@ msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10,
   # make sure not to connect more than once per 20 seconds
   # using package curl for the communication with lipidmaps
   
-  ### do some checking if all is fine
-  # make sure ExactMass is set and set as number
-   if (is.numeric(intensity_threshold)) {
-    # is number positive
-    if (intensity_threshold > 0) {
-      # for the webform it needs to be character
-      intensity_threshold <- as.character(intensity_threshold)
-    } else {
-      stop("'intensity_threshold' should be possitive!")
-    }
-  } else {
-    stop("'intensity_threshold' needs to be a number!")
-  }
-
-  # make sure prec_tol is set and set as number
-  if (is.numeric(prec_tol)) {
-    if (prec_tol > 0) {
-      # for the webform it needs to be character
-      prec_tol <- as.character(prec_tol)
-    } else {
-      stop("'prec_tol' should be possitive!")
-    }
-  } else {
-    stop("'prec_tol' needs to be a number!")
-  }
-  
-    # make sure min_matches is set and set as number
-  if (is.numeric(min_matches)) {
-    if (min_matches > 0) {
-      # for the webform it needs to be character
-      min_matches <- as.character(min_matches)
-    } else {
-      stop("'min_matches' should be possitive!")
-    }
-  } else {
-    stop("'min_matches' needs to be a number!")
-  }
-  
-      # make sure prod_tol is set and set as number
-  if (is.numeric(prod_tol)) {
-    if (prod_tol > 0) {
-      # for the webform it needs to be character
-      prod_tol <- as.character(prod_tol)
-    } else {
-      stop("'prod_tol' should be possitive!")
-    }
-  } else {
-    stop("'prod_tol' needs to be a number!")
-  }
- 
+  # check if the ion is set correctly
+  ion <- match.arg(arg = ion)
+  # check if the headgroup is set correctly
   if (is.null(headgroup)) {
-    headgroup <- ""
-    warning("headgroup set to 'All'!\n")
-  } else {
-    if (is.character(headgroup[1])) {
-      headgroup <- match.arg(headgroup)
-      if (headgroup == "All") {
-        headgroup <- ""
-      }
-    } else {
-      stop("headgroup should be character: 'All', 'PC', 'PA', 'PS', 'PE', 'PG' or 'PI'\n")
-    }
+    headgroup <- "All"
   }
+  headgroup <- match.arg(arg = headgroup)
   
   ### define some things
   # define the website
