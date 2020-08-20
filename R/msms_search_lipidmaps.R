@@ -163,7 +163,7 @@ msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10,
   
   ### define some things
   # define the website
-  http_lipidmaps <- "http://www.lipidmaps.org/tools/ms/GL_prod_search.php"
+  http_lipidmaps <- "https://www.lipidmaps.org/tools/ms/GL_prod_search.php"
   
   ### do the search
   # create a new handle to set the form variables
@@ -221,7 +221,7 @@ msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10,
   
   ### define some things
   # define the website
-  http_lipidmaps <- "http://www.lipidmaps.org/tools/ms/GP_prod_search.php"
+  http_lipidmaps <- "https://www.lipidmaps.org/tools/ms/GP_prod_search.php"
   
   ### do the search
   # create a new handle to set the form variables
