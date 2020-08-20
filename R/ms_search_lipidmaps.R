@@ -100,7 +100,7 @@ ms_search_lipidmaps <- function(ExactMass = NULL,
   
   ### define some things
   # define the website
-  http_lipidmaps <- "http://www.lipidmaps.org/data/structure/LMSDSearch.php"
+  http_lipidmaps <- "https://www.lipidmaps.org/data/structure/LMSDSearch.php"
   
   ### do the search
   # create a new handle to set the form variables
