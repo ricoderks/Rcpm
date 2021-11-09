@@ -27,7 +27,8 @@ Imports:
     rlang,
     methods,
     tidyr,
-    vdiffr
+    vdiffr,
+    data.table
 Suggests:
     knitr,
     testthat,
@@ -37,4 +38,4 @@ Remotes:
     bioc::multtest,
     bioc::pcaMethods
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

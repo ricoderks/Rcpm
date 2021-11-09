@@ -103,7 +103,7 @@ diff_plot <- function(data, x, y, fill_by, facet_y, facet_x) {
                space = "free_y") +
     ylab("Difference") +
     xlab("Lipid name") +
-    guides(fill = FALSE)
+    guides(fill = "none")
   
   ## return the ggplot2 object
   return(p)

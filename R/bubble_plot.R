@@ -101,7 +101,7 @@ bubble_plot <- function(data, x, y, color_by, carbon_db) {
                scales = "free") +
     xlab("Retention time [minutes]") +
     ylab(expression(italic("m/z"))) +
-    guides(color = FALSE, size = FALSE)
+    guides(color = "none", size = "none")
   
   ## return the ggplot2 object
   return(p)
