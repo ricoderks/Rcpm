@@ -20,7 +20,7 @@
 #'
 #' Phospholipids:
 #' 
-#' Headgroups are defined as:  "All" or one off "PC", "PA", "PS", "PE", "PG", "PI"
+#' Headgroups are defined as:  "Any" or one off "PC", "PA", "PS", "PE", "PG", "PI"
 #'
 #' The ion types are defined as: 
 #' * chloride : [M-H]- / [M+Cl]-
@@ -29,7 +29,7 @@
 #' 
 #' Glycerolipids:
 #' 
-#' Headgroups are defined as:  "All" or one off "MD", "DG", "TG"
+#' Headgroups are defined as:  "Any" or one off "MD", "DG", "TG"
 #'
 #' The ion types are defined as: 
 #' * ammonium : [M+NH4]+
@@ -47,9 +47,9 @@
 #'                      intensity_threshold = 10,
 #'                      prec_tol = 0.01,
 #'                      prod_tol = 0.01,
-#'                      headgroup = "All",
+#'                      headgroup = "Any",
 #'                      ion = "formate",
-#'                      min_matches = 1,
+#'                      min_matches = 2,
 #'                      LIMIT = "All",
 #'                      peaklist = mypeaks)
 
@@ -99,11 +99,11 @@ msms_search_lipidmaps <- function(lipidclass = c("glycerolipids", "phospholipids
   
   # make sure min_matches is set and set as number
   if (is.numeric(min_matches)) {
-    if (min_matches > 0) {
+    if (min_matches > 1) {
       # for the webform it needs to be character
       min_matches <- as.character(min_matches)
     } else {
-      stop("'min_matches' should be possitive!")
+      stop("'min_matches' should be at least 2!")
     }
   } else {
     stop("'min_matches' needs to be a number!")
@@ -203,7 +203,7 @@ msms_search_lipidmaps.glycerolipids <- function(intensity_threshold = 10,
 msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10, 
                                                 prec_tol = 0.01,
                                                 prod_tol = 0.01,
-                                                headgroup = c("All", "PC", "PA", "PS", "PE", "PG", "PI"),
+                                                headgroup = c("Any", "PC", "PA", "PS", "PE", "PG", "PI"),
                                                 ion = c("chloride", "acetate", "formate"),
                                                 min_matches = 5,
                                                 LIMIT = c("All", "even"),
@@ -215,7 +215,7 @@ msms_search_lipidmaps.phospholipids <- function(intensity_threshold = 10,
   ion <- match.arg(arg = ion)
   # check if the headgroup is set correctly
   if (is.null(headgroup)) {
-    headgroup <- "All"
+    headgroup <- "Any"
   }
   headgroup <- match.arg(arg = headgroup)
   

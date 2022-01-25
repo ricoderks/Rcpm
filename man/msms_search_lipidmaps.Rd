@@ -48,7 +48,7 @@ This function uses the Programmatic Access functionality of LipidMaps to search 
 
 Phospholipids:
 
-Headgroups are defined as:  "All" or one off "PC", "PA", "PS", "PE", "PG", "PI"
+Headgroups are defined as:  "Any" or one off "PC", "PA", "PS", "PE", "PG", "PI"
 
 The ion types are defined as: 
 * chloride : [M-H]- / [M+Cl]-
@@ -57,7 +57,7 @@ The ion types are defined as:
 
 Glycerolipids:
 
-Headgroups are defined as:  "All" or one off "MD", "DG", "TG"
+Headgroups are defined as:  "Any" or one off "MD", "DG", "TG"
 
 The ion types are defined as: 
 * ammonium : [M+NH4]+
@@ -69,9 +69,9 @@ results <- msms_search_lipidmaps(lipidclass = "phospholipids",
                      intensity_threshold = 10,
                      prec_tol = 0.01,
                      prod_tol = 0.01,
-                     headgroup = "All",
+                     headgroup = "Any",
                      ion = "formate",
-                     min_matches = 1,
+                     min_matches = 2,
                      LIMIT = "All",
                      peaklist = mypeaks)
 }
