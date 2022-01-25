@@ -49,7 +49,7 @@
 #'                      prod_tol = 0.01,
 #'                      headgroup = "Any",
 #'                      ion = "formate",
-#'                      min_matches = 1,
+#'                      min_matches = 2,
 #'                      LIMIT = "All",
 #'                      peaklist = mypeaks)
 

@@ -134,7 +134,7 @@ test_that("Is input correct:", {
                                      min_matches = -1,
                                      LIMIT = "All",
                                      peaklist = mypeaks),
-               "'min_matches' should be possitive!")
+               "'min_matches' should be at least 2!")
   expect_error(msms_search_lipidmaps(lipidclass = "phospholipids",
                                      intensity_threshold = 10,
                                      prec_tol = 0.01,
