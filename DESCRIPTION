@@ -7,7 +7,7 @@ Author: Rico Derks
 Maintainer: Rico Derks <r.j.e.derks@lumc.nl>
 Description: This package contains several general functions for the Center of
     Proteomics and Metabolomics (LUMC).
-License: GPL-3
+License: GPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8
 Imports:
