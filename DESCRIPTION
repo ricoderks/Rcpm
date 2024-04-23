@@ -1,8 +1,8 @@
 Package: Rcpm
 Type: Package
 Title: General functions for the Center of Proteomics and Metabolomics (LUMC)
-Version: 1.0.4
-Date: 2022-01-25
+Version: 1.0.4.9000
+Date: 2024-04-22
 Author: Rico Derks
 Maintainer: Rico Derks <r.j.e.derks@lumc.nl>
 Description: This package contains several general functions for the Center of
@@ -11,31 +11,33 @@ License: GPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8
 Imports:
-    plyr,
-    ggplot2,
-    grid,
-    reshape2,
-    pcaMethods,
-    xml2,
-    base64enc,
-    curl,
-    dplyr,
-    purrr,
-    preprocessCore,
-    pls,
-    rvest,
-    rlang,
-    methods,
-    tidyr,
-    vdiffr,
-    data.table
+  base64enc,
+  curl,
+  data.table,
+  dplyr,
+  ggplot2,
+  grid,
+  methods,
+  patchwork,
+  pcaMethods,
+  pls,
+  plyr,
+  preprocessCore,
+  purrr,
+  RColorBrewer,
+  reshape2,
+  rlang,
+  rvest,
+  tidyr,
+  vdiffr,
+  xml2
 Suggests:
-    knitr,
-    testthat,
-    rmarkdown
+  knitr,
+  rmarkdown,
+  testthat
 Remotes:
-    bioc::preprocessCore,
-    bioc::multtest,
-    bioc::pcaMethods
+  bioc::multtest,
+  bioc::pcaMethods,
+  bioc::preprocessCore
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
