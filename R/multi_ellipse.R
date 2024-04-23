@@ -16,8 +16,10 @@
 #' PCA score plot per group.
 #'
 #' @importFrom stats var qf
+#' @importFrom dplyr ensym pull
 #'
-#' @author Rico Derks, modified by Marco Bladergroen
+#' @author Rico Derks
+#' @author Marco Bladergroen
 #' 
 #' # if ellipse is not NULL this function assumes you have data with a factorial column named as in 'ellipse' to draw multiple ellipses.
 #' x and y should contain the name (string) of the columns of the data to be plotted. If ellipse is NULL the (single) ellipse is drawn according to data in x and y (vectors).
@@ -29,21 +31,21 @@ multi_ellipse <- function(data, x, y, alpha = 0.95, len = 200, ellipse = NULL) {
   if(!is.null(ellipse) && !ellipse==FALSE){
     ellipse <- ensym(ellipse)
     if(is.character(x)){
-      x <- ensym(x)
+      x <- dplyr::ensym(x)
     }
     if(is.character(y)){
-      y <- ensym(y)
+      y <- dplyr::ensym(y)
     }
     
-    for(i in levels(pull(data[, as_label(ellipse)]))){
+    for(i in levels(dplyr::pull(data[, as_label(ellipse)]))){
       filteredData <- data %>% filter({{ ellipse }} == i)
       x1 <- as.vector(t(filteredData[,x]))
       y1 <- as.vector(t(filteredData[,y]))
       
-      result <- rbind(result, cbind(el = as.factor(rep(i, len)), Rcpm:::simple_ellipse(x = x1, y = y1, alpha = alpha, len = len)))
+      result <- rbind(result, cbind(el = as.factor(rep(i, len)), simple_ellipse(x = x1, y = y1, alpha = alpha, len = len)))
     }
   } else {
-    result <- rbind(result, cbind(el = as.factor(rep("All", len)), Rcpm:::simple_ellipse(x = x, y = y, alpha = alpha, len = len)))
+    result <- rbind(result, cbind(el = as.factor(rep("All", len)), simple_ellipse(x = x, y = y, alpha = alpha, len = len)))
   }
   
   return(result)

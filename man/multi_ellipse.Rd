@@ -31,7 +31,9 @@ This is a helper function which is used to create a confidence (Hotelling T2) in
 PCA score plot per group.
 }
 \author{
-Rico Derks, modified by Marco Bladergroen
+Rico Derks
+
+Marco Bladergroen
 
 # if ellipse is not NULL this function assumes you have data with a factorial column named as in 'ellipse' to draw multiple ellipses.
 x and y should contain the name (string) of the columns of the data to be plotted. If ellipse is NULL the (single) ellipse is drawn according to data in x and y (vectors).
