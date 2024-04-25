@@ -55,6 +55,9 @@ extract_feature <- function(data = NULL) {
     )
   }
   
+  # remove NA's
+  feature_data[is.na(feature_data)] <- 0
+  
   return(feature_data)
 }
 

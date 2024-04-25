@@ -8,10 +8,12 @@ fa_analysis_plot(
   lipid_data = NULL,
   meta_data = NULL,
   selected_lipidclass = NULL,
+  selected_fa = NULL,
   group_column = NULL,
   plot_title = NULL,
   y_axis_title = NULL,
-  legend_title = NULL
+  legend_title = NULL,
+  rev = FALSE
 )
 }
 \arguments{
@@ -22,6 +24,8 @@ fa_analysis_plot(
 \item{selected_lipidclass}{character vector, name of the lipid class(es) of
 interest.}
 
+\item{selected_fa}{character vector, fatty acid tails.}
+
 \item{group_column}{character(1), column name of the meta data containing the 
 group information.}
 
@@ -30,6 +34,8 @@ group information.}
 \item{y_axis_title}{character(1), title for the y-axis.}
 
 \item{legend_title}{character(1), title for the legend.}
+
+\item{rev}{logical(1), if TRUE x-axis will be lipid class.}
 }
 \value{
 Fatty acid analysis plot as ggplot2 object.
