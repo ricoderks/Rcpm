@@ -1,4 +1,4 @@
-#' @titlte Calculations for the fatty acid analysis plot
+#' @title Calculations for the fatty acid analysis plot
 #' 
 #' @description
 #' Calculations for the fatty acid analysis plot.
@@ -90,7 +90,7 @@ fa_analysis_calc <- function(
 }
 
 
-#' @titlte Calculations for the fatty acid analysis plot
+#' @title Calculations for the fatty acid analysis plot
 #' 
 #' @description
 #' Calculations for the fatty acid analysis plot.
@@ -261,7 +261,7 @@ fa_analysis_plot <- function(
     )
   }
   
-  if(ref) {
+  if(rev) {
     fa_data <- fa_analysis_calc_rev(lipid_data = lipid_data,
                                     meta_data = meta_data,
                                     selected_fa = selected_fa)
