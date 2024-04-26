@@ -82,6 +82,7 @@ extract_feature <- function(data = NULL) {
 #' @return data.frame in long format.
 #' 
 #' @importFrom tidyr pivot_longer
+#' @importFrom dplyr all_of
 #' @importFrom rlang .data
 #' 
 #' @author Rico Derks
@@ -132,7 +133,7 @@ calc_fa_composition <- function(lipid_data = NULL,
   # make long
   res <- res |> 
     tidyr::pivot_longer(
-      cols = -.data$double_bond,
+      cols = -dplyr::all_of("double_bond"),
       names_to = "carbon_number",
       values_to = "proportion"
     )
@@ -376,6 +377,26 @@ plot_fa_composition <- function(lipid_data = NULL,
                                 group_column = NULL,
                                 groups = NULL,
                                 selected_lipidclass = NULL) {
+  if(!(group_column %in% colnames(meta_data))) {
+    stop("'group_column' contains incorrect column name!")
+  }
+  
+  if(!all(groups %in% meta_data[, group_column])) {
+    stop("Incorrect groups named in 'groups'!")
+  }
+  
+  if(!("sampleID" %in% colnames(lipid_data) & "sampleID" %in% colnames(meta_data))) {
+    stop("'meta_data' or 'lipid_data' must at least contain column 'sampleID'!")
+  }
+  
+  if(!is.null(selected_lipidclass)) {
+    selected_lipidclass <- match.arg(
+      arg = selected_lipidclass,
+      choices = c("CE", "Cer", "DG", "FA", "HexCER", "LPC", "LPE", "LacCER", 
+                  "PA", "PC", "PE", "PG", "PI", "PS", "SM", "TG")
+    )
+  }
+  
   #### Data
   ## left side
   # heatmap

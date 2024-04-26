@@ -30,10 +30,10 @@ fa_analysis_calc <- function(
   lipid_data[, idx_tg] <- lipid_data[, idx_tg] / 3
   
   # get the species from the selected lipid classes
-  if(selected_lipidclass == "All") {
+  if(selected_lipidclass[1] == "All") {
     # all lipids, but remove PA
     sel_feat_idx <- feature_data$lipid[!(feature_data$lipid_class %in% c("PA"))]
-  } else if(selected_lipidclass == "All_noTG") {
+  } else if(selected_lipidclass[1] == "All_noTG") {
     # all lipids, but remove PA
     sel_feat_idx <- feature_data$lipid[!(feature_data$lipid_class %in% c("PA", "TG"))]
   } else {
@@ -251,24 +251,40 @@ fa_analysis_plot <- function(
     legend_title = NULL,
     rev = FALSE) {
   
-  if(!is.null(selected_lipidclass)) {
-    selected_lipidclass <- match.arg(
-      arg = selected_lipidclass,
-      choices = c("CE", "Cer", "DG", "FA", "HexCER", "LPC", "LPE", 
-                  "LacCER", "PA", "PC", "PE", "PG", "PI", "PS", "SM",
-                  "TG", "All", "All_noTG"),
-      several.ok = TRUE
-    )
-  }
-  
   if(rev) {
+    if(is.null(selected_fa)) {
+      stop("No fatty acid tails defined in 'selected_fa'!")
+    }
+    if(!all(grepl(x = selected_fa,
+                  pattern = "[0-9]{1,2}:[0-9]{1,2}"))) {
+      stop("'selected_fa', fatty acid tails incorrectly defined! e.g. 18:1")
+    }
     fa_data <- fa_analysis_calc_rev(lipid_data = lipid_data,
                                     meta_data = meta_data,
                                     selected_fa = selected_fa)
   } else {
+    if(!is.null(selected_lipidclass)) {
+      selected_lipidclass <- match.arg(
+        arg = selected_lipidclass,
+        choices = c("CE", "Cer", "DG", "FA", "HexCER", "LPC", "LPE", 
+                    "LacCER", "PA", "PC", "PE", "PG", "PI", "PS", "SM",
+                    "TG", "All", "All_noTG"),
+        several.ok = TRUE
+      )
+    } else {
+      stop("No lipid class defined in 'selected_lipidclass'!")
+    }
     fa_data <- fa_analysis_calc(lipid_data = lipid_data,
                                 meta_data = meta_data,
                                 selected_lipidclass = selected_lipidclass)
+  }
+  
+  if(!(group_column %in% colnames(meta_data))) {
+    stop("'group_column' contains incorrect column name!")
+  }
+  
+  if(!("sampleID" %in% colnames(lipid_data) & "sampleID" %in% colnames(meta_data))) {
+    stop("'meta_data' or 'lipid_data' must at least contain column 'sampleID'!")
   }
   
   plot_data <- fa_analysis_prep(fa_data = fa_data,
