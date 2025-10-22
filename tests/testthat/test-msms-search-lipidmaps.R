@@ -54,7 +54,7 @@ test_that("Is input correct:", {
                                      min_matches = 2,
                                      LIMIT = "All",
                                      peaklist = mypeaks),
-               "'arg' should be one of \"ammonium\"")
+               "'arg' should be \"ammonium\"")
   expect_error(msms_search_lipidmaps(lipidclass = "phospholipids",
                                      intensity_threshold = 10,
                                      prec_tol = 0.01,

@@ -34,7 +34,7 @@ context("summary-fit: output check")
 
 test_that("Is output correct ggplot2 object:", {
   expect_equal(class(summary_fit(sumfit)), 
-               c("gg", "ggplot"))
+               c("ggplot2::ggplot", "ggplot", "ggplot2::gg", "S7_object", "gg"))
   vdiffr::expect_doppelganger("Summary fit plot", 
                               my_summary_fit_plot)
 })

@@ -11,31 +11,29 @@ License: GPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8
 Imports:
-    plyr,
-    ggplot2,
-    grid,
-    reshape2,
-    pcaMethods,
-    xml2,
     base64enc,
     curl,
+    data.table,
     dplyr,
-    purrr,
-    preprocessCore,
-    pls,
-    rvest,
-    rlang,
+    ggplot2,
+    grid,
     methods,
+    pcaMethods,
+    pls,
+    plyr,
+    preprocessCore,
+    rlang,
+    rvest,
     tidyr,
-    vdiffr,
-    data.table
+    xml2
 Suggests:
     knitr,
+    rmarkdown,
     testthat,
-    rmarkdown
+    vdiffr
 Remotes:
     bioc::preprocessCore,
     bioc::multtest,
     bioc::pcaMethods
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.3

@@ -42,7 +42,7 @@
 #' # [1] 1.622068             
 reverse_predict <- function(model, new_y, level = 0.95) {
   # sanity check --------------------------------------------------
-  if (class(model) != "lm") {
+  if (!is(model, "lm")) {
     stop("model needs to be of class lm!")
   }
   if (!is.atomic(new_y) || !is.numeric(new_y)) {
