@@ -41,10 +41,10 @@ multi_ellipse <- function(data, x, y, alpha = 0.95, len = 200, ellipse = NULL) {
       x1 <- as.vector(t(filteredData[,x]))
       y1 <- as.vector(t(filteredData[,y]))
       
-      result <- rbind(result, cbind(el = as.factor(rep(i, len)), Rcpm:::simple_ellipse(x = x1, y = y1, alpha = alpha, len = len)))
+      result <- rbind(result, cbind(el = as.factor(rep(i, len)), simple_ellipse(x = x1, y = y1, alpha = alpha, len = len)))
     }
   } else {
-    result <- rbind(result, cbind(el = as.factor(rep("All", len)), Rcpm:::simple_ellipse(x = x, y = y, alpha = alpha, len = len)))
+    result <- rbind(result, cbind(el = as.factor(rep("All", len)), simple_ellipse(x = x, y = y, alpha = alpha, len = len)))
   }
   
   return(result)
