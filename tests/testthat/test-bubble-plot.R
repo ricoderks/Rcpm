@@ -131,6 +131,6 @@ context("bubble-plot: output check")
 
 test_that("Is output correct ggplot2 object:", {
   expect_equal(class(bubble_plot(data = my_data, x = rt, y = mz, color_by = carbon, carbon_db = carbon_db)), 
-               c("gg", "ggplot"))
+               c("ggplot2::ggplot", "ggplot", "ggplot2::gg", "S7_object", "gg"))
   vdiffr::expect_doppelganger("ggplot2 graph", my_bubbleplot)
 })

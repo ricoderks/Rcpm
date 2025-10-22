@@ -99,6 +99,6 @@ test_that("Is output correct ggplot2 object:", {
                                fill_by = diff_grp,
                                facet_x = versus,
                                facet_y = lipidclass)),
-               c("gg", "ggplot"))
+               c("ggplot2::ggplot", "ggplot", "ggplot2::gg", "S7_object", "gg"))
   vdiffr::expect_doppelganger("My diff plot", my_diffplot)
 })
