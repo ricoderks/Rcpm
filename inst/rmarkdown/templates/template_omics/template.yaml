@@ -1,0 +1,4 @@
+name: template_omics
+description: >
+   Template for omics R markdown notebooks.
+create_dir: FALSE
