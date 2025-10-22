@@ -16,6 +16,7 @@
 #' PCA score plot per group.
 #'
 #' @importFrom stats var qf
+#' @importFrom dplyr pull
 #'
 #' @author Rico Derks, modified by Marco Bladergroen
 #' 
